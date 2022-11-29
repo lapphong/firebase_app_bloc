@@ -3,12 +3,9 @@ import 'package:flutter/services.dart';
 
 import '../../../../utils/showSnackBar.dart';
 import '../../../assets/assets_path.dart';
-import '../../../themes/app_color.dart';
-import '../../../themes/text_style.dart';
-import '../../../widgets/stateless/common_avatar.dart';
-import '../../../widgets/stateless/common_button.dart';
-import '../widgets/email_textfield.dart';
-import '../widgets/password_textfiled.dart';
+import '../../../themes/themes.dart';
+import '../../../widgets/stateless/stateless.dart';
+import '../widgets/authentication_widgets.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
