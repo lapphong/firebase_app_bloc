@@ -1,7 +1,8 @@
-import 'package:firebase_app_bloc/modules/authentication/pages/splash_page.dart';
-import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:firebase_app_bloc/modules/authentication/pages/splash_page.dart';
+import 'package:firebase_app_bloc/routes/route_name.dart';
 
 import '../blocs/app/app_bloc.dart';
 
