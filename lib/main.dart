@@ -1,14 +1,29 @@
-import 'package:firebase_app_bloc/modules/authentication/pages/sign_in_page.dart';
-import 'package:firebase_app_bloc/themes/app_color.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_bloc/modules/dashboardPage.dart';
+import 'package:firebase_app_bloc/repositories/auth_repository.dart';
+import 'package:firebase_app_bloc/routes/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'blocs/app/app_bloc.dart';
+import 'firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'routes/routes.dart' as router;
 
-void main() {
+import 'themes/themes.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +31,38 @@ class MyApp extends StatelessWidget {
       statusBarColor: DarkTheme.greyScale900,
       statusBarBrightness: Brightness.light,
     ));
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: DarkTheme.greyScale900,
-        fontFamily: 'manrope',
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: DarkTheme.white,
-              displayColor: DarkTheme.white,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthRepository>(
+          create: (context) => AuthRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseAuth: FirebaseAuth.instance,
+          ),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AppBloc>(
+            create: (context) => AppBloc(
+              authRepository: context.read<AuthRepository>(),
             ),
+          ),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          //navigatorKey: navigatorKey,
+          theme: ThemeData(
+            scaffoldBackgroundColor: DarkTheme.greyScale900,
+            fontFamily: 'manrope',
+            textTheme: Theme.of(context).textTheme.apply(
+                  bodyColor: DarkTheme.white,
+                  displayColor: DarkTheme.white,
+                ),
+          ),
+          home: const DashBoardPage(),
+          onGenerateRoute: router.Routes.generateRoute,
+        ),
       ),
-      home: const SignInPage(),
     );
   }
 }
