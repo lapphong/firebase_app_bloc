@@ -19,9 +19,6 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  final FocusNode _emailFocusNode = FocusNode();
-  final FocusNode _passwordFocusNode = FocusNode();
-
   Widget buildTextFieldEmail() {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
@@ -29,7 +26,6 @@ class _SignInPageState extends State<SignInPage> {
           key: const Key('loginForm_emailInput_textField'),
           onChange: (email) => context.read<SignInCubit>().emailChanged(email),
           errorText: state.email.invalid ? 'Email is valid' : null,
-          emailFocusNode: _emailFocusNode,
         );
       },
     );
@@ -40,10 +36,11 @@ class _SignInPageState extends State<SignInPage> {
       builder: (context, state) {
         return PasswordTextField(
           key: const Key('loginForm_passwordInput_textField'),
-          focusNode: _passwordFocusNode,
           onChange: (password) =>
               context.read<SignInCubit>().passwordChanged(password),
           errorText: state.password.invalid ? 'Password is valid' : null,
+          onEditingComplete: () =>
+              context.read<SignInCubit>().logInEmailWithCredentials(),
         );
       },
     );
@@ -82,11 +79,9 @@ class _SignInPageState extends State<SignInPage> {
                       return ClassicButton(
                         onTap: state.status.isSubmissionInProgress
                             ? () {}
-                            : () => {
-                                  context
-                                      .read<SignInCubit>()
-                                      .logInWithCredentials()
-                                },
+                            : () => context
+                                .read<SignInCubit>()
+                                .logInEmailWithCredentials(),
                         width: size.width,
                         radius: 12,
                         widthRadius: 0,
@@ -99,7 +94,7 @@ class _SignInPageState extends State<SignInPage> {
                             : DarkTheme.primaryBlue600,
                         child: Center(
                             child: state.status.isSubmissionInProgress
-                                ? const Text('Loading...')
+                                ? const CircularProgressIndicator()
                                 : const Text('Sign In')),
                       );
                     },
@@ -223,13 +218,6 @@ class _SignInPageState extends State<SignInPage> {
   //     ),
   //   );
   // }
-
-  @override
-  void dispose() {
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
-    super.dispose();
-  }
 
   void snackBarError(String e) {
     return showSnackBar(

@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'blocs/app/app_bloc.dart';
+import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'routes/routes.dart' as router;
@@ -16,6 +16,7 @@ import 'themes/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

@@ -32,7 +32,7 @@ class SignInCubit extends Cubit<SignInState> {
     );
   }
 
-  Future<void> logInWithCredentials() async {
+  Future<void> logInEmailWithCredentials() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {

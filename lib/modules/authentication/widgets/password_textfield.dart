@@ -14,6 +14,7 @@ class PasswordTextField extends StatefulWidget {
     this.errorText,
     this.inputFormatters,
     this.onChange,
+    this.onEditingComplete,
     this.onSubmit,
   }) : super(key: key);
 
@@ -23,6 +24,7 @@ class PasswordTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChange, onSubmit;
   final Widget? suffixIcon;
+  final void Function()? onEditingComplete;
 
   @override
   _PasswordTextFieldState createState() => _PasswordTextFieldState();
@@ -50,6 +52,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         ),
       ),
       inputFormatters: widget.inputFormatters,
+      onEditingComplete: widget.onEditingComplete,
       onChange: widget.onChange,
       onSubmit: widget.onSubmit,
       obscureText: _obscureText,
