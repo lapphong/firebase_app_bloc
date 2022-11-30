@@ -1,4 +1,3 @@
-import 'package:firebase_app_bloc/modules/authentication/cubits/sign_in/sign_in_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +9,7 @@ import '../../../themes/themes.dart';
 import '../../../utils/debounce.dart';
 import '../../../widgets/stateless/stateless.dart';
 
+import '../cubits/cubits.dart';
 import '../widgets/authentication_widgets.dart';
 
 class SignInPage extends StatelessWidget {

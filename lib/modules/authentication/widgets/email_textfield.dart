@@ -5,7 +5,7 @@ import '../../../assets/assets_path.dart';
 import '../../../widgets/stateless/common_avatar.dart';
 import '../../../widgets/stateless/common_textfield.dart';
 
-class TextFieldEmail extends StatefulWidget {
+class TextFieldEmail extends StatelessWidget {
   const TextFieldEmail({
     Key? key,
     this.emailFocusNode,
@@ -26,23 +26,18 @@ class TextFieldEmail extends StatefulWidget {
   final Function()? onEditingComplete;
 
   @override
-  State<TextFieldEmail> createState() => _TextFieldEmailState();
-}
-
-class _TextFieldEmailState extends State<TextFieldEmail> {
-  @override
   Widget build(BuildContext context) {
     return CommonTextField(
-      errorText: widget.errorText,
-      controller: widget.emailController,
+      errorText: errorText,
+      controller: emailController,
       hintText: 'Enter your Email',
       label: 'Email',
-      focusNode: widget.emailFocusNode,
-      inputFormatters: widget.inputFormatters,
+      focusNode: emailFocusNode,
+      inputFormatters: inputFormatters,
       inputType: TextInputType.emailAddress,
       inputAction: TextInputAction.next,
-      onChange: widget.onChange,
-      onSubmit: widget.onSubmit,
+      onChange: onChange,
+      onSubmit: onSubmit,
       prefixIcon: const Align(
         widthFactor: 0.5,
         heightFactor: 0.5,
