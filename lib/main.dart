@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_bloc/modules/authentication/cubits/sign_in/sign_in_cubit.dart';
+
 import 'package:firebase_app_bloc/modules/dashboardPage.dart';
 import 'package:firebase_app_bloc/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/app/app_bloc.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'modules/authentication/cubits/sign_in/sign_in_cubit.dart';
 import 'routes/routes.dart' as router;
 
 import 'themes/themes.dart';

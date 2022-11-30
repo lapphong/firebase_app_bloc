@@ -9,9 +9,17 @@ void showSnackBar(BuildContext context, String text, Widget image) {
       children: [
         image,
         const SizedBox(width: 20),
-        Text(text),
+        Expanded(
+          child: Text(
+            text,
+            maxLines: 3,
+            textDirection: TextDirection.ltr,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     ),
+    duration: const Duration(seconds: 3),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

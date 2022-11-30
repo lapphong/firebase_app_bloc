@@ -39,6 +39,7 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
       label: 'Email',
       focusNode: widget.emailFocusNode,
       inputFormatters: widget.inputFormatters,
+      inputType: TextInputType.emailAddress,
       onChange: widget.onChange,
       onSubmit: widget.onSubmit,
       prefixIcon: const Align(

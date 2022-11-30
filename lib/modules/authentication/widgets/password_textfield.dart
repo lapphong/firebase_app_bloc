@@ -9,21 +9,19 @@ class PasswordTextField extends StatefulWidget {
   const PasswordTextField({
     Key? key,
     this.suffixIcon,
-    this.controller,
+    //this.controller,
     this.focusNode,
     this.errorText,
     this.inputFormatters,
     this.onChange,
     this.onSubmit,
-    this.obscureText = true,
   }) : super(key: key);
 
-  final TextEditingController? controller;
+  //final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? errorText;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChange, onSubmit;
-  final bool obscureText;
   final Widget? suffixIcon;
 
   @override
@@ -31,11 +29,14 @@ class PasswordTextField extends StatefulWidget {
 }
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
+  late bool _obscureText = true;
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return CommonTextField(
       errorText: widget.errorText,
-      controller: widget.controller,
+      controller: _passwordController,
       hintText: 'Enter your password',
       label: 'Password',
       focusNode: widget.focusNode,
@@ -51,8 +52,27 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       inputFormatters: widget.inputFormatters,
       onChange: widget.onChange,
       onSubmit: widget.onSubmit,
-      obscureText: widget.obscureText,
-      suffix: widget.suffixIcon,
+      obscureText: _obscureText,
+      suffix: _passwordController.text.isEmpty
+          ? Container(width: 0)
+          : Align(
+              widthFactor: 0.5,
+              heightFactor: 0.5,
+              child: _passwordController.text.isNotEmpty
+                  ? CustomAvatar(
+                      width: 20,
+                      height: 15,
+                      assetName: _obscureText
+                          ? AssetPath.iconEye
+                          : AssetPath.iconHideEye,
+                      onTap: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    )
+                  : const Text(''),
+            ),
     );
   }
 }
