@@ -7,24 +7,23 @@ import 'package:formz/formz.dart';
 import '../../../../utils/showSnackBar.dart';
 import '../../../assets/assets_path.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/debounce.dart';
 import '../../../widgets/stateless/stateless.dart';
 
 import '../widgets/authentication_widgets.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignInPage extends StatelessWidget {
+  SignInPage({Key? key}) : super(key: key);
 
-  @override
-  State<SignInPage> createState() => _SignInPageState();
-}
+  final debounce = Debounce(milliseconds: 1000);
 
-class _SignInPageState extends State<SignInPage> {
   Widget buildTextFieldEmail() {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
         return TextFieldEmail(
           key: const Key('loginForm_emailInput_textField'),
-          onChange: (email) => context.read<SignInCubit>().emailChanged(email),
+          onChange: (email) => debounce
+              .run(() => context.read<SignInCubit>().emailChanged(email)),
           errorText: state.email.invalid ? 'Email is valid' : null,
         );
       },
@@ -36,8 +35,8 @@ class _SignInPageState extends State<SignInPage> {
       builder: (context, state) {
         return PasswordTextField(
           key: const Key('loginForm_passwordInput_textField'),
-          onChange: (password) =>
-              context.read<SignInCubit>().passwordChanged(password),
+          onChange: (password) => debounce
+              .run(() => context.read<SignInCubit>().passwordChanged(password)),
           errorText: state.password.invalid ? 'Password is valid' : null,
           onEditingComplete: () =>
               context.read<SignInCubit>().logInEmailWithCredentials(),
@@ -52,7 +51,7 @@ class _SignInPageState extends State<SignInPage> {
     return BlocListener<SignInCubit, SignInState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          snackBarError(state.errorMessage.toString());
+          snackBarError(context, state.errorMessage.toString());
         }
       },
       child: Scaffold(
@@ -219,7 +218,7 @@ class _SignInPageState extends State<SignInPage> {
   //   );
   // }
 
-  void snackBarError(String e) {
+  void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
       'Sign in field : $e',
@@ -227,7 +226,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void snackBarSuccess() {
+  void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
       "Sign in Successfully",

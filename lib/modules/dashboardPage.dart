@@ -5,17 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:firebase_app_bloc/modules/authentication/pages/splash_page.dart';
 
-import '../blocs/app/app_bloc.dart';
 import '../blocs/blocs.dart';
 
-class DashBoardPage extends StatefulWidget {
+class DashBoardPage extends StatelessWidget {
   const DashBoardPage({super.key});
 
-  @override
-  State<DashBoardPage> createState() => _DashBoardPageState();
-}
-
-class _DashBoardPageState extends State<DashBoardPage> {
   @override
   Widget build(BuildContext context) {
     // return BlocConsumer<AppBloc, AppState>(
@@ -43,11 +37,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
         if (state.appStatus == AppStatus.unknown) {
           return const SplashPage();
         } else if (state.appStatus == AppStatus.unauthenticated) {
-          return const SignInPage();
+          return SignInPage();
         } else if (state.appStatus == AppStatus.authenticated) {
           return const HomePage();
         }
-        return Center(child: Text('Unhandle State $state'));
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

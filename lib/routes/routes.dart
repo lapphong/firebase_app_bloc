@@ -12,7 +12,7 @@ class Routes {
       case RouteName.splash:
         return _buildRoute(settings, const SplashPage());
       case RouteName.signInPage:
-        return _buildRoute(settings, const SignInPage());
+        return _buildRoute(settings, SignInPage());
       case RouteName.homePage:
         return _buildRoute(settings, const HomePage());
       // case RouteName.signUpPage:
