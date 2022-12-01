@@ -13,9 +13,9 @@ class Routes {
       case '/':
         return _buildRoute(settings, const DashBoardPage());
       case RouteName.signInPage:
-        return _buildRoute(settings, SignInPage());
+        return _buildRoute(settings, const SignInPage());
       case RouteName.signUpPage:
-        return _buildRoute(settings, SignUpPage());
+        return _buildRoute(settings, const SignUpPage());
       case RouteName.homePage:
         return _buildRoute(settings, const HomePage());
 

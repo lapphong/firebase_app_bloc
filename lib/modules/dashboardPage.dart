@@ -1,11 +1,11 @@
-import 'package:firebase_app_bloc/modules/authentication/pages/sign_in/sign_in_page.dart';
-import 'package:firebase_app_bloc/modules/home/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:firebase_app_bloc/modules/authentication/pages/splash_page.dart';
+import 'package:firebase_app_bloc/modules/home/pages/home_page.dart';
 
 import '../blocs/blocs.dart';
+import 'authentication/pages/authentication_page.dart';
 
 class DashBoardPage extends StatelessWidget {
   const DashBoardPage({super.key});
@@ -37,7 +37,7 @@ class DashBoardPage extends StatelessWidget {
         if (state.appStatus == AppStatus.unknown) {
           return const SplashPage();
         } else if (state.appStatus == AppStatus.unauthenticated) {
-          return SignInPage();
+          return const SignInPage();
         } else if (state.appStatus == AppStatus.authenticated) {
           return const HomePage();
         }

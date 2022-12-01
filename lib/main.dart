@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'modules/authentication/cubits/cubits.dart';
 import 'routes/routes.dart' as router;
 
 import 'themes/themes.dart';
@@ -16,15 +15,24 @@ import 'themes/themes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  final authRepository = AuthRepository(
+    firebaseFirestore: FirebaseFirestore.instance,
+    firebaseAuth: FirebaseAuth.instance,
+  );
+  await authRepository.user.first;
+  runApp(MyApp(authRepository: authRepository));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  const MyApp({
+    super.key,
+    required AuthRepository authRepository,
+  }) : _authRepository = authRepository;
+  final AuthRepository _authRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -32,49 +40,37 @@ class MyApp extends StatelessWidget {
       statusBarColor: DarkTheme.greyScale900,
       statusBarBrightness: Brightness.light,
     ));
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<AuthRepository>(
-          create: (context) => AuthRepository(
-            firebaseFirestore: FirebaseFirestore.instance,
-            firebaseAuth: FirebaseAuth.instance,
-          ),
+    return RepositoryProvider.value(
+      value: _authRepository,
+      child: BlocProvider(
+        create: (context) => AppBloc(
+          authRepository: context.read<AuthRepository>(),
         ),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<AppBloc>(
-            create: (context) => AppBloc(
-              authRepository: context.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider<SignInCubit>(
-            create: (context) => SignInCubit(
-              authRepository: context.read<AuthRepository>(),
-            ),
-          ),
-          BlocProvider<SignUpCubit>(
-            create: (context) => SignUpCubit(
-              authRepository: context.read<AuthRepository>(),
-            ),
-          ),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          navigatorKey: navigatorKey,
-          theme: ThemeData(
-            scaffoldBackgroundColor: DarkTheme.greyScale900,
-            fontFamily: 'manrope',
-            textTheme: Theme.of(context).textTheme.apply(
-                  bodyColor: DarkTheme.white,
-                  displayColor: DarkTheme.white,
-                ),
-          ),
-          //home: const DashBoardPage(),
-          initialRoute: '/',
-          onGenerateRoute: router.Routes.generateRoute,
-        ),
+        child: const AppView(),
       ),
+    );
+  }
+}
+
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
+      theme: ThemeData(
+        scaffoldBackgroundColor: DarkTheme.greyScale900,
+        fontFamily: 'manrope',
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: DarkTheme.white,
+              displayColor: DarkTheme.white,
+            ),
+      ),
+      initialRoute: '/',
+      onGenerateRoute: router.Routes.generateRoute,
     );
   }
 }
