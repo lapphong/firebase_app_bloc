@@ -1,10 +1,8 @@
 import 'package:firebase_app_bloc/modules/dashboardPage.dart';
-import 'package:firebase_app_bloc/modules/home/pages/home_page.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/authentication/pages/sign_in/sign_in_page.dart';
 import '../modules/authentication/pages/sign_up/sign_up_page.dart';
 
 class Routes {
@@ -12,12 +10,8 @@ class Routes {
     switch (settings.name) {
       case '/':
         return _buildRoute(settings, const DashBoardPage());
-      case RouteName.signInPage:
-        return _buildRoute(settings, const SignInPage());
       case RouteName.signUpPage:
         return _buildRoute(settings, const SignUpPage());
-      case RouteName.homePage:
-        return _buildRoute(settings, const HomePage());
 
       // case RouteName.verifyYourPage:
       //   return _buildRoute(settings, const VerifyYourPage());
