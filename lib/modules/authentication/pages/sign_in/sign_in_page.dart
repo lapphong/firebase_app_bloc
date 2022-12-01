@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../../../utils/showSnackBar.dart';
-import '../../../assets/assets_path.dart';
-import '../../../themes/themes.dart';
-import '../../../utils/debounce.dart';
-import '../../../widgets/stateless/stateless.dart';
+import '../../../../../utils/showSnackBar.dart';
+import '../../../../assets/assets_path.dart';
+import '../../../../themes/themes.dart';
+import '../../../../utils/debounce.dart';
+import '../../../../widgets/stateless/stateless.dart';
 
-import '../cubits/cubits.dart';
-import '../widgets/authentication_widgets.dart';
+import '../../cubits/cubits.dart';
+import '../../widgets/authentication_widgets.dart';
 
 class SignInPage extends StatelessWidget {
   SignInPage({Key? key}) : super(key: key);
@@ -20,6 +20,7 @@ class SignInPage extends StatelessWidget {
 
   Widget buildTextFieldEmail() {
     return BlocBuilder<SignInCubit, SignInState>(
+      buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextFieldEmail(
           key: const Key('loginForm_emailInput_textField'),
@@ -33,6 +34,7 @@ class SignInPage extends StatelessWidget {
 
   Widget buildTextFieldPassword() {
     return BlocBuilder<SignInCubit, SignInState>(
+      buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return PasswordTextField(
           key: const Key('loginForm_passwordInput_textField'),
@@ -77,6 +79,8 @@ class SignInPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: BlocBuilder<SignInCubit, SignInState>(
+                    buildWhen: (previous, current) =>
+                        previous.status != current.status,
                     builder: (context, state) {
                       return ClassicButton(
                         onTap: state.status.isSubmissionInProgress
@@ -204,9 +208,7 @@ class SignInPage extends StatelessWidget {
               Navigator.of(context).pushNamed(RouteName.signUpPage),
           child: Text(
             'Create Here',
-            style: TxtStyle.headline5.copyWith(
-              color: DarkTheme.primaryBlue600,
-            ),
+            style: TxtStyle.headline5.copyWith(color: DarkTheme.primaryBlue600),
           ),
         ),
       ],

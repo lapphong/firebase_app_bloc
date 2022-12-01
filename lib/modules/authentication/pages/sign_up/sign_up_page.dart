@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
-import '../../../../utils/showSnackBar.dart';
-import '../../../assets/assets_path.dart';
-import '../../../themes/themes.dart';
-import '../../../utils/debounce.dart';
-import '../../../widgets/stateless/stateless.dart';
-import '../cubits/cubits.dart';
-import '../widgets/authentication_widgets.dart';
+import '../../../../../utils/showSnackBar.dart';
+import '../../../../assets/assets_path.dart';
+import '../../../../themes/themes.dart';
+import '../../../../utils/debounce.dart';
+import '../../../../widgets/stateless/stateless.dart';
+import '../../cubits/cubits.dart';
+import '../../widgets/authentication_widgets.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({Key? key}) : super(key: key);

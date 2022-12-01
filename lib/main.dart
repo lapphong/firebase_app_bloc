@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:firebase_app_bloc/modules/dashboardPage.dart';
 import 'package:firebase_app_bloc/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -71,7 +70,8 @@ class MyApp extends StatelessWidget {
                   displayColor: DarkTheme.white,
                 ),
           ),
-          home: const DashBoardPage(),
+          //home: const DashBoardPage(),
+          initialRoute: '/',
           onGenerateRoute: router.Routes.generateRoute,
         ),
       ),

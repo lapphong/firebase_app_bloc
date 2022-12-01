@@ -1,17 +1,17 @@
+import 'package:firebase_app_bloc/modules/dashboardPage.dart';
 import 'package:firebase_app_bloc/modules/home/pages/home_page.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/authentication/pages/sign_in_page.dart';
-import '../modules/authentication/pages/sign_up_page.dart';
-import '../modules/authentication/pages/splash_page.dart';
+import '../modules/authentication/pages/sign_in/sign_in_page.dart';
+import '../modules/authentication/pages/sign_up/sign_up_page.dart';
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case RouteName.splash:
-        return _buildRoute(settings, const SplashPage());
+      case '/':
+        return _buildRoute(settings, const DashBoardPage());
       case RouteName.signInPage:
         return _buildRoute(settings, SignInPage());
       case RouteName.signUpPage:
