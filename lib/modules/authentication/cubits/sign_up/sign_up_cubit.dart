@@ -10,9 +10,9 @@ import '../../../../utils/formz/formz.dart';
 part 'sign_up_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  final AuthRepository authenticationRepository;
+  final AuthRepository authRepository;
   SignUpCubit({
-    required this.authenticationRepository,
+    required this.authRepository,
   }) : super(const SignUpState());
 
   void emailChanged(String value) {
@@ -87,7 +87,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await authenticationRepository.signUp(
+      await authRepository.signUp(
         name: state.name.value,
         email: state.email.value,
         password: state.password.value,

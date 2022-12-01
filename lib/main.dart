@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app_bloc/modules/authentication/cubits/sign_in/sign_in_cubit.dart';
 
 import 'package:firebase_app_bloc/modules/dashboardPage.dart';
 import 'package:firebase_app_bloc/repositories/auth_repository.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'modules/authentication/cubits/cubits.dart';
 import 'routes/routes.dart' as router;
 
 import 'themes/themes.dart';
@@ -51,6 +51,11 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<SignInCubit>(
             create: (context) => SignInCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider<SignUpCubit>(
+            create: (context) => SignUpCubit(
               authRepository: context.read<AuthRepository>(),
             ),
           ),

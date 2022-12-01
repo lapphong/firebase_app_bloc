@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/authentication/pages/sign_in_page.dart';
+import '../modules/authentication/pages/sign_up_page.dart';
 import '../modules/authentication/pages/splash_page.dart';
 
 class Routes {
@@ -13,10 +14,11 @@ class Routes {
         return _buildRoute(settings, const SplashPage());
       case RouteName.signInPage:
         return _buildRoute(settings, SignInPage());
+      case RouteName.signUpPage:
+        return _buildRoute(settings, SignUpPage());
       case RouteName.homePage:
         return _buildRoute(settings, const HomePage());
-      // case RouteName.signUpPage:
-      //   return _buildRoute(settings, const SignUpPage());
+
       // case RouteName.verifyYourPage:
       //   return _buildRoute(settings, const VerifyYourPage());
       // case RouteName.selectPlanPage:

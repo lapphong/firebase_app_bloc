@@ -6,6 +6,7 @@ import '../../themes/text_style.dart';
 
 class CommonTextField extends StatelessWidget {
   const CommonTextField({
+    this.validator,
     this.onEditingComplete,
     this.obscureText = false,
     this.focusNode,
@@ -50,6 +51,7 @@ class CommonTextField extends StatelessWidget {
   final Widget? prefix;
   final bool? isRequired;
   final void Function()? onEditingComplete;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +68,7 @@ class CommonTextField extends StatelessWidget {
             primaryColor: Theme.of(context).textTheme.headline5?.color,
           ),
           child: TextFormField(
+            validator: validator,
             onEditingComplete: onEditingComplete,
             focusNode: focusNode,
             controller: controller,

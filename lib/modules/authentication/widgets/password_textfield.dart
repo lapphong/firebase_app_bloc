@@ -14,17 +14,21 @@ class PasswordTextField extends StatefulWidget {
     this.errorText,
     this.inputFormatters,
     this.onChange,
+    this.hintText = 'Enter your password',
+    this.label = 'Password',
     this.onEditingComplete,
+    this.validator,
     this.onSubmit,
   }) : super(key: key);
 
   //final TextEditingController? controller;
   final FocusNode? focusNode;
-  final String? errorText;
+  final String? errorText, label, hintText;
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChange, onSubmit;
   final Widget? suffixIcon;
   final void Function()? onEditingComplete;
+  final String? Function(String?)? validator;
 
   @override
   _PasswordTextFieldState createState() => _PasswordTextFieldState();
@@ -37,10 +41,11 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return CommonTextField(
+      validator: widget.validator,
       errorText: widget.errorText,
       controller: _passwordController,
-      hintText: 'Enter your password',
-      label: 'Password',
+      hintText: widget.hintText,
+      label: widget.label!,
       focusNode: widget.focusNode,
       prefixIcon: const Align(
         widthFactor: 0.5,

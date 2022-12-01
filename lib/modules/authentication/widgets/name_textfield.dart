@@ -5,11 +5,11 @@ import '../../../assets/assets_path.dart';
 import '../../../widgets/stateless/common_avatar.dart';
 import '../../../widgets/stateless/common_textfield.dart';
 
-class TextFieldEmail extends StatelessWidget {
-  const TextFieldEmail({
+class TextFieldName extends StatelessWidget {
+  const TextFieldName({
     Key? key,
-    this.emailFocusNode,
-    this.emailController,
+    this.nameFocusNode,
+    this.nameController,
     this.onChange,
     this.errorText,
     this.inputFormatters,
@@ -18,8 +18,8 @@ class TextFieldEmail extends StatelessWidget {
     this.onSubmit,
   }) : super(key: key);
 
-  final FocusNode? emailFocusNode;
-  final TextEditingController? emailController;
+  final FocusNode? nameFocusNode;
+  final TextEditingController? nameController;
   final ValueChanged<String>? onChange, onSubmit;
 
   final String? errorText;
@@ -32,12 +32,12 @@ class TextFieldEmail extends StatelessWidget {
     return CommonTextField(
       validator: validator,
       errorText: errorText,
-      controller: emailController,
-      hintText: 'Enter your Email',
-      label: 'Email',
-      focusNode: emailFocusNode,
+      controller: nameController,
+      hintText: 'Enter your Name',
+      label: 'Name',
+      focusNode: nameFocusNode,
       inputFormatters: inputFormatters,
-      inputType: TextInputType.emailAddress,
+      inputType: TextInputType.name,
       inputAction: TextInputAction.next,
       onChange: onChange,
       onSubmit: onSubmit,
@@ -46,8 +46,8 @@ class TextFieldEmail extends StatelessWidget {
         heightFactor: 0.5,
         child: CustomAvatar(
           width: 15,
-          height: 12,
-          assetName: AssetPath.iconEmail,
+          height: 15,
+          assetName: AssetPath.iconUser,
         ),
       ),
     );

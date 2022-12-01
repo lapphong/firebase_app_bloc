@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,9 @@ class SignInPage extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return BlocListener<SignInCubit, SignInState>(
       listener: (context, state) {
-        if (state.status.isSubmissionFailure) {
+        if (state.status.isSubmissionSuccess) {
+          snackBarSuccess(context);
+        } else if (state.status.isSubmissionFailure) {
           snackBarError(context, state.errorMessage.toString());
         }
       },
@@ -166,7 +169,7 @@ class SignInPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                //buildGoToSignUpPage(context),
+                buildGoToSignUpPage(context),
               ],
             ),
           ),
@@ -190,33 +193,25 @@ class SignInPage extends StatelessWidget {
     );
   }
 
-  // Padding buildGoToSignUpPage(BuildContext context) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(top: 10.0),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         const Text('Don\'t have an account? ', style: TxtStyle.headline5),
-  //         TextButton(
-  //           onPressed: () {
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                 builder: (context) => const SignUpPage(),
-  //               ),
-  //             );
-  //           },
-  //           child: Text(
-  //             'Create Here',
-  //             style: TxtStyle.headline5.copyWith(
-  //               color: DarkTheme.primaryBlue600,
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  buildGoToSignUpPage(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Don\'t have an account? ', style: TxtStyle.headline5),
+        TextButton(
+          key: const Key('loginForm_createAccount_flatButton'),
+          onPressed: () =>
+              Navigator.of(context).pushNamed(RouteName.signUpPage),
+          child: Text(
+            'Create Here',
+            style: TxtStyle.headline5.copyWith(
+              color: DarkTheme.primaryBlue600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
