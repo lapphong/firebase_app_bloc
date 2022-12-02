@@ -1,8 +1,8 @@
-import 'package:firebase_app_bloc/modules/root/pages/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:firebase_app_bloc/modules/authentication/pages/splash_page.dart';
+import 'package:firebase_app_bloc/modules/root/pages/root_page.dart';
 
 import '../blocs/blocs.dart';
 import 'authentication/pages/authentication_page.dart';
@@ -39,7 +39,7 @@ class DashBoardPage extends StatelessWidget {
         } else if (state.appStatus == AppStatus.unauthenticated) {
           return const SignInPage();
         } else if (state.appStatus == AppStatus.authenticated) {
-          return const RooPage();
+          return const RootPage();
         }
         return const Center(child: CircularProgressIndicator());
       },

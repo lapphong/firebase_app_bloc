@@ -1,6 +1,5 @@
 import 'package:firebase_app_bloc/themes/app_color.dart';
 import 'package:firebase_app_bloc/themes/text_style.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,8 +8,8 @@ import '../cubits/cubits.dart';
 import '../enums/tab_item.dart';
 import '../widgets/cupertino_home_scaffold.dart';
 
-class RooPage extends StatelessWidget {
-  const RooPage({super.key});
+class RootPage extends StatelessWidget {
+  const RootPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,7 @@ class RooPage extends StatelessWidget {
 
 class RootView extends StatelessWidget {
   const RootView({super.key});
+  static var timeBackPress;
 
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
@@ -42,19 +42,18 @@ class RootView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _currentTab = context.select((TabCubit cubit) => cubit.state.tab);
+    final currentTab = context.select((TabCubit cubit) => cubit.state.tab);
+    timeBackPress = DateTime.now();
     return WillPopScope(
-      onWillPop: () => _onWillPop(_currentTab, context),
+      onWillPop: () => _onWillPop(context, currentTab),
       child: CupertinoHomeScaffold(
-        currentTab: _currentTab,
+        currentTab: currentTab,
         onSelectTab: (TabItem tabItem) {
-          if (tabItem == _currentTab) {
-            navigatorKeys[tabItem]!
-                .currentState
-                ?.popUntil((route) => route.isFirst);
-          } else {
-            context.read<TabCubit>().setTab(tabItem);
-          }
+          tabItem == currentTab
+              ? navigatorKeys[tabItem]!
+                  .currentState
+                  ?.popUntil((route) => route.isFirst)
+              : context.read<TabCubit>().setTab(tabItem);
         },
         widgetBuilders: widgetBuilders,
         navigatorKeys: RootView.navigatorKeys,
@@ -62,25 +61,22 @@ class RootView extends StatelessWidget {
     );
   }
 
-  static DateTime press = DateTime.now();
-  Future<bool> _onWillPop(TabItem currentTab, BuildContext context) async {
+  Future<bool> _onWillPop(BuildContext context, TabItem currentTab) async {
     String? currentRoute;
     navigatorKeys[currentTab]?.currentState!.popUntil((route) {
       currentRoute = route.settings.name;
-      print('currentRoute:$currentRoute');
-      print('ModalRoute: ${ModalRoute.of(context)!.settings.name}');
       return true;
     });
 
     if (currentRoute == '/') {
-      final time = DateTime.now().difference(press);
-      final cantExit = time >= const Duration(seconds: 2);
-      press = DateTime.now();
+      final difference = DateTime.now().difference(timeBackPress);
+      final cantExit = difference >= const Duration(seconds: 2);
+      timeBackPress = DateTime.now();
       if (cantExit) {
         showSnackBar(
           context,
           "Click again Press Back button to Exit",
-          const Icon(Icons.exit_to_app, color: DarkTheme.red),
+          const Icon(Icons.exit_to_app, color: DarkTheme.white),
         );
         return false;
       } else {

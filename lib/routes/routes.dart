@@ -4,12 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/authentication/pages/sign_up/sign_up_page.dart';
+import '../modules/root/pages/root_page.dart';
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
         return _buildRoute(settings, const DashBoardPage());
+      case RouteName.rootPage:
+        return _buildRoute(settings, const RootPage());
       case RouteName.signUpPage:
         return _buildRoute(settings, const SignUpPage());
 
