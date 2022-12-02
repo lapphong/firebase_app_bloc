@@ -1,8 +1,7 @@
-import 'package:firebase_app_bloc/themes/app_color.dart';
-import 'package:firebase_app_bloc/themes/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
 import '../cubits/cubits.dart';
 import '../enums/tab_item.dart';

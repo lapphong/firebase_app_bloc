@@ -3,7 +3,8 @@ import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../modules/authentication/pages/sign_up/sign_up_page.dart';
+
+import '../modules/authentication/authentication.dart';
 import '../modules/root/pages/root_page.dart';
 
 class Routes {
