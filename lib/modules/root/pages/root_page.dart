@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
+import '../../home/pages/home_page.dart';
+import '../../setting/pages/setting_page.dart';
 import '../cubits/cubits.dart';
 import '../enums/tab_item.dart';
 import '../widgets/cupertino_home_scaffold.dart';
@@ -87,22 +89,6 @@ class RootView extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Home Page',
-          style: TxtStyle.headline1,
-        ),
-      ),
-    );
-  }
-}
-
 class ActivityPage extends StatelessWidget {
   const ActivityPage({super.key});
 
@@ -128,44 +114,6 @@ class CategoryPage extends StatelessWidget {
       body: Center(
         child: Text(
           'CategoryPage Page',
-          style: TxtStyle.headline1,
-        ),
-      ),
-    );
-  }
-}
-
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditPage(),
-                )),
-            child: Text(
-              'Setting Page',
-              style: TxtStyle.headline1,
-            )),
-      ),
-    );
-  }
-}
-
-class EditPage extends StatelessWidget {
-  const EditPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Edit Page',
           style: TxtStyle.headline1,
         ),
       ),
