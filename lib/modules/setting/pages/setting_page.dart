@@ -1,4 +1,5 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
+import 'package:firebase_app_bloc/modules/setting/widgets/setting_items_arrow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,19 +22,17 @@ class SettingPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Setting', style: TxtStyle.title),
-                        const SizedBox(width: 100),
-                        buildToggleSwitchMode(),
-                        const BellButton(),
-                      ],
-                    ),
+                  const SizedBox(height: 34),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Setting', style: TxtStyle.title),
+                      const SizedBox(width: 100),
+                      buildToggleSwitchMode(),
+                      const BellButton(),
+                    ],
                   ),
+                  const SizedBox(height: 20),
                   SettingAccount(
                     onTap: () {
                       // Navigator.of(context).pushNamed(
@@ -51,10 +50,45 @@ class SettingPage extends StatelessWidget {
             const SizedBox(height: 16),
             const TitleOptionSettings(title: 'ACCOUNT SETTING'),
             const SizedBox(height: 16),
-            //buildListView(accountSetting, 0),
+            buildSettingItemsArrow(
+              title: 'Change Phone Number',
+              urlIcon: AssetPath.iconUser,
+              onTap: () {},
+            ),
+            const SizedBox(height: 16),
+            buildSettingItemsArrow(
+              title: 'Password',
+              urlIcon: AssetPath.iconPassword,
+              onTap: () {},
+            ),
+            const SizedBox(height: 16),
             const TitleOptionSettings(title: 'APPLICATION'),
             const SizedBox(height: 16),
             //buildListView(application, 0),
+            buildSettingItemsArrow(
+              title: 'Download Video',
+              urlIcon: AssetPath.iconDownload,
+              onTap: () {
+                //Navigator.pushNamed(context, RouteName.downloadVideoPage);
+              },
+            ),
+            const SizedBox(height: 16),
+            buildSettingItemsArrow(
+              title: 'My Favorite',
+              urlIcon: AssetPath.iconMyFavorite,
+              onTap: () {
+                //Navigator.pushNamed(context, RouteName.favoritePage)
+              },
+            ),
+            const SizedBox(height: 16),
+            buildSettingItemsArrow(
+              title: 'Language',
+              urlIcon: AssetPath.iconLanguage,
+              onTap: () {
+                //Navigator.pushNamed(context, RouteName.languagePage)
+              },
+            ),
+            const SizedBox(height: 16),
             //buildListView(applicationToggle, 1),
             const TitleOptionSettings(
               height: 16,
@@ -105,70 +139,18 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  // check == 0 : item child ListView is arrow right
-  // ListView buildListView(List<ModelSetting> list, int check) {
-  //   return ListView.builder(
-  //     padding: EdgeInsets.zero,
-  //     shrinkWrap: true,
-  //     physics: const NeverScrollableScrollPhysics(),
-  //     itemCount: list.length,
-  //     itemBuilder: (context, index) {
-  //       return check == 0
-  //           ? Padding(
-  //               padding: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
-  //               child: ItemsArrowSetting(
-  //                 onTap: () => goToPage(context, index, list),
-  //                 assetName: list[index].iconUrl,
-  //                 title: list[index].title,
-  //               ),
-  //             )
-  //           : Padding(
-  //               padding: const EdgeInsets.only(left: 24, right: 24, bottom: 16),
-  //               child: ItemsToggleSetting(
-  //                 onTap: () => chooseOption(context, index, list),
-  //                 assetName: list[index].iconUrl,
-  //                 title: list[index].title,
-  //               ),
-  //             );
-  //     },
-  //   );
-  // }
-
-  // void chooseOption(BuildContext context, int index, List<ModelSetting> list) {
-  //   if (list == applicationToggle) {
-  //     switch (index) {
-  //       case 0:
-  //         print('Notification');
-  //         break;
-  //       case 1:
-  //         print('Dark mode');
-  //         break;
-  //     }
-  //   }
-  // }
-
-  // goToPage(BuildContext context, int index, List<ModelSetting> list) {
-  //   if (list == application) {
-  //     switch (index) {
-  //       case 0:
-  //         Navigator.pushNamed(context, RouteName.downloadVideoPage);
-  //         break;
-  //       case 1:
-  //         Navigator.pushNamed(context, RouteName.favoritePage);
-  //         break;
-  //       case 2:
-  //         Navigator.pushNamed(context, RouteName.languagePage);
-  //         break;
-  //     }
-  //   } else {
-  //     switch (index) {
-  //       case 0:
-  //         print('change phone number');
-  //         break;
-  //       case 1:
-  //         print('password');
-  //         break;
-  //     }
-  //   }
-  // }
+  Widget buildSettingItemsArrow({
+    required String title,
+    required String urlIcon,
+    required Function() onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: SettingItemsArrow(
+        onTap: onTap,
+        title: title,
+        assetName: urlIcon,
+      ),
+    );
+  }
 }
