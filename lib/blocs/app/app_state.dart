@@ -4,14 +4,14 @@ enum AppStatus { unknown, authenticated, unauthenticated }
 
 class AppState extends Equatable {
   final AppStatus appStatus;
-  final fbAuth.User? user;
-  AppState({
+  final auth.User? user;
+  const AppState({
     required this.appStatus,
     this.user,
   });
 
   factory AppState.unknown() {
-    return AppState(appStatus: AppStatus.unknown);
+    return const AppState(appStatus: AppStatus.unknown);
   }
 
   @override
@@ -22,7 +22,7 @@ class AppState extends Equatable {
 
   AppState copyWith({
     AppStatus? appStatus,
-    fbAuth.User? user,
+    auth.User? user,
   }) {
     return AppState(
       appStatus: appStatus ?? this.appStatus,

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  User({
+  const User({
     required this.id,
     required this.name,
     required this.email,
@@ -26,7 +26,7 @@ class User extends Equatable {
   }
 
   factory User.initialUser() {
-    return User(
+    return const User(
       id: '',
       name: '',
       email: '',

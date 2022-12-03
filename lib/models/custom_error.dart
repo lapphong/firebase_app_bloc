@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class CustomError extends Equatable {
-  CustomError({
+  const CustomError({
     this.code = '',
     this.message = '',
     this.plugin = '',

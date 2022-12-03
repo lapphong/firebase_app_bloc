@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 import '../configs/db_config.dart';
 import '../models/custom_error.dart';
@@ -11,9 +11,9 @@ class AuthRepository {
   });
 
   final FirebaseFirestore firebaseFirestore;
-  final fbAuth.FirebaseAuth firebaseAuth;
+  final auth.FirebaseAuth firebaseAuth;
 
-  Stream<fbAuth.User?> get user => firebaseAuth.userChanges();
+  Stream<auth.User?> get user => firebaseAuth.userChanges();
 
   Future<void> signUp({
     required String name,
@@ -21,7 +21,7 @@ class AuthRepository {
     required String password,
   }) async {
     try {
-      final fbAuth.UserCredential userCredential = await firebaseAuth
+      final auth.UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
       final signedInUser = userCredential.user!;
@@ -30,7 +30,7 @@ class AuthRepository {
         'email': email,
         'profileImage': 'https://picsum.photos/300',
       });
-    } on fbAuth.FirebaseAuthException catch (e) {
+    } on auth.FirebaseAuthException catch (e) {
       throw CustomError(
         code: e.code,
         message: e.message!,
@@ -54,7 +54,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
-    } on fbAuth.FirebaseAuthException catch (e) {
+    } on auth.FirebaseAuthException catch (e) {
       throw CustomError(
         code: e.code,
         message: e.message!,

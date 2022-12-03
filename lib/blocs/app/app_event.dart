@@ -8,8 +8,8 @@ abstract class AppEvent extends Equatable {
 }
 
 class AppStateChangedEvent extends AppEvent {
-  final fbAuth.User? user;
-  AppStateChangedEvent({
+  final auth.User? user;
+  const AppStateChangedEvent({
     this.user,
   });
 

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 import '../../repositories/auth_repository.dart';
 
@@ -13,7 +13,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late final StreamSubscription authSubscription;
   final AuthRepository authRepository;
   AppBloc({required this.authRepository}) : super(AppState.unknown()) {
-    authSubscription = authRepository.user.listen((fbAuth.User? user) {
+    authSubscription = authRepository.user.listen((auth.User? user) {
       add(AppStateChangedEvent(user: user));
     });
     on<AppStateChangedEvent>((event, emit) {
