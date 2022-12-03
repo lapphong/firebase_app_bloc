@@ -3,9 +3,9 @@ import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 import '../modules/authentication/authentication.dart';
 import '../modules/root/pages/root_page.dart';
+import '../modules/setting/pages/change_language_page.dart';
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -21,8 +21,6 @@ class Routes {
       //   return _buildRoute(settings, const VerifyYourPage());
       // case RouteName.selectPlanPage:
       //   return _buildRoute(settings, const SelectPlanPage());
-      // case RouteName.homePage:
-      //   return _buildRoute(settings, const RootPage());
       // case RouteName.activityPage:
       //   return _buildRoute(
       //       settings, const RootPage(currentTab: TabItem.activity));
@@ -32,8 +30,8 @@ class Routes {
       // case RouteName.settingPage:
       //   return _buildRoute(
       //       settings, const RootPage(currentTab: TabItem.setting));
-      // case RouteName.languagePage:
-      //   return _buildRoute(settings, const LanguagePage());
+      case RouteName.languagePage:
+        return _buildRoute(settings, const ChangeLanguagePage());
       // case RouteName.favoritePage:
       //   return _buildRoute(settings, const MyFavoritePage());
       // case RouteName.downloadVideoPage:

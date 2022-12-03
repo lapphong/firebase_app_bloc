@@ -1,0 +1,42 @@
+[
+    {
+        "id": "1",
+        "title": "United States",
+        "urlIcon": "assets/images/us_icon.png"
+    },
+    {
+        "id": "2",
+        "title": "France",
+        "urlIcon": "assets/images/france_icon.png"
+    },
+    {
+        "id": "3",
+        "title": "Germany",
+        "urlIcon": "assets/images/german_icon.png"
+    },
+    {
+        "id": "4",
+        "title": "Indonesian",
+        "urlIcon": "assets/images/indonesia_icon.png"
+    },
+    {
+        "id": "5",
+        "title": "Italy",
+        "urlIcon": "assets/images/italy_icon.png"
+    },
+    {
+        "id": "6",
+        "title": "Japan",
+        "urlIcon": "assets/images/japan_icon.png"
+    },
+    {
+        "id": "7",
+        "title": "Russian",
+        "urlIcon": "assets/images/russia_icon.png"
+    },
+    {
+        "id": "8",
+        "title": "Sweden",
+        "urlIcon": "assets/images/sweden_icon.png"
+    }
+]

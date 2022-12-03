@@ -88,4 +88,6 @@ class AssetPath {
   static const String imgDetailMentor = '$prePath/img_detail_mentor.png';
 
   static const String video = 'assets/videos/video.mp4';
+
+  static const String listLanguageJson = 'assets/data/list_language.json';
 }

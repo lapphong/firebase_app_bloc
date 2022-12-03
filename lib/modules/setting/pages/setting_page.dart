@@ -1,9 +1,9 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
-import 'package:firebase_app_bloc/modules/setting/widgets/setting_items_arrow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
+import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../widgets/setting_widgets.dart';
@@ -84,9 +84,7 @@ class SettingPage extends StatelessWidget {
             buildSettingItemsArrow(
               title: 'Language',
               urlIcon: AssetPath.iconLanguage,
-              onTap: () {
-                //Navigator.pushNamed(context, RouteName.languagePage)
-              },
+              onTap: () => Navigator.pushNamed(context, RouteName.languagePage),
             ),
             const SizedBox(height: 16),
             //buildListView(applicationToggle, 1),

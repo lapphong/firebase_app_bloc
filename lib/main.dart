@@ -64,6 +64,7 @@ class AppView extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: DarkTheme.greyScale900,
         fontFamily: 'manrope',
+        dividerColor: DarkTheme.greyScale50.withOpacity(0.8),
         textTheme: Theme.of(context).textTheme.apply(
               bodyColor: DarkTheme.white,
               displayColor: DarkTheme.white,
