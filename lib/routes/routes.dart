@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../modules/authentication/authentication.dart';
-import '../modules/root/pages/root_page.dart';
 import '../modules/setting/pages/change_language_page.dart';
 
 class Routes {
@@ -12,8 +11,6 @@ class Routes {
     switch (settings.name) {
       case '/':
         return _buildRoute(settings, const DashBoardPage());
-      case RouteName.rootPage:
-        return _buildRoute(settings, const RootPage());
       case RouteName.signUpPage:
         return _buildRoute(settings, const SignUpPage());
 

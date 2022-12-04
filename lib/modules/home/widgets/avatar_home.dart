@@ -1,18 +1,20 @@
+import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:flutter/material.dart';
 
 class AvatarHome extends StatelessWidget {
   const AvatarHome({super.key, required this.url});
 
-  final String? url;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 40,
-      height: 40,
+    return ClipOval(
       child: CircleAvatar(
-        radius: 100,
-        backgroundImage: AssetImage(url!),
+        child: FadeInImage.assetNetwork(
+          placeholder: AssetPath.imgLoading,
+          image: url,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

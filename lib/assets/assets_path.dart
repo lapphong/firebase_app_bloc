@@ -86,6 +86,8 @@ class AssetPath {
   static const String imgContentDownload5 =
       '$prePath/img_content_download5.png';
   static const String imgDetailMentor = '$prePath/img_detail_mentor.png';
+  static const String imgLoading = '$prePath/loading.gif';
+  static const String imgError = '$prePath/error.png';
 
   static const String video = 'assets/videos/video.mp4';
 

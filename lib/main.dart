@@ -23,7 +23,6 @@ void main() async {
     firebaseFirestore: FirebaseFirestore.instance,
     firebaseAuth: FirebaseAuth.instance,
   );
-  await authRepository.user.first;
   runApp(MyApp(authRepository: authRepository));
 }
 

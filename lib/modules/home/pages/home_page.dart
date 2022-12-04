@@ -1,21 +1,12 @@
+import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:flutter/material.dart';
-
-import '../../../assets/assets_path.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../widgets/home_widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  Widget buildTextFieldSearch() {
-    return TextFieldSearch(
-      key: const Key('homePage_searchInput_textField'),
-      onChange: (textSearch) => {},
-      //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
-      //errorText: state.email.invalid ? 'Email is valid' : null,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +16,8 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    AvatarHome(url: AssetPath.imgAvatar),
-                    BellButton(),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text('Hi, Michael Owen', style: TxtStyle.headline2),
-                Text(
-                  'Welcome back to Ontari, Explore Course',
-                  style: TxtStyle.headline5
-                      .copyWith(color: DarkTheme.greyScale500),
-                ),
+                buildDeTailAccount(),
                 buildTextFieldSearch(),
                 const SizedBox(height: 20),
                 const Discount(),
@@ -56,6 +33,57 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildTextFieldSearch() {
+    return TextFieldSearch(
+      key: const Key('homePage_searchInput_textField'),
+      onChange: (textSearch) => {},
+      //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
+      //errorText: state.email.invalid ? 'Email is valid' : null,
+    );
+  }
+
+  Widget buildDeTailAccount() {
+    return BlocConsumer<ProfileCubit, ProfileState>(
+      listener: (context, state) {
+        if (state.profileStatus == ProfileStatus.error) {
+          showAlertDialog(
+            context,
+            title: 'ERROR',
+            content: state.error.toString(),
+            defaultActionText: 'OK',
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state.profileStatus == ProfileStatus.initial) {
+          return Container();
+        } else if (state.profileStatus == ProfileStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.profileStatus == ProfileStatus.error) {
+          return const ProfileStatusError();
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AvatarHome(url: state.user.profileImage),
+                const BellButton(),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text('Hi, ${state.user.name}', style: TxtStyle.headline2),
+            Text(
+              'Welcome back to Ontari, Explore Course',
+              style: TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
+            ),
+          ],
+        );
+      },
     );
   }
 

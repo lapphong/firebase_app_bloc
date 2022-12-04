@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_bloc/repositories/profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../blocs/blocs.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
 import '../../home/pages/home_page.dart';
@@ -14,16 +17,42 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => TabCubit(),
-      child: const RootView(),
+    return RepositoryProvider<ProfileRepository>(
+      create: (context) => ProfileRepository(
+        firebaseFirestore: FirebaseFirestore.instance,
+      ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => TabCubit(),
+          ),
+          BlocProvider<ProfileCubit>(
+            create: (context) => ProfileCubit(
+              profileRepository: context.read<ProfileRepository>(),
+            ),
+          ),
+        ],
+        child: const RootView(),
+      ),
     );
   }
 }
 
-class RootView extends StatelessWidget {
+class RootView extends StatefulWidget {
   const RootView({super.key});
-  static var timeBackPress;
+
+  @override
+  State<RootView> createState() => _RootViewState();
+}
+
+class _RootViewState extends State<RootView> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<ProfileCubit>()
+        .getProfile(uid: context.read<AppBloc>().state.user!.uid);
+  }
 
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
@@ -44,7 +73,6 @@ class RootView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentTab = context.select((TabCubit cubit) => cubit.state.tab);
-    timeBackPress = DateTime.now();
     return WillPopScope(
       onWillPop: () => _onWillPop(context, currentTab),
       child: CupertinoHomeScaffold(
@@ -57,11 +85,12 @@ class RootView extends StatelessWidget {
               : context.read<TabCubit>().setTab(tabItem);
         },
         widgetBuilders: widgetBuilders,
-        navigatorKeys: RootView.navigatorKeys,
+        navigatorKeys: navigatorKeys,
       ),
     );
   }
 
+  DateTime timeBackPress = DateTime.now();
   Future<bool> _onWillPop(BuildContext context, TabItem currentTab) async {
     String? currentRoute;
     navigatorKeys[currentTab]?.currentState!.popUntil((route) {

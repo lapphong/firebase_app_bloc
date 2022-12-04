@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:flutter/material.dart';
 
 class BodyItemNetwork extends StatelessWidget {
@@ -35,7 +36,10 @@ class BodyItemNetwork extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(assetName),
+                      image: FadeInImage(
+                        placeholder: const AssetImage(AssetPath.imgLoading),
+                        image: NetworkImage(assetName),
+                      ).image,
                     ),
                     borderRadius: BorderRadius.circular(radius),
                   ),

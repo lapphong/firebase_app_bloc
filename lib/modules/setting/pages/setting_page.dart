@@ -33,17 +33,7 @@ class SettingPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  SettingAccount(
-                    onTap: () {
-                      // Navigator.of(context).pushNamed(
-                      //   RouteName.editProfilePage,
-                      //   arguments: detail,
-                      // );
-                    },
-                    fullName: 'Barly Vallendito',
-                    userName: 'barlyvallendito',
-                    assetName: AssetPath.imgAvatar,
-                  ),
+                  buildDeTailAccount(),
                 ],
               ),
             ),
@@ -96,6 +86,41 @@ class SettingPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildDeTailAccount() {
+    return BlocConsumer<ProfileCubit, ProfileState>(
+      listener: (context, state) {
+        if (state.profileStatus == ProfileStatus.error) {
+          showAlertDialog(
+            context,
+            title: 'ERROR',
+            content: state.error.toString(),
+            defaultActionText: 'OK',
+          );
+        }
+      },
+      builder: (context, state) {
+        if (state.profileStatus == ProfileStatus.initial) {
+          return Container();
+        } else if (state.profileStatus == ProfileStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.profileStatus == ProfileStatus.error) {
+          return const ProfileStatusError();
+        }
+        return SettingAccount(
+          onTap: () {
+            // Navigator.of(context).pushNamed(
+            //   RouteName.editProfilePage,
+            //   arguments: detail,
+            // );
+          },
+          fullName: state.user.name,
+          userName: state.user.id,
+          assetName: state.user.profileImage,
+        );
+      },
     );
   }
 
