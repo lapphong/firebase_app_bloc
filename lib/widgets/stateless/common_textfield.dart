@@ -28,6 +28,7 @@ class CommonTextField extends StatelessWidget {
     this.inputFormatters,
     this.autoFocus,
     this.label = '',
+    this.initialValue,
     this.prefix,
     this.isRequired,
     Key? key,
@@ -37,7 +38,7 @@ class CommonTextField extends StatelessWidget {
   final bool? obscureText, enable, readOnly;
   final TextEditingController? controller;
   final FocusNode? focusNode;
-  final String? hintText, errorText;
+  final String? hintText, errorText, initialValue;
   final Widget? suffix;
   final Color? background;
   final int minLine, maxLine;
@@ -68,6 +69,7 @@ class CommonTextField extends StatelessWidget {
             primaryColor: Theme.of(context).textTheme.headline5?.color,
           ),
           child: TextFormField(
+            initialValue: initialValue,
             validator: validator,
             onEditingComplete: onEditingComplete,
             focusNode: focusNode,

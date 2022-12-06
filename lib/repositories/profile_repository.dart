@@ -33,4 +33,19 @@ class ProfileRepository {
       );
     }
   }
+
+  Future<void> update({required User user}) async {
+    try {
+      await userRef.doc(user.id).update({
+        'name': user.name,
+        'profileImage': user.profileImage,
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }

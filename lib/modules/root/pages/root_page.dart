@@ -29,7 +29,7 @@ class RootPage extends StatelessWidget {
           BlocProvider<ProfileCubit>(
             create: (context) => ProfileCubit(
               profileRepository: context.read<ProfileRepository>(),
-            ),
+            )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
           ),
         ],
         child: const RootView(),
@@ -46,13 +46,6 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-  @override
-  void initState() {
-    super.initState();
-    context
-        .read<ProfileCubit>()
-        .getProfile(uid: context.read<AppBloc>().state.user!.uid);
-  }
 
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),

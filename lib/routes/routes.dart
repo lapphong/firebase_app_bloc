@@ -3,8 +3,9 @@ import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
 import '../modules/authentication/authentication.dart';
-import '../modules/setting/pages/change_language_page.dart';
+import '../modules/setting/pages/setting_pages.dart';
 
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -13,7 +14,14 @@ class Routes {
         return _buildRoute(settings, const DashBoardPage());
       case RouteName.signUpPage:
         return _buildRoute(settings, const SignUpPage());
-
+      case RouteName.languagePage:
+        return _buildRoute(settings, const ChangeLanguagePage());
+      case RouteName.editProfilePage:
+        final user = settings.arguments;
+        if (user is User) {
+          return _buildRoute(settings, EditProfilePage(user: user));
+        }
+        return _errorRoute(settings);
       // case RouteName.verifyYourPage:
       //   return _buildRoute(settings, const VerifyYourPage());
       // case RouteName.selectPlanPage:
@@ -27,14 +35,11 @@ class Routes {
       // case RouteName.settingPage:
       //   return _buildRoute(
       //       settings, const RootPage(currentTab: TabItem.setting));
-      case RouteName.languagePage:
-        return _buildRoute(settings, const ChangeLanguagePage());
+
       // case RouteName.favoritePage:
       //   return _buildRoute(settings, const MyFavoritePage());
       // case RouteName.downloadVideoPage:
       //   return _buildRoute(settings, DownloadVideoPage());
-      // case RouteName.editProfilePage:
-      //   return _buildRoute(settings, const EditProfilePage());
       // case RouteName.detailMentorPage:
       //   return _buildRoute(settings, const DetailMentorPage());
       // case RouteName.playingCoursePage:

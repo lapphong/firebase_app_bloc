@@ -16,13 +16,16 @@ class TextFieldName extends StatelessWidget {
     this.onEditingComplete,
     this.validator,
     this.onSubmit,
+    this.enable = true,
+    this.initialValue = '',
+    this.readOnly = false,
   }) : super(key: key);
 
   final FocusNode? nameFocusNode;
   final TextEditingController? nameController;
   final ValueChanged<String>? onChange, onSubmit;
-
-  final String? errorText;
+  final bool enable, readOnly;
+  final String? errorText, initialValue;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onEditingComplete;
   final String? Function(String?)? validator;
@@ -30,11 +33,14 @@ class TextFieldName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonTextField(
+      initialValue: initialValue,
       validator: validator,
       errorText: errorText,
+      readOnly: readOnly,
       controller: nameController,
       hintText: 'Enter your Name',
       label: 'Name',
+      enable: enable,
       focusNode: nameFocusNode,
       inputFormatters: inputFormatters,
       inputType: TextInputType.name,

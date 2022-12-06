@@ -110,12 +110,10 @@ class SettingPage extends StatelessWidget {
           return const ProfileStatusError();
         }
         return SettingAccount(
-          onTap: () {
-            // Navigator.of(context).pushNamed(
-            //   RouteName.editProfilePage,
-            //   arguments: detail,
-            // );
-          },
+          onTap: () => Navigator.of(context).pushNamed(
+            RouteName.editProfilePage,
+            arguments: state.user,
+          ),
           fullName: state.user.name,
           userName: state.user.id,
           assetName: state.user.profileImage,
