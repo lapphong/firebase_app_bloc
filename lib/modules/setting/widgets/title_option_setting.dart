@@ -6,12 +6,10 @@ class TitleOptionSettings extends StatelessWidget {
     Key? key,
     this.title = '',
     this.height = 32,
-    this.color,
   }) : super(key: key);
 
   final String title;
   final double? height;
-  final Color? color;
 
   @override
   Widget build(BuildContext context) {

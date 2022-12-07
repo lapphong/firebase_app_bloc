@@ -78,10 +78,7 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             //buildListView(applicationToggle, 1),
-            const TitleOptionSettings(
-              height: 16,
-              color: DarkTheme.greyScale800,
-            ),
+            const TitleOptionSettings(height: 16),
             buildLogoutButton(context),
           ],
         ),

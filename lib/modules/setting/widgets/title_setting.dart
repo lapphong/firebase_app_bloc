@@ -4,8 +4,6 @@ import '../../../assets/assets_path.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 
-
-
 class TitleSetting extends StatelessWidget {
   const TitleSetting({
     Key? key,

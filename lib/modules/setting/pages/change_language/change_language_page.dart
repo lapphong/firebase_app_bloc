@@ -2,9 +2,9 @@ import 'package:firebase_app_bloc/modules/setting/models/language.dart';
 import 'package:firebase_app_bloc/modules/setting/widgets/setting_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../../../assets/assets_path.dart';
-import '../../../themes/themes.dart';
-import '../repositories/repositories.dart';
+import '../../../../assets/assets_path.dart';
+import '../../../../themes/themes.dart';
+import '../../repositories/repositories.dart';
 
 class ChangeLanguagePage extends StatefulWidget {
   const ChangeLanguagePage({Key? key}) : super(key: key);
