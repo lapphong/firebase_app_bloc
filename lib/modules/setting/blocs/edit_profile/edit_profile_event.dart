@@ -9,16 +9,16 @@ abstract class EditProfileEvent extends Equatable {
 
 class ChangeAvatarEvent extends EditProfileEvent {}
 
-class OpenImagePickerEvent extends EditProfileEvent {}
-
-class ProvideImagePathEvent extends EditProfileEvent {
-  final String avatarPath;
-
-  const ProvideImagePathEvent({required this.avatarPath});
+class OpenImagePickerEvent extends EditProfileEvent {
+  final ImageSource imageSource;
+  //display the selected image
+  const OpenImagePickerEvent({required this.imageSource});
 
   @override
-  List<Object> get props => [avatarPath];
+  List<Object> get props => [imageSource];
 }
+
+class CloseOptionImageEvent extends EditProfileEvent {}
 
 class NameChangedEvent extends EditProfileEvent {
   final String name;

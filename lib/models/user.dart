@@ -41,4 +41,18 @@ class User extends Equatable {
   String toString() {
     return 'User(id:$id,name:$name,email:$email,profileImage:$profileImage)';
   }
+
+  User copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? profileImage,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      profileImage: profileImage ?? this.profileImage,
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../assets/assets_path.dart';
@@ -23,17 +24,13 @@ class SettingAccount extends StatelessWidget {
       onTap: onTap,
       height: 64,
       widthImg: 64,
-      assetName: assetName,
       mid: Padding(
         padding: const EdgeInsets.only(left: 14.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              fullName!,
-              style: TxtStyle.headline3,
-            ),
+            Text(fullName!, style: TxtStyle.headline3),
             Text(
               userName!,
               style: TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
@@ -43,29 +40,15 @@ class SettingAccount extends StatelessWidget {
       ),
       right: const Image(
         alignment: Alignment.centerRight,
-        image: AssetImage(
-          AssetPath.iconArrowRight,
-        ),
+        image: AssetImage(AssetPath.iconArrowRight),
       ),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 4.0, bottom: 4),
-          child: SizedBox(
-            width: 16,
-            height: 16,
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: DarkTheme.white,
-              ),
-              alignment: Alignment.center,
-              child: const Image(
-                image: AssetImage(AssetPath.iconCrown),
-              ),
-            ),
-          ),
-        ),
+      child: CachedNetworkImage(
+        imageUrl: assetName,
+        fit: BoxFit.cover,
+        placeholder: (_, __) =>
+            const Image(image: AssetImage(AssetPath.imgLoading)),
+        errorWidget: (context, url, error) =>
+            const Image(image: AssetImage(AssetPath.imgError)),
       ),
     );
   }

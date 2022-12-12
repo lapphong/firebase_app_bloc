@@ -1,4 +1,3 @@
-import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:flutter/material.dart';
 
 class BodyItemNetwork extends StatelessWidget {
@@ -6,16 +5,16 @@ class BodyItemNetwork extends StatelessWidget {
     Key? key,
     this.height = 0,
     this.widthImg = 0,
-    this.assetName = '',
+    //this.assetName = '',
     this.radius = 10,
     this.mid,
-    required this.right,
     this.child,
+    required this.right,
     this.onTap,
   }) : super(key: key);
 
   final double height, widthImg, radius;
-  final String assetName;
+  //final String assetName;
   final Widget? mid, child;
   final Widget right;
   final VoidCallback? onTap;
@@ -31,19 +30,12 @@ class BodyItemNetwork extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: widthImg,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: FadeInImage(
-                        placeholder: const AssetImage(AssetPath.imgLoading),
-                        image: NetworkImage(assetName),
-                      ).image,
-                    ),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(radius),
+                    child: child,
                   ),
-                  child: child,
                 ),
                 SizedBox(
                   height: height,

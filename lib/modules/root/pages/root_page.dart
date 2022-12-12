@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/repositories/profile_repository.dart';
+import 'package:firebase_app_bloc/repositories/storage_repository.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,10 +19,19 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<ProfileRepository>(
-      create: (context) => ProfileRepository(
-        firebaseFirestore: FirebaseFirestore.instance,
-      ),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<ProfileRepository>(
+          create: (context) => ProfileRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+          ),
+        ),
+        RepositoryProvider<StorageRepository>(
+          create: (context) => StorageRepository(
+            firebaseStorage: FirebaseStorage.instance,
+          ),
+        ),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -46,7 +57,6 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
     TabItem.activity: GlobalKey<NavigatorState>(),

@@ -33,6 +33,8 @@ dependencies:
   formz: ^0.4.1
   rxdart: ^0.27.7
   image_picker: ^0.8.6
+  firebase_storage: ^11.0.6
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

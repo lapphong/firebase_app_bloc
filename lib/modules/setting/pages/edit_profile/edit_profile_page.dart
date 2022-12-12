@@ -1,14 +1,23 @@
+import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_app_bloc/blocs/profile/profile_cubit.dart';
 import 'package:firebase_app_bloc/modules/setting/blocs/blocs.dart';
+import 'package:firebase_app_bloc/repositories/storage_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../../../assets/assets_path.dart';
 import '../../../../models/models.dart';
 import '../../../../repositories/profile_repository.dart';
 import '../../../../themes/themes.dart';
 import '../../../../utils/debounce.dart';
+import '../../../../utils/showSnackBar.dart';
 import '../../../../widgets/stateless/stateless.dart';
 import '../../../authentication/authentication.dart';
 import '../../widgets/setting_widgets.dart';
+import 'package:formz/formz.dart';
 
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({Key? key, required this.user}) : super(key: key);
@@ -20,14 +29,40 @@ class EditProfilePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => EditProfileBloc(
         profileRepository: context.read<ProfileRepository>(),
+        storageRepository: context.read<StorageRepository>(),
+        user: user,
       ),
-      child: Scaffold(
-        body: SafeArea(child: _buildBody()),
+      child: BlocConsumer<EditProfileBloc, EditProfileState>(
+        listener: (context, state) {
+          if (state.imageSourceActionSheetIsVisible) {
+            _showImageSourceActionSheet(context);
+          }
+          if (state.status.isSubmissionSuccess) {
+            Navigator.pop(context);
+            context.read<ProfileCubit>().getProfile(uid: user.id);
+            snackBarSuccess(context);
+          }
+          if (state.status.isSubmissionFailure) {
+            print("LỖI UPDATE:${state.errorMessage.toString()}");
+            snackBarError(context, state.errorMessage.toString());
+          }
+        },
+        builder: (context, state) {
+          return WillPopScope(
+            onWillPop: () async {
+              if (state.imageSourceActionSheetIsVisible) {
+                context.read<EditProfileBloc>().add(CloseOptionImageEvent());
+              }
+              return true;
+            },
+            child: _buildBody(),
+          );
+        },
       ),
     );
   }
 
-  Widget buildTextFieldName(String displayLastName) {
+  Widget buildTextFieldName() {
     return BlocBuilder<EditProfileBloc, EditProfileState>(
       builder: (context, state) {
         return TextFieldName(
@@ -43,71 +78,151 @@ class EditProfilePage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          buildTitleAndSave(),
-          const TitleOptionSettings(title: 'EDIT AVATAR', height: 32),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: buildChangeAvatar(),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              buildTitleAndSave(),
+              const TitleOptionSettings(title: 'EDIT AVATAR', height: 32),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: buildChangeAvatar(),
+              ),
+              const TitleOptionSettings(title: 'EDIT INFORMATION', height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 24),
+                    buildTextFieldName(),
+                    const SizedBox(height: 24),
+                    buildTextFieldEmail(),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const TitleOptionSettings(title: 'EDIT INFORMATION', height: 32),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 24),
-                buildTextFieldName(user.name),
-                const SizedBox(height: 24),
-                buildTextFieldEmail(user.email),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
   Widget buildChangeAvatar() {
-    return BodyItemNetwork(
-      assetName: user.profileImage,
-      height: 64,
-      widthImg: 64,
-      mid: Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClassicButton(
-              widthRadius: 2,
-              width: 117,
-              height: 32,
-              radius: 7,
-              color: DarkTheme.greyScale800,
-              colorRadius: DarkTheme.primaryBlue600,
-              child: Center(
-                child: Text(
-                  'Change Avatar',
-                  style: TxtStyle.buttonSmall.copyWith(
-                    color: DarkTheme.primaryBlue600,
+    return BlocBuilder<EditProfileBloc, EditProfileState>(
+      builder: (context, state) {
+        return BodyItemNetwork(
+          height: 64,
+          widthImg: 64,
+          mid: Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClassicButton(
+                  onTap: () =>
+                      context.read<EditProfileBloc>().add(ChangeAvatarEvent()),
+                  widthRadius: 2,
+                  width: 117,
+                  height: 32,
+                  radius: 7,
+                  color: DarkTheme.greyScale800,
+                  colorRadius: DarkTheme.primaryBlue600,
+                  child: Center(
+                    child: Text(
+                      'Change Avatar',
+                      style: TxtStyle.buttonSmall.copyWith(
+                        color: DarkTheme.primaryBlue600,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Text(
+                  'Edit avatar are visible only on ontari.',
+                  style: TxtStyle.headline6
+                      .copyWith(color: DarkTheme.greyScale500),
+                ),
+              ],
             ),
-            Text(
-              'Edit avatar are visible only on ontari.',
-              style: TxtStyle.headline6.copyWith(color: DarkTheme.greyScale500),
-            ),
-          ],
-        ),
-      ),
-      right: const Text(''),
+          ),
+          right: const Text(''),
+          child: state.avatarPath != null
+              ? Image.file(File(state.avatarPath!), fit: BoxFit.cover)
+              : CachedNetworkImage(
+                  imageUrl: user.profileImage,
+                  fit: BoxFit.cover,
+                  placeholder: (_, __) =>
+                      const Image(image: AssetImage(AssetPath.imgLoading)),
+                  errorWidget: (context, url, error) =>
+                      const Image(image: AssetImage(AssetPath.imgError)),
+                ),
+        );
+      },
     );
   }
 
-  Widget buildTextFieldEmail(String displayEmail) {
+  void _showImageSourceActionSheet(BuildContext context) {
+    selectImageSource(imageSource) {
+      context
+          .read<EditProfileBloc>()
+          .add(OpenImagePickerEvent(imageSource: imageSource));
+    }
+
+    if (Platform.isIOS) {
+      showCupertinoModalPopup(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          actions: [
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+                selectImageSource(ImageSource.camera);
+              },
+              child: const Text('Camera'),
+            ),
+            CupertinoActionSheetAction(
+              onPressed: () {
+                Navigator.pop(context);
+                selectImageSource(ImageSource.gallery);
+              },
+              child: const Text('Gallery'),
+            )
+          ],
+        ),
+      );
+    } else {
+      showModalBottomSheet(
+        elevation: 0,
+        isDismissible: false,
+        backgroundColor: DarkTheme.greyScale800,
+        context: context,
+        builder: (context) => Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt, color: DarkTheme.white),
+              title: const Text('Camera'),
+              onTap: () {
+                Navigator.pop(context);
+                selectImageSource(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_album, color: DarkTheme.white),
+              title: const Text('Gallery'),
+              onTap: () {
+                Navigator.pop(context);
+                selectImageSource(ImageSource.gallery);
+              },
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+  Widget buildTextFieldEmail() {
     return TextFieldEmail(
       key: const Key('editForm_emailInput_textField'),
       initialValue: user.email,
@@ -123,18 +238,46 @@ class EditProfilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const TitleSetting(title: 'Edit Profile'),
-          ClassicButton(
-            onTap: () {},
-            width: 60,
-            height: 32,
-            radius: 12,
-            widthRadius: 0,
-            colorRadius: DarkTheme.primaryBlue600,
-            color: DarkTheme.primaryBlue600,
-            child: const Center(child: Text('Save')),
+          BlocBuilder<EditProfileBloc, EditProfileState>(
+            builder: (context, state) {
+              return ClassicButton(
+                onTap: () =>
+                    context.read<EditProfileBloc>().add(SaveProfileChanges()),
+                width: 60,
+                height: 32,
+                radius: 12,
+                widthRadius: 0,
+                colorRadius: state.status.isSubmissionInProgress
+                    ? DarkTheme.greyScale600
+                    : DarkTheme.primaryBlue600,
+                color: state.status.isSubmissionInProgress
+                    ? DarkTheme.greyScale600
+                    : DarkTheme.primaryBlue600,
+                child: Center(
+                    child: state.status.isSubmissionInProgress
+                        ? const Text('...')
+                        : const Text('Save')),
+              );
+            },
           ),
         ],
       ),
+    );
+  }
+
+  void snackBarSuccess(BuildContext context) {
+    return showSnackBar(
+      context,
+      "Updated info Successfully",
+      Image.asset(AssetPath.iconUser),
+    );
+  }
+
+  void snackBarError(BuildContext context, String e) {
+    return showSnackBar(
+      context,
+      'Updated field : $e',
+      Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }
 }
