@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_app_bloc/blocs/profile/profile_cubit.dart';
 import 'package:firebase_app_bloc/modules/setting/blocs/blocs.dart';
 import 'package:firebase_app_bloc/repositories/storage_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,11 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../assets/assets_path.dart';
+import '../../../../blocs/blocs.dart';
 import '../../../../models/models.dart';
 import '../../../../repositories/profile_repository.dart';
 import '../../../../themes/themes.dart';
-import '../../../../utils/debounce.dart';
-import '../../../../utils/showSnackBar.dart';
+import '../../../../utils/utils.dart';
 import '../../../../widgets/stateless/stateless.dart';
 import '../../../authentication/authentication.dart';
 import '../../widgets/setting_widgets.dart';
@@ -42,21 +41,26 @@ class EditProfilePage extends StatelessWidget {
             context.read<ProfileCubit>().getProfile(uid: user.id);
             snackBarSuccess(context);
           }
-          if (state.status.isSubmissionFailure) {
+          if (state.status.isSubmissionCanceled) {
+            Navigator.pop(context);
+          }
+          if (state.status.isSubmissionCanceled) {
             print("LỖI UPDATE:${state.errorMessage.toString()}");
             snackBarError(context, state.errorMessage.toString());
           }
         },
         builder: (context, state) {
-          return WillPopScope(
-            onWillPop: () async {
-              if (state.imageSourceActionSheetIsVisible) {
-                context.read<EditProfileBloc>().add(CloseOptionImageEvent());
-              }
-              return true;
-            },
-            child: _buildBody(),
-          );
+          // return WillPopScope(
+          //   onWillPop: () async {
+          //     Navigator.pop(context);
+          //     if (state.imageSourceActionSheetIsVisible) {
+          //       context.read<EditProfileBloc>().add(CloseOptionImageEvent());
+          //     }
+          //     return true;
+          //   },
+          //   child: _buildBody(),
+          // );
+          return _buildBody();
         },
       ),
     );
@@ -207,6 +211,10 @@ class EditProfilePage extends StatelessWidget {
                 Navigator.pop(context);
                 selectImageSource(ImageSource.camera);
               },
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Divider(),
             ),
             ListTile(
               leading: const Icon(Icons.photo_album, color: DarkTheme.white),

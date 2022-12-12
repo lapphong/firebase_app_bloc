@@ -6,6 +6,7 @@ import '../../../assets/assets_path.dart';
 import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
+import '../blocs/blocs.dart';
 import '../widgets/setting_widgets.dart';
 
 class SettingPage extends StatelessWidget {
@@ -120,14 +121,21 @@ class SettingPage extends StatelessWidget {
   }
 
   Widget buildToggleSwitchMode() {
-    return Row(
-      children: [
-        const Image(image: AssetImage(AssetPath.iconDarkMode)),
-        ToggleSwitchButton(
-          value: true,
-          onChanged: (value) => {},
-        ),
-      ],
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            const Image(image: AssetImage(AssetPath.iconDarkMode)),
+            ToggleSwitchButton(
+              value: context.watch<ThemeCubit>().state.appTheme == AppTheme.dark
+                  ? true
+                  : false,
+              onChanged: (value) =>
+                  context.read<ThemeCubit>().changeTheme(value),
+            ),
+          ],
+        );
+      },
     );
   }
 

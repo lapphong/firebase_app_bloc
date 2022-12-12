@@ -93,7 +93,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         ),
       );
     } catch (_) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
+      emit(state.copyWith(status: FormzStatus.submissionCanceled));
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_bloc/modules/setting/blocs/blocs.dart';
 
 import 'package:firebase_app_bloc/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,10 +42,15 @@ class MyApp extends StatelessWidget {
     ));
     return RepositoryProvider.value(
       value: _authRepository,
-      child: BlocProvider(
-        create: (context) => AppBloc(
-          authRepository: context.read<AuthRepository>(),
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AppBloc(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider(create: (context) => ThemeCubit()..getTheme()),
+        ],
         child: const AppView(),
       ),
     );
@@ -57,20 +63,18 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      theme: ThemeData(
-        scaffoldBackgroundColor: DarkTheme.greyScale900,
-        fontFamily: 'manrope',
-        dividerColor: DarkTheme.greyScale50.withOpacity(0.8),
-        textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: DarkTheme.white,
-              displayColor: DarkTheme.white,
-            ),
-      ),
-      initialRoute: '/',
-      onGenerateRoute: router.Routes.generateRoute,
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          theme: state.appTheme == AppTheme.dark
+              ? ThemeDataApp.dark
+              : ThemeDataApp.light,
+          initialRoute: '/',
+          onGenerateRoute: router.Routes.generateRoute,
+        );
+      },
     );
   }
 }
