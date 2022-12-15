@@ -19,14 +19,14 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 buildDeTailAccount(),
-                buildTextFieldSearch(),
+                buildTextFieldSearch(context),
                 const SizedBox(height: 20),
                 const Discount(),
-                buildTitleContentHome(S.current.bestMentors, S.current.seeAll),
+                buildTitleContentHome(S.of(context).bestMentors, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildListMentors(),
                 const SizedBox(height: 20),
-                buildTitleContentHome(S.current.classPreview, S.current.seeAll),
+                buildTitleContentHome(S.of(context).classPreview, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildGridViewPreview(),
               ],
@@ -37,9 +37,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildTextFieldSearch() {
+  Widget buildTextFieldSearch(BuildContext context) {
     return TextFieldSearch(
-      hintText: S.current.searchYourFocus,
+      hintText: S.of(context).searchYourFocus,
       key: const Key('homePage_searchInput_textField'),
       onChange: (textSearch) => {},
       //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
@@ -80,7 +80,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 20),
             Text(S.current.hi(state.user.name), style: TxtStyle.headline2),
             Text(
-              S.current.welcomeBackToUdemy,
+              S.of(context).welcomeBackToUdemy,
               style: TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
             ),
           ],

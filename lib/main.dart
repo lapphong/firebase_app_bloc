@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(create: (context) => ThemeCubit()..getTheme()),
+          BlocProvider(create: (context) => LocalizationCubit()..getLang()),
         ],
         child: const AppView(),
       ),
@@ -65,12 +66,14 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, state) {
+    return Builder(
+      builder: (context) {
+        final stateAppMode = context.watch<ThemeCubit>().state;
+        final stateAppLang = context.watch<LocalizationCubit>().state;
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           navigatorKey: navigatorKey,
-          theme: state.appTheme == AppTheme.dark
+          theme: stateAppMode.appTheme == AppTheme.dark
               ? ThemeDataApp.dark
               : ThemeDataApp.light,
           localizationsDelegates: const [
@@ -79,7 +82,7 @@ class AppView extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          locale: Locale('ja', 'JP'),
+          locale: stateAppLang.locale,
           supportedLocales: S.delegate.supportedLocales,
           initialRoute: '/',
           onGenerateRoute: router.Routes.generateRoute,

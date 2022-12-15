@@ -35,8 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changeAvatar": MessageLookupByLibrary.simpleMessage("Сменить Aвaтap"),
         "changePhoneNumber":
             MessageLookupByLibrary.simpleMessage("Изменить номер телефона"),
-        "classPreview": MessageLookupByLibrary.simpleMessage(
-            "Предварительный просмотр класса"),
+        "classPreview":
+            MessageLookupByLibrary.simpleMessage("Предварительный прос..."),
         "complete": MessageLookupByLibrary.simpleMessage("Полный"),
         "completed": MessageLookupByLibrary.simpleMessage("Завершенный"),
         "design": MessageLookupByLibrary.simpleMessage("Дизайн"),

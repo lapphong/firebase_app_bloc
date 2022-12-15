@@ -91,7 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("Registrazione"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
-                "Registrati o accedi al tuo account premium\n per ottenere un accesso illimitato."),
+                "Registrati o accedi al tuo account\npremium per ottenere un accesso\nillimitato."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Incompleto"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Bentornato a Udemy, corso Esplora"),

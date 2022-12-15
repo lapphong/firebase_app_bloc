@@ -40,12 +40,12 @@ class Discount extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      S.current.get20Discount,
+                      S.of(context).get20Discount,
                       style: TxtStyle.headline3,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      S.current
+                      S.of(context)
                           .signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess,
                       textAlign: TextAlign.start,
                       style: TxtStyle.headline6

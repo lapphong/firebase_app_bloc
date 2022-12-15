@@ -28,8 +28,7 @@ class SettingPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(S.current.setting, style: TxtStyle.title),
-                      const SizedBox(width: 50),
+                      Text(S.of(context).setting, style: TxtStyle.title),
                       buildToggleSwitchMode(),
                       const BellButton(),
                     ],
@@ -40,25 +39,25 @@ class SettingPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            TitleOptionSettings(title: S.current.accountSetting),
+            TitleOptionSettings(title: S.of(context).accountSetting),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: S.current.changePhoneNumber,
+              title: S.of(context).changePhoneNumber,
               urlIcon: AssetPath.iconUser,
               onTap: () {},
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: S.current.password,
+              title: S.of(context).password,
               urlIcon: AssetPath.iconPassword,
               onTap: () {},
             ),
             const SizedBox(height: 16),
-            TitleOptionSettings(title: S.current.application),
+            TitleOptionSettings(title: S.of(context).application),
             const SizedBox(height: 16),
             //buildListView(application, 0),
             buildSettingItemsArrow(
-              title: S.current.downloadVideo,
+              title: S.of(context).downloadVideo,
               urlIcon: AssetPath.iconDownload,
               onTap: () {
                 //Navigator.pushNamed(context, RouteName.downloadVideoPage);
@@ -66,7 +65,7 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: S.current.myFavorite,
+              title: S.of(context).myFavorite,
               urlIcon: AssetPath.iconMyFavorite,
               onTap: () {
                 //Navigator.pushNamed(context, RouteName.favoritePage)
@@ -74,7 +73,7 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: S.current.language,
+              title: S.of(context).language,
               urlIcon: AssetPath.iconLanguage,
               onTap: () => Navigator.pushNamed(context, RouteName.languagePage),
             ),
@@ -128,7 +127,8 @@ class SettingPage extends StatelessWidget {
           children: [
             const Image(image: AssetImage(AssetPath.iconDarkMode)),
             ToggleSwitchButton(
-              value: context.watch<ThemeCubit>().state.appTheme == AppTheme.dark
+              value: context.select((ThemeCubit bloc) => bloc.state.appTheme) ==
+                      AppTheme.dark
                   ? true
                   : false,
               onChanged: (value) =>
@@ -159,7 +159,7 @@ class SettingPage extends StatelessWidget {
       child: TextButton(
         onPressed: () => _confirmSignOut(context),
         child: Text(
-          S.current.logout,
+          S.of(context).logout,
           style: TxtStyle.headline4.copyWith(color: DarkTheme.red),
         ),
       ),
