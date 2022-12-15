@@ -6,9 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'blocs/blocs.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
+import 'generated/l10n.dart';
 import 'routes/routes.dart' as router;
 
 import 'themes/themes.dart';
@@ -71,6 +73,13 @@ class AppView extends StatelessWidget {
           theme: state.appTheme == AppTheme.dark
               ? ThemeDataApp.dark
               : ThemeDataApp.light,
+          localizationsDelegates: const [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
           initialRoute: '/',
           onGenerateRoute: router.Routes.generateRoute,
         );

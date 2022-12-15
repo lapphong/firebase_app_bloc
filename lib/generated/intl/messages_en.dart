@@ -21,5 +21,62 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accountSetting":
+            MessageLookupByLibrary.simpleMessage("ACCOUNT SETTING"),
+        "activity": MessageLookupByLibrary.simpleMessage("Activity"),
+        "application": MessageLookupByLibrary.simpleMessage("APPLICATION"),
+        "bestMentors": MessageLookupByLibrary.simpleMessage("Best Mentors"),
+        "business": MessageLookupByLibrary.simpleMessage("Business"),
+        "category": MessageLookupByLibrary.simpleMessage("Category"),
+        "changeAvatar": MessageLookupByLibrary.simpleMessage("Change Avatar"),
+        "changePhoneNumber":
+            MessageLookupByLibrary.simpleMessage("Change Phone Number"),
+        "classPreview": MessageLookupByLibrary.simpleMessage("Class Preview"),
+        "complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "completed": MessageLookupByLibrary.simpleMessage("Completed"),
+        "design": MessageLookupByLibrary.simpleMessage("Design"),
+        "downloadVideo": MessageLookupByLibrary.simpleMessage("Download Video"),
+        "editAvatar": MessageLookupByLibrary.simpleMessage("EDIT AVATAR"),
+        "editInformation":
+            MessageLookupByLibrary.simpleMessage("EDIT INFORMATION"),
+        "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "emailAddress": MessageLookupByLibrary.simpleMessage("Email address"),
+        "enterYourEmailAddress":
+            MessageLookupByLibrary.simpleMessage("Enter your email address"),
+        "enterYourPassword":
+            MessageLookupByLibrary.simpleMessage("Enter your Password"),
+        "entertainment": MessageLookupByLibrary.simpleMessage("Entertainment"),
+        "food": MessageLookupByLibrary.simpleMessage("Food"),
+        "forgotPassword":
+            MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "hi": MessageLookupByLibrary.simpleMessage("Hi {}"),
+        "incomplete": MessageLookupByLibrary.simpleMessage("Incomplete"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "mentors": MessageLookupByLibrary.simpleMessage("{} Mentors"),
+        "music": MessageLookupByLibrary.simpleMessage("Music"),
+        "myFavorite": MessageLookupByLibrary.simpleMessage("My Favorite"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
+            "Or continue with social account"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "preview": MessageLookupByLibrary.simpleMessage("Preview"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "setting": MessageLookupByLibrary.simpleMessage("Setting"),
+        "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
+        "signInBtn": MessageLookupByLibrary.simpleMessage("Sign in"),
+        "signInWithFacebook":
+            MessageLookupByLibrary.simpleMessage("Sign In with Facebook"),
+        "signInWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Sign In with Google"),
+        "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "uncompleted": MessageLookupByLibrary.simpleMessage("Uncompleted"),
+        "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
+            "Welcome back to Udemy, Explore Course"),
+        "youFinishedAllOfYourCourses": MessageLookupByLibrary.simpleMessage(
+            "You finished all of your courses ")
+      };
 }

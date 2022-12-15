@@ -53,5 +53,10 @@
 	<string>To choose user profile image</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Used to capture audio for image picker plugin</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>en_FR</string>
+	</array>
 </dict>
 </plist>
