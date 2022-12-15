@@ -400,7 +400,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'it&software' key
+  /// `IT & Software`
+  String get itsoftware {
+    return Intl.message(
+      'IT & Software',
+      name: 'itsoftware',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Music`
   String get music {

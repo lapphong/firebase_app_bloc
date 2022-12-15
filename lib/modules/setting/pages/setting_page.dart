@@ -29,7 +29,7 @@ class SettingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(S.current.setting, style: TxtStyle.title),
-                      const SizedBox(width: 100),
+                      const SizedBox(width: 50),
                       buildToggleSwitchMode(),
                       const BellButton(),
                     ],

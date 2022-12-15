@@ -64,6 +64,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "greatWork": MessageLookupByLibrary.simpleMessage("Отличная работа!"),
         "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Неполный"),
+        "itsoftware": MessageLookupByLibrary.simpleMessage(
+            "ИТ и программное обеспечение"),
         "language": MessageLookupByLibrary.simpleMessage("Язык"),
         "logout": MessageLookupByLibrary.simpleMessage("Выйти"),
         "mentors": MessageLookupByLibrary.simpleMessage("{} наставников"),

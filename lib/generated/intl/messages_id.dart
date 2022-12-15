@@ -62,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "greatWork": MessageLookupByLibrary.simpleMessage("Kerja bagus!"),
         "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Tidak lengkap"),
+        "itsoftware":
+            MessageLookupByLibrary.simpleMessage("TI & Perangkat Lunak"),
         "language": MessageLookupByLibrary.simpleMessage("Bahasa"),
         "logout": MessageLookupByLibrary.simpleMessage("Keluar"),
         "mentors": MessageLookupByLibrary.simpleMessage("{} Mentors"),
@@ -86,7 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("Daftar"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
-                "Daftar atau masuk ke akun premium Anda untuk mendapatkan akses tanpa batas."),
+                "Daftar atau masuk ke akun premium Anda untuk \nmendapatkan akses tanpa batas."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Belum selesai"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Selamat datang kembali di Udemy, Jelajahi Kursus"),

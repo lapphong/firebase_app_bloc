@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "greatWork": MessageLookupByLibrary.simpleMessage("Ottimo lavoro!"),
         "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Incompleto"),
+        "itsoftware":
+            MessageLookupByLibrary.simpleMessage("Informatica e software"),
         "language": MessageLookupByLibrary.simpleMessage("Lingua"),
         "logout": MessageLookupByLibrary.simpleMessage("Disconnettersi"),
         "mentors": MessageLookupByLibrary.simpleMessage("{} mentori"),
@@ -89,7 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("Registrazione"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
-                "Registrati o accedi al tuo account premium per ottenere un accesso illimitato."),
+                "Registrati o accedi al tuo account premium\n per ottenere un accesso illimitato."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Incompleto"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Bentornato a Udemy, corso Esplora"),

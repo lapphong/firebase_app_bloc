@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "greatWork": MessageLookupByLibrary.simpleMessage("すごい仕事！"),
         "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("不完全な"),
+        "itsoftware": MessageLookupByLibrary.simpleMessage("IT & ソフトウェア"),
         "language": MessageLookupByLibrary.simpleMessage("言語"),
         "logout": MessageLookupByLibrary.simpleMessage("ログアウト"),
         "mentors": MessageLookupByLibrary.simpleMessage("メンター{}名"),
@@ -80,7 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("サインアップ"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
-                "プレミアム アカウントにサインアップまたはログインすると、無制限にアクセスできます。"),
+                "プレミアム アカウントにサインアップまたは\nログインすると、無制限にアクセスできます。"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("未完成"),
         "welcomeBackToUdemy":
             MessageLookupByLibrary.simpleMessage("オンタリへようこそ、コースを探索"),

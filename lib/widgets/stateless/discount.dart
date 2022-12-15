@@ -45,7 +45,9 @@ class Discount extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      S.current.signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess,
+                      S.current
+                          .signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess,
+                      textAlign: TextAlign.start,
                       style: TxtStyle.headline6
                           .copyWith(color: DarkTheme.greyScale500),
                     )

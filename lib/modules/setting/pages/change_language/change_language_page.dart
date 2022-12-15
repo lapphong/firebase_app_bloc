@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/modules/setting/models/language.dart';
 import 'package:firebase_app_bloc/modules/setting/widgets/setting_widgets.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,10 @@ class _ChangeLanguagePageState extends State<ChangeLanguagePage> {
                 padding: const EdgeInsets.only(bottom: 26.0),
                 child: ItemLanguage(
                   onTap: () {
-                    setState(() => selectedIndex = index);
+                    setState(() {
+                      selectedIndex = index;
+                      //S.load(Locale('jp'));
+                    });
                     print(index);
                   },
                   iconChecked: selectedIndex == index
