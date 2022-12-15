@@ -16,13 +16,14 @@ class TextFieldSearch extends StatelessWidget {
     this.onEditingComplete,
     this.validator,
     this.onSubmit,
+    this.hintText
   }) : super(key: key);
 
   final FocusNode? nameFocusNode;
   final TextEditingController? nameController;
   final ValueChanged<String>? onChange, onSubmit;
 
-  final String? errorText;
+  final String? errorText,hintText;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onEditingComplete;
   final String? Function(String?)? validator;
@@ -33,7 +34,7 @@ class TextFieldSearch extends StatelessWidget {
       validator: validator,
       errorText: errorText,
       controller: nameController,
-      hintText: 'Search your focus...',
+      hintText: hintText,
       label: '',
       focusNode: nameFocusNode,
       inputFormatters: inputFormatters,

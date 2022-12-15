@@ -160,15 +160,23 @@ class S {
     );
   }
 
-  // skipped getter for the 'don\'tHaveAnAccount' key
-
-  /// `Hi {}`
-  String get hi {
+  /// `Don't have an account? Create Here`
+  String get donotHaveAnAccount {
     return Intl.message(
-      'Hi {}',
-      name: 'hi',
+      'Don\'t have an account? Create Here',
+      name: 'donotHaveAnAccount',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Hi {name}`
+  String hi(Object name) {
+    return Intl.message(
+      'Hi $name',
+      name: 'hi',
+      desc: '',
+      args: [name],
     );
   }
 
@@ -182,11 +190,35 @@ class S {
     );
   }
 
-  // skipped getter for the 'searchYourFocus...' key
+  /// `Search your focus...`
+  String get searchYourFocus {
+    return Intl.message(
+      'Search your focus...',
+      name: 'searchYourFocus',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'get20%Discount' key
+  /// `Get 20% Discount`
+  String get get20Discount {
+    return Intl.message(
+      'Get 20% Discount',
+      name: 'get20Discount',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess.' key
+  /// `Sign up or log in to your premium\naccount to get unlimited access.`
+  String get signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess {
+    return Intl.message(
+      'Sign up or log in to your premium\naccount to get unlimited access.',
+      name: 'signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Best Mentors`
   String get bestMentors {
@@ -238,7 +270,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'yourToday\'sProgressAlmostDone!' key
+  /// `Your Today s Progress Almost Done!`
+  String get yourTodaysProgressAlmostDone {
+    return Intl.message(
+      'Your Today s Progress Almost Done!',
+      name: 'yourTodaysProgressAlmostDone',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Completed`
   String get completed {
@@ -280,7 +320,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'greatWork!' key
+  /// `Great work!`
+  String get greatWork {
+    return Intl.message(
+      'Great work!',
+      name: 'greatWork',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `You finished all of your courses `
   String get youFinishedAllOfYourCourses {
@@ -484,7 +532,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'editAvatarAreVisibleOnlyOnUdemy.' key
+  /// `Edit avatar are visible only on Udemy.`
+  String get editAvatarAreVisibleOnlyOnUdemy {
+    return Intl.message(
+      'Edit avatar are visible only on Udemy.',
+      name: 'editAvatarAreVisibleOnlyOnUdemy',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `EDIT INFORMATION`
   String get editInformation {
@@ -523,12 +579,12 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'DE'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'FR'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'ID'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'IT'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'JP'),
-      Locale.fromSubtags(languageCode: 'en', countryCode: 'RU'),
+      Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'id'),
+      Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'jp'),
+      Locale.fromSubtags(languageCode: 'ru'),
     ];
   }
 

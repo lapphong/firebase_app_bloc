@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en_ID locale. All the
+// This is a library that provides messages for a id locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,9 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en_ID';
+  String get localeName => 'id';
+
+  static String m0(name) => "Hai ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,8 +38,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "complete": MessageLookupByLibrary.simpleMessage("Menyelesaikan"),
         "completed": MessageLookupByLibrary.simpleMessage("Lengkap"),
         "design": MessageLookupByLibrary.simpleMessage("Rancangan"),
+        "donotHaveAnAccount": MessageLookupByLibrary.simpleMessage(
+            "Belum punya akun? Buat Disini"),
         "downloadVideo": MessageLookupByLibrary.simpleMessage("Unduh video"),
         "editAvatar": MessageLookupByLibrary.simpleMessage("EDIT AVATAR"),
+        "editAvatarAreVisibleOnlyOnUdemy": MessageLookupByLibrary.simpleMessage(
+            "Edit avatar hanya terlihat di Udemy."),
         "editInformation":
             MessageLookupByLibrary.simpleMessage("EDIT INFORMASI"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Sunting profil"),
@@ -51,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "food": MessageLookupByLibrary.simpleMessage("Makanan"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Tidak ingat kata sandi?"),
-        "hi": MessageLookupByLibrary.simpleMessage("Hai {}"),
+        "get20Discount":
+            MessageLookupByLibrary.simpleMessage("Dapatkan Diskon 20%."),
+        "greatWork": MessageLookupByLibrary.simpleMessage("Kerja bagus!"),
+        "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Tidak lengkap"),
         "language": MessageLookupByLibrary.simpleMessage("Bahasa"),
         "logout": MessageLookupByLibrary.simpleMessage("Keluar"),
@@ -64,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Kata sandi"),
         "preview": MessageLookupByLibrary.simpleMessage("Pratinjau"),
         "save": MessageLookupByLibrary.simpleMessage("Menyimpan"),
+        "searchYourFocus":
+            MessageLookupByLibrary.simpleMessage("Cari fokusmu..."),
         "seeAll": MessageLookupByLibrary.simpleMessage("Lihat semua"),
         "setting": MessageLookupByLibrary.simpleMessage("Pengaturan"),
         "signIn": MessageLookupByLibrary.simpleMessage("Masuk"),
@@ -73,10 +84,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Masuk dengan Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Daftar"),
+        "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
+            MessageLookupByLibrary.simpleMessage(
+                "Daftar atau masuk ke akun premium Anda untuk mendapatkan akses tanpa batas."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Belum selesai"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Selamat datang kembali di Udemy, Jelajahi Kursus"),
         "youFinishedAllOfYourCourses": MessageLookupByLibrary.simpleMessage(
-            "Anda menyelesaikan semua kursus Anda")
+            "Anda menyelesaikan semua kursus Anda"),
+        "yourTodaysProgressAlmostDone": MessageLookupByLibrary.simpleMessage(
+            "Kemajuan Anda Hari Ini Hampir Selesai!")
       };
 }

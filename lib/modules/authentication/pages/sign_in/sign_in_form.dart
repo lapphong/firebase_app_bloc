@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -32,7 +33,7 @@ class SignInForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 40),
-                const Text('Ontari.', style: TxtStyle.titleBig),
+                const Text('Udemy.', style: TxtStyle.titleBig),
                 const SizedBox(height: 16),
                 buildTextFieldEmail(),
                 const SizedBox(height: 16),
@@ -62,13 +63,13 @@ class SignInForm extends StatelessWidget {
                       child: Center(
                           child: state.status.isSubmissionInProgress
                               ? const CircularProgressIndicator()
-                              : const Text('Sign In')),
+                              : Text(S.current.signIn)),
                     );
                   },
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Or continue with social account',
+                  S.current.orContinueWithSocialAccount,
                   style: TxtStyle.headline5.copyWith(
                     color: DarkTheme.greyScale500,
                   ),
@@ -86,9 +87,9 @@ class SignInForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AssetPath.iconGoogle),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Text('Sign In with Google'),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(S.current.signInWithGoogle),
                       ),
                     ],
                   ),
@@ -106,9 +107,9 @@ class SignInForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(AssetPath.iconFacebook),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Text('Sign In with Facebook'),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text(S.current.signInWithFacebook),
                       ),
                     ],
                   ),
@@ -178,10 +179,8 @@ class SignInForm extends StatelessWidget {
       child: TextButton(
         onPressed: () {},
         child: Text(
-          'Forgot password?',
-          style: TxtStyle.headline4.copyWith(
-            color: DarkTheme.primaryBlue600,
-          ),
+          S.current.forgotPassword,
+          style: TxtStyle.headline4.copyWith(color: DarkTheme.primaryBlue600),
         ),
       ),
     );
@@ -191,7 +190,7 @@ class SignInForm extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('Don\'t have an account? ', style: TxtStyle.headline5),
+        Text(S.current.donotHaveAnAccount, style: TxtStyle.headline5),
         TextButton(
           key: const Key('loginForm_createAccount_flatButton'),
           onPressed: () =>

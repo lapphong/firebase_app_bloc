@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en_RU locale. All the
+// This is a library that provides messages for a ru locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,9 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en_RU';
+  String get localeName => 'ru';
+
+  static String m0(name) => "Привет ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -41,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadVideo": MessageLookupByLibrary.simpleMessage("Скачать видео"),
         "editAvatar":
             MessageLookupByLibrary.simpleMessage("РЕДАКТИРОВАТЬ ABATAPA"),
+        "editAvatarAreVisibleOnlyOnUdemy": MessageLookupByLibrary.simpleMessage(
+            "Редактировать аватарку можно только на онтари."),
         "editInformation":
             MessageLookupByLibrary.simpleMessage("ИЗМЕНИТЬ ИНФОРМАЦИЮ"),
         "editProfile":
@@ -55,7 +59,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "entertainment": MessageLookupByLibrary.simpleMessage("Развлечения"),
         "food": MessageLookupByLibrary.simpleMessage("Еда"),
         "forgotPassword": MessageLookupByLibrary.simpleMessage("забыл пароль?"),
-        "hi": MessageLookupByLibrary.simpleMessage("Привет {}"),
+        "get20Discount":
+            MessageLookupByLibrary.simpleMessage("Получите скидку 20%"),
+        "greatWork": MessageLookupByLibrary.simpleMessage("Отличная работа!"),
+        "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Неполный"),
         "language": MessageLookupByLibrary.simpleMessage("Язык"),
         "logout": MessageLookupByLibrary.simpleMessage("Выйти"),
@@ -69,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "preview":
             MessageLookupByLibrary.simpleMessage("Предварительный просмотр"),
         "save": MessageLookupByLibrary.simpleMessage("Сохранять"),
+        "searchYourFocus":
+            MessageLookupByLibrary.simpleMessage("Найдите свой фокус..."),
         "seeAll": MessageLookupByLibrary.simpleMessage("Увидеть все"),
         "setting": MessageLookupByLibrary.simpleMessage("Параметр"),
         "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
@@ -82,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Добро пожаловать обратно в Онтари, Исследуйте курс"),
         "youFinishedAllOfYourCourses":
-            MessageLookupByLibrary.simpleMessage("Вы прошли все курсы")
+            MessageLookupByLibrary.simpleMessage("Вы прошли все курсы"),
+        "yourTodaysProgressAlmostDone": MessageLookupByLibrary.simpleMessage(
+            "Ваш сегодняшний прогресс почти завершен!")
       };
 }

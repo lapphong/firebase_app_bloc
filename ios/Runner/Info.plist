@@ -57,6 +57,11 @@
 	<array>
 		<string>en</string>
 		<string>en_FR</string>
+		<string>en_DE</string>
+		<string>en_ID</string>
+		<string>en_IT</string>
+		<string>en_JP</string>
+		<string>en_RU</string>
 	</array>
 </dict>
 </plist>

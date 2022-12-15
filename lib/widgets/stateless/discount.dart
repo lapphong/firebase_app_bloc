@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 import '../../assets/assets_path.dart';
@@ -38,13 +39,13 @@ class Discount extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Get 20% Discount',
+                    Text(
+                      S.current.get20Discount,
                       style: TxtStyle.headline3,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Sign up or log in to your premium\naccount to get unlimited access.',
+                      S.current.signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess,
                       style: TxtStyle.headline6
                           .copyWith(color: DarkTheme.greyScale500),
                     )

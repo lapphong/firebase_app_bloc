@@ -1,4 +1,5 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../themes/themes.dart';
@@ -21,11 +22,11 @@ class HomePage extends StatelessWidget {
                 buildTextFieldSearch(),
                 const SizedBox(height: 20),
                 const Discount(),
-                buildTitleContentHome('Best Mentor', 'See all'),
+                buildTitleContentHome(S.current.bestMentors, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildListMentors(),
                 const SizedBox(height: 20),
-                buildTitleContentHome('Class Preview', 'See all'),
+                buildTitleContentHome(S.current.classPreview, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildGridViewPreview(),
               ],
@@ -38,6 +39,7 @@ class HomePage extends StatelessWidget {
 
   Widget buildTextFieldSearch() {
     return TextFieldSearch(
+      hintText: S.current.searchYourFocus,
       key: const Key('homePage_searchInput_textField'),
       onChange: (textSearch) => {},
       //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
@@ -76,9 +78,9 @@ class HomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            Text('Hi, ${state.user.name}', style: TxtStyle.headline2),
+            Text(S.current.hi(state.user.name), style: TxtStyle.headline2),
             Text(
-              'Welcome back to Ontari, Explore Course',
+              S.current.welcomeBackToUdemy,
               style: TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
             ),
           ],

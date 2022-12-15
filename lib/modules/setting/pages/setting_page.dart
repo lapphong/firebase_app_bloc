@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
+import '../../../generated/l10n.dart';
 import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
@@ -27,7 +28,7 @@ class SettingPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('Setting', style: TxtStyle.title),
+                      Text(S.current.setting, style: TxtStyle.title),
                       const SizedBox(width: 100),
                       buildToggleSwitchMode(),
                       const BellButton(),
@@ -39,25 +40,25 @@ class SettingPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const TitleOptionSettings(title: 'ACCOUNT SETTING'),
+            TitleOptionSettings(title: S.current.accountSetting),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: 'Change Phone Number',
+              title: S.current.changePhoneNumber,
               urlIcon: AssetPath.iconUser,
               onTap: () {},
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: 'Password',
+              title: S.current.password,
               urlIcon: AssetPath.iconPassword,
               onTap: () {},
             ),
             const SizedBox(height: 16),
-            const TitleOptionSettings(title: 'APPLICATION'),
+            TitleOptionSettings(title: S.current.application),
             const SizedBox(height: 16),
             //buildListView(application, 0),
             buildSettingItemsArrow(
-              title: 'Download Video',
+              title: S.current.downloadVideo,
               urlIcon: AssetPath.iconDownload,
               onTap: () {
                 //Navigator.pushNamed(context, RouteName.downloadVideoPage);
@@ -65,7 +66,7 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: 'My Favorite',
+              title: S.current.myFavorite,
               urlIcon: AssetPath.iconMyFavorite,
               onTap: () {
                 //Navigator.pushNamed(context, RouteName.favoritePage)
@@ -73,7 +74,7 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
-              title: 'Language',
+              title: S.current.language,
               urlIcon: AssetPath.iconLanguage,
               onTap: () => Navigator.pushNamed(context, RouteName.languagePage),
             ),
@@ -158,7 +159,7 @@ class SettingPage extends StatelessWidget {
       child: TextButton(
         onPressed: () => _confirmSignOut(context),
         child: Text(
-          'Logout',
+          S.current.logout,
           style: TxtStyle.headline4.copyWith(color: DarkTheme.red),
         ),
       ),

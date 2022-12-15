@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(name) => "Hi ${name}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting":
@@ -36,8 +38,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "complete": MessageLookupByLibrary.simpleMessage("Complete"),
         "completed": MessageLookupByLibrary.simpleMessage("Completed"),
         "design": MessageLookupByLibrary.simpleMessage("Design"),
+        "donotHaveAnAccount": MessageLookupByLibrary.simpleMessage(
+            "Don\'t have an account? Create Here"),
         "downloadVideo": MessageLookupByLibrary.simpleMessage("Download Video"),
         "editAvatar": MessageLookupByLibrary.simpleMessage("EDIT AVATAR"),
+        "editAvatarAreVisibleOnlyOnUdemy": MessageLookupByLibrary.simpleMessage(
+            "Edit avatar are visible only on Udemy."),
         "editInformation":
             MessageLookupByLibrary.simpleMessage("EDIT INFORMATION"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
@@ -51,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "food": MessageLookupByLibrary.simpleMessage("Food"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot password?"),
-        "hi": MessageLookupByLibrary.simpleMessage("Hi {}"),
+        "get20Discount":
+            MessageLookupByLibrary.simpleMessage("Get 20% Discount"),
+        "greatWork": MessageLookupByLibrary.simpleMessage("Great work!"),
+        "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Incomplete"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
@@ -64,6 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "preview": MessageLookupByLibrary.simpleMessage("Preview"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "searchYourFocus":
+            MessageLookupByLibrary.simpleMessage("Search your focus..."),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "setting": MessageLookupByLibrary.simpleMessage("Setting"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
@@ -73,10 +84,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Sign In with Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign Up"),
+        "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
+            MessageLookupByLibrary.simpleMessage(
+                "Sign up or log in to your premium\naccount to get unlimited access."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Uncompleted"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Welcome back to Udemy, Explore Course"),
         "youFinishedAllOfYourCourses": MessageLookupByLibrary.simpleMessage(
-            "You finished all of your courses ")
+            "You finished all of your courses "),
+        "yourTodaysProgressAlmostDone": MessageLookupByLibrary.simpleMessage(
+            "Your Today s Progress Almost Done!")
       };
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -33,9 +34,9 @@ class SignUpForm extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 50.0),
-                  child: Text('Sign Up', style: TxtStyle.titleBig),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Text(S.current.signUp, style: TxtStyle.titleBig),
                 ),
                 buildTextFieldName(),
                 Padding(
@@ -69,7 +70,7 @@ class SignUpForm extends StatelessWidget {
                       child: Center(
                           child: state.status.isSubmissionInProgress
                               ? const CircularProgressIndicator()
-                              : const Text('Sign Up')),
+                              : Text(S.current.signUp)),
                     );
                   },
                 ),

@@ -16,41 +16,41 @@ import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 import 'package:intl/src/intl_helpers.dart';
 
+import 'messages_de.dart' as messages_de;
 import 'messages_en.dart' as messages_en;
-import 'messages_en_DE.dart' as messages_en_de;
-import 'messages_en_FR.dart' as messages_en_fr;
-import 'messages_en_ID.dart' as messages_en_id;
-import 'messages_en_IT.dart' as messages_en_it;
-import 'messages_en_JP.dart' as messages_en_jp;
-import 'messages_en_RU.dart' as messages_en_ru;
+import 'messages_fr.dart' as messages_fr;
+import 'messages_id.dart' as messages_id;
+import 'messages_it.dart' as messages_it;
+import 'messages_jp.dart' as messages_jp;
+import 'messages_ru.dart' as messages_ru;
 
 typedef Future<dynamic> LibraryLoader();
 Map<String, LibraryLoader> _deferredLibraries = {
+  'de': () => new SynchronousFuture(null),
   'en': () => new SynchronousFuture(null),
-  'en_DE': () => new SynchronousFuture(null),
-  'en_FR': () => new SynchronousFuture(null),
-  'en_ID': () => new SynchronousFuture(null),
-  'en_IT': () => new SynchronousFuture(null),
-  'en_JP': () => new SynchronousFuture(null),
-  'en_RU': () => new SynchronousFuture(null),
+  'fr': () => new SynchronousFuture(null),
+  'id': () => new SynchronousFuture(null),
+  'it': () => new SynchronousFuture(null),
+  'jp': () => new SynchronousFuture(null),
+  'ru': () => new SynchronousFuture(null),
 };
 
 MessageLookupByLibrary? _findExact(String localeName) {
   switch (localeName) {
+    case 'de':
+      return messages_de.messages;
     case 'en':
       return messages_en.messages;
-    case 'en_DE':
-      return messages_en_de.messages;
-    case 'en_FR':
-      return messages_en_fr.messages;
-    case 'en_ID':
-      return messages_en_id.messages;
-    case 'en_IT':
-      return messages_en_it.messages;
-    case 'en_JP':
-      return messages_en_jp.messages;
-    case 'en_RU':
-      return messages_en_ru.messages;
+    case 'fr':
+      return messages_fr.messages;
+    case 'id':
+      return messages_id.messages;
+    case 'it':
+      return messages_it.messages;
+    case 'jp':
+      return messages_jp.messages;
+    case 'ru':
+      return messages_ru.messages;
     default:
       return null;
   }

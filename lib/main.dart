@@ -79,6 +79,7 @@ class AppView extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
+          //locale: const Locale('de'),
           supportedLocales: S.delegate.supportedLocales,
           initialRoute: '/',
           onGenerateRoute: router.Routes.generateRoute,

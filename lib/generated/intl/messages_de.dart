@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en_DE locale. All the
+// This is a library that provides messages for a de locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,9 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en_DE';
+  String get localeName => 'de';
+
+  static String m0(name) => "Hallo ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -36,9 +38,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "complete": MessageLookupByLibrary.simpleMessage("Vollständig"),
         "completed": MessageLookupByLibrary.simpleMessage("Abgeschlossen"),
         "design": MessageLookupByLibrary.simpleMessage("Entwurf"),
+        "donotHaveAnAccount": MessageLookupByLibrary.simpleMessage(
+            "Sie haben kein Konto? Hier erstellen"),
         "downloadVideo":
             MessageLookupByLibrary.simpleMessage("Video herunterladen"),
         "editAvatar": MessageLookupByLibrary.simpleMessage("AVATAR BEARBEITEN"),
+        "editAvatarAreVisibleOnlyOnUdemy": MessageLookupByLibrary.simpleMessage(
+            "Avatar bearbeiten sind nur auf ontari sichtbar."),
         "editInformation":
             MessageLookupByLibrary.simpleMessage("INFORMATIONEN BEARBEITEN"),
         "editProfile":
@@ -53,7 +59,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "food": MessageLookupByLibrary.simpleMessage("Essen"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Passwort vergessen?"),
-        "hi": MessageLookupByLibrary.simpleMessage("Hallo {}"),
+        "get20Discount":
+            MessageLookupByLibrary.simpleMessage("Erhalten Sie 20% Rabatt"),
+        "greatWork": MessageLookupByLibrary.simpleMessage("Gute Arbeit!"),
+        "hi": m0,
         "incomplete": MessageLookupByLibrary.simpleMessage("Unvollständig"),
         "language": MessageLookupByLibrary.simpleMessage("Sprache"),
         "logout": MessageLookupByLibrary.simpleMessage("Ausloggen"),
@@ -66,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
         "preview": MessageLookupByLibrary.simpleMessage("Vorschau"),
         "save": MessageLookupByLibrary.simpleMessage("Speichern"),
+        "searchYourFocus":
+            MessageLookupByLibrary.simpleMessage("Suchen Sie Ihren Fokus ..."),
         "seeAll": MessageLookupByLibrary.simpleMessage("Alles sehen"),
         "setting": MessageLookupByLibrary.simpleMessage("Einstellung"),
         "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
@@ -75,10 +86,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Anmeldung mit Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Anmeldung"),
+        "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
+            MessageLookupByLibrary.simpleMessage(
+                "Registrieren Sie sich oder melden Sie sich bei Ihrem Premium-Konto an\n um unbegrenzten Zugriff zu erhalten."),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Unvollendet"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Willkommen zurück in Udemy, Explore Course"),
         "youFinishedAllOfYourCourses": MessageLookupByLibrary.simpleMessage(
-            "Du hast alle deine Kurse abgeschlossen")
+            "Du hast alle deine Kurse abgeschlossen"),
+        "yourTodaysProgressAlmostDone": MessageLookupByLibrary.simpleMessage(
+            "Ihr heutiger Fortschritt ist fast fertig!")
       };
 }
