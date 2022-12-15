@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a jp locale. All the
+// This is a library that provides messages for a ja_JP locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,7 +18,7 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'jp';
+  String get localeName => 'ja_JP';
 
   static String m0(name) => "こんにちは ${name}";
 
@@ -81,7 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "signUp": MessageLookupByLibrary.simpleMessage("サインアップ"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
-                "プレミアム アカウントにサインアップまたは\nログインすると、無制限にアクセスできます。"),
+                "プレミアム アカウントにサイン\nアップまたはログインすると、無制限\nにアクセスできます。"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("未完成"),
         "welcomeBackToUdemy":
             MessageLookupByLibrary.simpleMessage("オンタリへようこそ、コースを探索"),

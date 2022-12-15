@@ -35,7 +35,7 @@ class Discount extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 23.0),
+                padding: const EdgeInsets.only(top: 22.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
