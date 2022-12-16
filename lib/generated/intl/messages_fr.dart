@@ -42,6 +42,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aperçu de la classe"),
         "complete": MessageLookupByLibrary.simpleMessage("Complet"),
         "completed": MessageLookupByLibrary.simpleMessage("Complété"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirmez le mot de passe"),
         "confirmPasswordIsValid": MessageLookupByLibrary.simpleMessage(
             "Confirmer le mot de passe est valide"),
         "createHere": MessageLookupByLibrary.simpleMessage("Créer ici"),
@@ -60,8 +62,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailAddress": MessageLookupByLibrary.simpleMessage("Adresse e-mail"),
         "emailIsValid": MessageLookupByLibrary.simpleMessage(
             "Le courrier électronique est valide"),
+        "enterYourConfirm":
+            MessageLookupByLibrary.simpleMessage("Entrez votre confirmation"),
         "enterYourEmailAddress":
             MessageLookupByLibrary.simpleMessage("Entrez votre adresse email"),
+        "enterYourName":
+            MessageLookupByLibrary.simpleMessage("Entrez votre nom"),
         "enterYourPassword":
             MessageLookupByLibrary.simpleMessage("Tapez votre mot de passe"),
         "entertainment": MessageLookupByLibrary.simpleMessage("Divertissement"),
@@ -81,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "music": MessageLookupByLibrary.simpleMessage("Musique"),
         "myFavorite": MessageLookupByLibrary.simpleMessage("Mon préféré"),
         "name": MessageLookupByLibrary.simpleMessage("Nom"),
+        "nameIsValid":
+            MessageLookupByLibrary.simpleMessage("Le nom est valide"),
         "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
             "Ou continuez avec le compte social"),
         "password": MessageLookupByLibrary.simpleMessage("Mot de passe"),

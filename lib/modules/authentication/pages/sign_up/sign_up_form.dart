@@ -77,7 +77,7 @@ class SignUpForm extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Already have an account? ',
+                    Text(S.of(context).alreadyAccount,
                         style: TxtStyle.headline5),
                     TextButton(
                       onPressed: () => Navigator.pop(context),
@@ -105,7 +105,7 @@ class SignUpForm extends StatelessWidget {
           key: const Key('signUpForm_nameInput_textField'),
           onChange: (name) =>
               debounce.run(() => context.read<SignUpCubit>().nameChanged(name)),
-          errorText: state.name.invalid ? 'Name is valid' : null,
+          errorText: state.name.invalid ? S.of(context).nameIsValid : null,
         );
       },
     );
@@ -118,7 +118,7 @@ class SignUpForm extends StatelessWidget {
           key: const Key('signUpForm_emailInput_textField'),
           onChange: (email) => debounce
               .run(() => context.read<SignUpCubit>().emailChanged(email)),
-          errorText: state.email.invalid ? 'Email is valid' : null,
+          errorText: state.email.invalid ? S.of(context).emailIsValid : null,
         );
       },
     );
@@ -131,7 +131,8 @@ class SignUpForm extends StatelessWidget {
           key: const Key('signUpForm_passwordInput_textField'),
           onChange: (password) => debounce
               .run(() => context.read<SignUpCubit>().passwordChanged(password)),
-          errorText: state.password.invalid ? 'Password is valid' : null,
+          errorText:
+              state.password.invalid ? S.of(context).passwordIsValid : null,
         );
       },
     );
@@ -141,14 +142,14 @@ class SignUpForm extends StatelessWidget {
     return BlocBuilder<SignUpCubit, SignUpState>(
       builder: (context, state) {
         return PasswordTextField(
-          label: 'Confirm Password',
-          hintText: 'Enter your Confirm',
+          label: S.of(context).confirmPassword,
+          hintText: S.of(context).enterYourConfirm,
           key: const Key('signUpForm_confirmPasswordInput_textField'),
           onChange: (confirmPassword) => debounce.run(() => context
               .read<SignUpCubit>()
               .confirmedPasswordChanged(confirmPassword)),
           errorText: state.confirmedPassword.invalid
-              ? 'Confirm Password is valid'
+              ? S.of(context).confirmPasswordIsValid
               : null,
           onEditingComplete: () =>
               context.read<SignUpCubit>().signUpFormSubmitted(),
@@ -160,7 +161,7 @@ class SignUpForm extends StatelessWidget {
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
-      'Sign up field : $e',
+      '${S.of(context).signInFailed} : $e',
       Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }
@@ -168,7 +169,7 @@ class SignUpForm extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      "Sign up Successfully",
+      S.of(context).signInSuccessfully,
       Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }

@@ -60,5 +60,9 @@
     "confirmPasswordIsValid": "Подтвердить пароль действителен",
     "signUpSuccessfully": "Зарегистрируйтесь успешно",
     "signUpFailed": "Зарегистрируйтесь поле",
-    "alreadyAccount": "Уже есть учетная запись?"
+    "alreadyAccount": "Уже есть учетная запись?",
+    "enterYourName": "Введите ваше имя",
+    "confirmPassword": "Подтвердить Пароль",
+    "enterYourConfirm": "Введите свое подтверждение",
+    "nameIsValid": "Имя верно"
 }

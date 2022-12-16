@@ -60,6 +60,9 @@
     "confirmPasswordIsValid": "Bestätigen Sie das Passwort gültig",
     "signUpSuccessfully": "Melden Sie sich erfolgreich an",
     "signUpFailed": "Feld anmelden",
-    "alreadyAccount": "Sie haben bereits ein Konto?"
-
+    "alreadyAccount": "Sie haben bereits ein Konto?",
+    "enterYourName": "Gib deinen Namen ein",
+    "confirmPassword": "Passwort bestätigen",
+    "enterYourConfirm": "Geben Sie Ihre Bestätigung ein",
+    "nameIsValid": "Name ist gültig"
 }

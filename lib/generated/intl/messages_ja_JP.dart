@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "classPreview": MessageLookupByLibrary.simpleMessage("クラスのプレビュー"),
         "complete": MessageLookupByLibrary.simpleMessage("完了"),
         "completed": MessageLookupByLibrary.simpleMessage("完了"),
+        "confirmPassword": MessageLookupByLibrary.simpleMessage("パスワードを認証する"),
         "confirmPasswordIsValid":
             MessageLookupByLibrary.simpleMessage("パスワードが有効であることを確認してください"),
         "createHere": MessageLookupByLibrary.simpleMessage("ここで作成します"),
@@ -52,8 +53,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Eメール"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("電子メールアドレス"),
         "emailIsValid": MessageLookupByLibrary.simpleMessage("電子メールは有効です"),
+        "enterYourConfirm": MessageLookupByLibrary.simpleMessage("確認を入力してください"),
         "enterYourEmailAddress":
             MessageLookupByLibrary.simpleMessage("メールアドレスを入力してください"),
+        "enterYourName":
+            MessageLookupByLibrary.simpleMessage("あなたの名前を入力してください"),
         "enterYourPassword":
             MessageLookupByLibrary.simpleMessage("パスワードを入力してください"),
         "entertainment": MessageLookupByLibrary.simpleMessage("エンターテイメント"),
@@ -70,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "music": MessageLookupByLibrary.simpleMessage("音楽"),
         "myFavorite": MessageLookupByLibrary.simpleMessage("お気に入り"),
         "name": MessageLookupByLibrary.simpleMessage("名前"),
+        "nameIsValid": MessageLookupByLibrary.simpleMessage("名前は有効です"),
         "orContinueWithSocialAccount":
             MessageLookupByLibrary.simpleMessage("またはソーシャルアカウントで続行"),
         "password": MessageLookupByLibrary.simpleMessage("パスワード"),

@@ -60,5 +60,9 @@
     "confirmPasswordIsValid": "パスワードが有効であることを確認してください",
     "signUpSuccessfully": "正常にサインアップしてください",
     "signUpFailed": "フィールドにサインアップします",
-    "alreadyAccount": "すでにアカウントをお持ちですか？"
+    "alreadyAccount": "すでにアカウントをお持ちですか？",
+    "enterYourName": "あなたの名前を入力してください",
+    "confirmPassword": "パスワードを認証する",
+    "enterYourConfirm": "確認を入力してください",
+    "nameIsValid": "名前は有効です"
 }

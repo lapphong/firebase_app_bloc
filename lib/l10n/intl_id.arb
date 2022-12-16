@@ -60,5 +60,9 @@
     "confirmPasswordIsValid": "Konfirmasi kata sandi itu valid",
     "signUpSuccessfully": "Mendaftar dengan sukses",
     "signUpFailed": "Daftar Bidang",
-    "alreadyAccount": "Sudah memiliki akun?"
+    "alreadyAccount": "Sudah memiliki akun?",
+    "enterYourName": "Masukkan nama Anda",
+    "confirmPassword": "Konfirmasi sandi",
+    "enterYourConfirm": "Masukkan konfirmasi Anda",
+    "nameIsValid": "Nama valid"
 }

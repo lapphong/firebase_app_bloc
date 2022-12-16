@@ -151,7 +151,7 @@ class SignInForm extends StatelessWidget {
           key: const Key('loginForm_emailInput_textField'),
           onChange: (email) => debounce
               .run(() => context.read<SignInCubit>().emailChanged(email)),
-          errorText: state.email.invalid ? 'Email is valid' : null,
+          errorText: state.email.invalid ? S.of(context).emailIsValid : null,
         );
       },
     );
@@ -167,7 +167,8 @@ class SignInForm extends StatelessWidget {
           key: const Key('loginForm_passwordInput_textField'),
           onChange: (password) => debounce
               .run(() => context.read<SignInCubit>().passwordChanged(password)),
-          errorText: state.password.invalid ? 'Password is valid' : null,
+          errorText:
+              state.password.invalid ? S.of(context).passwordIsValid : null,
           onEditingComplete: () =>
               context.read<SignInCubit>().logInEmailWithCredentials(),
         );
@@ -198,7 +199,7 @@ class SignInForm extends StatelessWidget {
           onPressed: () =>
               Navigator.of(context).pushNamed(RouteName.signUpPage),
           child: Text(
-            'Create Here',
+            S.of(context).createHere,
             style: TxtStyle.headline5.copyWith(color: DarkTheme.primaryBlue600),
           ),
         ),
@@ -209,7 +210,7 @@ class SignInForm extends StatelessWidget {
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
-      'Sign in field : $e',
+      '${S.of(context).signInFailed} : $e',
       Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }
@@ -217,7 +218,7 @@ class SignInForm extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      "h",
+      S.of(context).signInSuccessfully,
       Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }

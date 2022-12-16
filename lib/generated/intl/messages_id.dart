@@ -39,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "classPreview": MessageLookupByLibrary.simpleMessage("Pratinjau Kelas"),
         "complete": MessageLookupByLibrary.simpleMessage("Menyelesaikan"),
         "completed": MessageLookupByLibrary.simpleMessage("Lengkap"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Konfirmasi sandi"),
         "confirmPasswordIsValid": MessageLookupByLibrary.simpleMessage(
             "Konfirmasi kata sandi itu valid"),
         "createHere": MessageLookupByLibrary.simpleMessage("Buat di sini"),
@@ -55,8 +57,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Surel"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("Alamat email"),
         "emailIsValid": MessageLookupByLibrary.simpleMessage("Email valid"),
+        "enterYourConfirm":
+            MessageLookupByLibrary.simpleMessage("Masukkan konfirmasi Anda"),
         "enterYourEmailAddress":
             MessageLookupByLibrary.simpleMessage("Masukkan alamat email Anda"),
+        "enterYourName":
+            MessageLookupByLibrary.simpleMessage("Masukkan nama Anda"),
         "enterYourPassword":
             MessageLookupByLibrary.simpleMessage("Masukkan Kata Sandi Anda"),
         "entertainment": MessageLookupByLibrary.simpleMessage("Hiburan"),
@@ -76,6 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "music": MessageLookupByLibrary.simpleMessage("Musik"),
         "myFavorite": MessageLookupByLibrary.simpleMessage("Kesukaanku"),
         "name": MessageLookupByLibrary.simpleMessage("Nama"),
+        "nameIsValid": MessageLookupByLibrary.simpleMessage("Nama valid"),
         "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
             "Atau lanjutkan dengan akun sosial"),
         "password": MessageLookupByLibrary.simpleMessage("Kata sandi"),

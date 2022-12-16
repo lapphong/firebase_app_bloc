@@ -60,5 +60,9 @@
     "confirmPasswordIsValid": "Conferma che la password è valida",
     "signUpSuccessfully": "Iscriviti con successo",
     "signUpFailed": "Campo di iscrizione",
-    "alreadyAccount": "Hai già un account?"
+    "alreadyAccount": "Hai già un account?",
+    "enterYourName": "Inserisci il tuo nome",
+    "confirmPassword": "Conferma password",
+    "enterYourConfirm": "Inserisci il tuo conferma",
+    "nameIsValid": "Il nome è valido"
 }

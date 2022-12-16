@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -38,8 +39,8 @@ class TextFieldName extends StatelessWidget {
       errorText: errorText,
       readOnly: readOnly,
       controller: nameController,
-      hintText: 'Enter your Name',
-      label: 'Name',
+      hintText: S.of(context).enterYourName,
+      label: S.of(context).name,
       enable: enable,
       focusNode: nameFocusNode,
       inputFormatters: inputFormatters,

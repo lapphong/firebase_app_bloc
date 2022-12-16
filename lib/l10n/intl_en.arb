@@ -60,5 +60,9 @@
     "confirmPasswordIsValid": "Confirm Password is valid",
     "signUpSuccessfully": "Sign up Successfully",
     "signUpFailed": "Sign up field",
-    "alreadyAccount": "Already have an account?"
+    "alreadyAccount": "Already have an account?",
+    "enterYourName": "Enter your Name",
+    "confirmPassword": "Confirm Password",
+    "enterYourConfirm": "Enter your Confirm",
+    "nameIsValid":"Name is valid"
 }

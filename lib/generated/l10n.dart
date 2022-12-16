@@ -669,6 +669,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Enter your Name`
+  String get enterYourName {
+    return Intl.message(
+      'Enter your Name',
+      name: 'enterYourName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your Confirm`
+  String get enterYourConfirm {
+    return Intl.message(
+      'Enter your Confirm',
+      name: 'enterYourConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name is valid`
+  String get nameIsValid {
+    return Intl.message(
+      'Name is valid',
+      name: 'nameIsValid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
