@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountSetting":
             MessageLookupByLibrary.simpleMessage("НАСТРОЙКИ АККАУНТА"),
         "activity": MessageLookupByLibrary.simpleMessage("Мероприятия"),
+        "alreadyAccount":
+            MessageLookupByLibrary.simpleMessage("Уже есть учетная запись?"),
         "application": MessageLookupByLibrary.simpleMessage("ЗАЯВЛЕНИЕ"),
         "bestMentors":
             MessageLookupByLibrary.simpleMessage("Лучшие наставники"),
@@ -39,6 +41,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Предварительный прос..."),
         "complete": MessageLookupByLibrary.simpleMessage("Полный"),
         "completed": MessageLookupByLibrary.simpleMessage("Завершенный"),
+        "confirmPasswordIsValid": MessageLookupByLibrary.simpleMessage(
+            "Подтвердить пароль действителен"),
+        "createHere": MessageLookupByLibrary.simpleMessage("Создать здесь"),
         "design": MessageLookupByLibrary.simpleMessage("Дизайн"),
         "downloadVideo": MessageLookupByLibrary.simpleMessage("Скачать видео"),
         "editAvatar":
@@ -52,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("Эл"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("Адрес электронной почты"),
+        "emailIsValid": MessageLookupByLibrary.simpleMessage(
+            "Электронная почта действительна"),
         "enterYourEmailAddress": MessageLookupByLibrary.simpleMessage(
             "Введите ваш адрес электронной почты"),
         "enterYourPassword":
@@ -75,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
             "Или продолжить c социальной учетной записью"),
         "password": MessageLookupByLibrary.simpleMessage("Пароль"),
+        "passwordIsValid":
+            MessageLookupByLibrary.simpleMessage("Пароль действителен"),
         "preview":
             MessageLookupByLibrary.simpleMessage("Предварительный просмотр"),
         "save": MessageLookupByLibrary.simpleMessage("Сохранять"),
@@ -84,11 +93,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Параметр"),
         "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("Войти"),
+        "signInFailed": MessageLookupByLibrary.simpleMessage("Войти в поле"),
+        "signInSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Включите успешно"),
         "signInWithFacebook": MessageLookupByLibrary.simpleMessage(
             "Авторизоваться c помощью Фэйсбука"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Войти через Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
+        "signUpFailed":
+            MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь поле"),
+        "signUpSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь успешно"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("незавершенный"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Добро пожаловать обратно в Онтари, Исследуйте курс"),

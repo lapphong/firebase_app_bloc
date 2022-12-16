@@ -51,5 +51,14 @@
     "editAvatarAreVisibleOnlyOnUdemy": "Edit avatar are visible only on Udemy.",
     "editInformation": "EDIT INFORMATION",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "createHere": "Create Here",
+    "emailIsValid": "Email is valid",
+    "passwordIsValid": "Password is valid",
+    "signInFailed": "Sign in field",
+    "signInSuccessfully": "Sign in Successfully",
+    "confirmPasswordIsValid": "Confirm Password is valid",
+    "signUpSuccessfully": "Sign up Successfully",
+    "signUpFailed": "Sign up field",
+    "alreadyAccount": "Already have an account?"
 }

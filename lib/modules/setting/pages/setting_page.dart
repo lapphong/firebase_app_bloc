@@ -1,4 +1,5 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
+import 'package:firebase_app_bloc/modules/setting/widgets/items_toggle_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,7 +30,7 @@ class SettingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(S.of(context).setting, style: TxtStyle.title),
-                      buildToggleSwitchMode(),
+                      //buildToggleSwitchMode(),
                       const BellButton(),
                     ],
                   ),
@@ -79,6 +80,10 @@ class SettingPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             //buildListView(applicationToggle, 1),
+            buildSettingItemsSwitchDarkMode(),
+
+            const SizedBox(height: 16),
+
             const TitleOptionSettings(height: 16),
             buildLogoutButton(context),
           ],
@@ -120,25 +125,52 @@ class SettingPage extends StatelessWidget {
     );
   }
 
-  Widget buildToggleSwitchMode() {
+  Widget buildSettingItemsSwitchDarkMode() {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
-        return Row(
-          children: [
-            const Image(image: AssetImage(AssetPath.iconDarkMode)),
-            ToggleSwitchButton(
-              value: context.select((ThemeCubit bloc) => bloc.state.appTheme) ==
-                      AppTheme.dark
-                  ? true
-                  : false,
-              onChanged: (value) =>
-                  context.read<ThemeCubit>().changeTheme(value),
-            ),
-          ],
+        final value = context.select((ThemeCubit bloc) => bloc.state.appTheme);
+
+        onChangedFunction(value) {
+          context.read<ThemeCubit>().changeTheme(value);
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: ItemsToggleSetting(
+            assetName: AssetPath.iconDarkMode,
+            title: 'Dark Mode',
+            onValue: context.select((ThemeCubit bloc) => bloc.state.appTheme) ==
+                    AppTheme.dark
+                ? true
+                : false,
+            onChanged: (value) => onChangedFunction(value),
+            onTap: () =>
+                onChangedFunction(value != AppTheme.dark ? true : false),
+          ),
         );
       },
     );
   }
+
+  // Widget buildToggleSwitchMode() {
+  //   return BlocBuilder<ThemeCubit, ThemeState>(
+  //     builder: (context, state) {
+  //       return Row(
+  //         children: [
+  //           const Image(image: AssetImage(AssetPath.iconDarkMode)),
+  //           ToggleSwitchButton(
+  //             value: context.select((ThemeCubit bloc) => bloc.state.appTheme) ==
+  //                     AppTheme.dark
+  //                 ? true
+  //                 : false,
+  //             onChanged: (value) =>
+  //                 context.read<ThemeCubit>().changeTheme(value),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<void> _confirmSignOut(BuildContext context) async {
     final didRequestSignOut = await showAlertDialog(

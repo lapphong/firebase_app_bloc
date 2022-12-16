@@ -51,5 +51,14 @@
     "editAvatarAreVisibleOnlyOnUdemy": "Редактировать аватарку можно только на онтари.",
     "editInformation": "ИЗМЕНИТЬ ИНФОРМАЦИЮ",
     "name": "Имя",
-    "email": "Эл"
+    "email": "Эл",
+    "createHere": "Создать здесь",
+    "emailIsValid": "Электронная почта действительна",
+    "passwordIsValid": "Пароль действителен",
+    "signInFailed": "Войти в поле",
+    "signInSuccessfully": "Включите успешно",
+    "confirmPasswordIsValid": "Подтвердить пароль действителен",
+    "signUpSuccessfully": "Зарегистрируйтесь успешно",
+    "signUpFailed": "Зарегистрируйтесь поле",
+    "alreadyAccount": "Уже есть учетная запись?"
 }

@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting": MessageLookupByLibrary.simpleMessage("アカウントの設定"),
         "activity": MessageLookupByLibrary.simpleMessage("アクティビティ"),
+        "alreadyAccount":
+            MessageLookupByLibrary.simpleMessage("すでにアカウントをお持ちですか？"),
         "application": MessageLookupByLibrary.simpleMessage("応用"),
         "bestMentors": MessageLookupByLibrary.simpleMessage("最高のメンター"),
         "business": MessageLookupByLibrary.simpleMessage("仕事"),
@@ -35,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "classPreview": MessageLookupByLibrary.simpleMessage("クラスのプレビュー"),
         "complete": MessageLookupByLibrary.simpleMessage("完了"),
         "completed": MessageLookupByLibrary.simpleMessage("完了"),
+        "confirmPasswordIsValid":
+            MessageLookupByLibrary.simpleMessage("パスワードが有効であることを確認してください"),
+        "createHere": MessageLookupByLibrary.simpleMessage("ここで作成します"),
         "design": MessageLookupByLibrary.simpleMessage("デザイン"),
         "donotHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("アカウントを持っていませんか？ ここで作成"),
@@ -46,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "editProfile": MessageLookupByLibrary.simpleMessage("プロファイル編集"),
         "email": MessageLookupByLibrary.simpleMessage("Eメール"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("電子メールアドレス"),
+        "emailIsValid": MessageLookupByLibrary.simpleMessage("電子メールは有効です"),
         "enterYourEmailAddress":
             MessageLookupByLibrary.simpleMessage("メールアドレスを入力してください"),
         "enterYourPassword":
@@ -67,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orContinueWithSocialAccount":
             MessageLookupByLibrary.simpleMessage("またはソーシャルアカウントで続行"),
         "password": MessageLookupByLibrary.simpleMessage("パスワード"),
+        "passwordIsValid": MessageLookupByLibrary.simpleMessage("パスワードは有効です"),
         "preview": MessageLookupByLibrary.simpleMessage("プレビュー"),
         "save": MessageLookupByLibrary.simpleMessage("保存"),
         "searchYourFocus": MessageLookupByLibrary.simpleMessage("フォーカスを検索..."),
@@ -74,14 +81,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("設定"),
         "signIn": MessageLookupByLibrary.simpleMessage("ログイン"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("ログイン"),
+        "signInFailed": MessageLookupByLibrary.simpleMessage("サインインフィールド"),
+        "signInSuccessfully":
+            MessageLookupByLibrary.simpleMessage("サインインに成功します"),
         "signInWithFacebook":
             MessageLookupByLibrary.simpleMessage("Facebookでサインイン"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Google でサインイン"),
         "signUp": MessageLookupByLibrary.simpleMessage("サインアップ"),
+        "signUpFailed": MessageLookupByLibrary.simpleMessage("フィールドにサインアップします"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
                 "プレミアム アカウントにサイン\nアップまたはログインすると、無制限\nにアクセスできます。"),
+        "signUpSuccessfully":
+            MessageLookupByLibrary.simpleMessage("正常にサインアップしてください"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("未完成"),
         "welcomeBackToUdemy":
             MessageLookupByLibrary.simpleMessage("オンタリへようこそ、コースを探索"),

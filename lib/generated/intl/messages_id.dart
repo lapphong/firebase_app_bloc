@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountSetting":
             MessageLookupByLibrary.simpleMessage("PENGATURAN AKUN"),
         "activity": MessageLookupByLibrary.simpleMessage("Aktivitas"),
+        "alreadyAccount":
+            MessageLookupByLibrary.simpleMessage("Sudah memiliki akun?"),
         "application": MessageLookupByLibrary.simpleMessage("APLIKASI"),
         "bestMentors": MessageLookupByLibrary.simpleMessage("Mentor Terbaik"),
         "business": MessageLookupByLibrary.simpleMessage("Bisnis"),
@@ -37,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "classPreview": MessageLookupByLibrary.simpleMessage("Pratinjau Kelas"),
         "complete": MessageLookupByLibrary.simpleMessage("Menyelesaikan"),
         "completed": MessageLookupByLibrary.simpleMessage("Lengkap"),
+        "confirmPasswordIsValid": MessageLookupByLibrary.simpleMessage(
+            "Konfirmasi kata sandi itu valid"),
+        "createHere": MessageLookupByLibrary.simpleMessage("Buat di sini"),
         "design": MessageLookupByLibrary.simpleMessage("Rancangan"),
         "donotHaveAnAccount": MessageLookupByLibrary.simpleMessage(
             "Belum punya akun? Buat Disini"),
@@ -49,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "editProfile": MessageLookupByLibrary.simpleMessage("Sunting profil"),
         "email": MessageLookupByLibrary.simpleMessage("Surel"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("Alamat email"),
+        "emailIsValid": MessageLookupByLibrary.simpleMessage("Email valid"),
         "enterYourEmailAddress":
             MessageLookupByLibrary.simpleMessage("Masukkan alamat email Anda"),
         "enterYourPassword":
@@ -73,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
             "Atau lanjutkan dengan akun sosial"),
         "password": MessageLookupByLibrary.simpleMessage("Kata sandi"),
+        "passwordIsValid":
+            MessageLookupByLibrary.simpleMessage("Kata sandi valid"),
         "preview": MessageLookupByLibrary.simpleMessage("Pratinjau"),
         "save": MessageLookupByLibrary.simpleMessage("Menyimpan"),
         "searchYourFocus":
@@ -81,14 +89,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Pengaturan"),
         "signIn": MessageLookupByLibrary.simpleMessage("Masuk"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("Masuk"),
+        "signInFailed": MessageLookupByLibrary.simpleMessage("Masuk di bidang"),
+        "signInSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Masuk dengan sukses"),
         "signInWithFacebook":
             MessageLookupByLibrary.simpleMessage("Masuk dengan Facebook"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Masuk dengan Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Daftar"),
+        "signUpFailed": MessageLookupByLibrary.simpleMessage("Daftar Bidang"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
                 "Daftar atau masuk ke akun premium\nAnda untuk mendapatkan akses tanpa\n batas."),
+        "signUpSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Mendaftar dengan sukses"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Belum selesai"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Selamat datang kembali di Udemy, Jelajahi Kursus"),

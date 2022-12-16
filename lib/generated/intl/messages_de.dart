@@ -27,6 +27,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountSetting":
             MessageLookupByLibrary.simpleMessage("KONTO-EINSTELLUNG"),
         "activity": MessageLookupByLibrary.simpleMessage("Aktivität"),
+        "alreadyAccount": MessageLookupByLibrary.simpleMessage(
+            "Sie haben bereits ein Konto?"),
         "application": MessageLookupByLibrary.simpleMessage("ANWENDUNG"),
         "bestMentors": MessageLookupByLibrary.simpleMessage("Beste Mentoren"),
         "business": MessageLookupByLibrary.simpleMessage("Geschäft"),
@@ -37,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "classPreview": MessageLookupByLibrary.simpleMessage("Klassenvorschau"),
         "complete": MessageLookupByLibrary.simpleMessage("Vollständig"),
         "completed": MessageLookupByLibrary.simpleMessage("Abgeschlossen"),
+        "confirmPasswordIsValid": MessageLookupByLibrary.simpleMessage(
+            "Bestätigen Sie das Passwort gültig"),
+        "createHere": MessageLookupByLibrary.simpleMessage("Hier erstellen"),
         "design": MessageLookupByLibrary.simpleMessage("Entwurf"),
         "donotHaveAnAccount": MessageLookupByLibrary.simpleMessage(
             "Sie haben kein Konto? Hier erstellen"),
@@ -51,6 +56,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Profil bearbeiten"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("E-Mail-Addresse"),
+        "emailIsValid":
+            MessageLookupByLibrary.simpleMessage("E -Mail ist gültig"),
         "enterYourEmailAddress": MessageLookupByLibrary.simpleMessage(
             "Geben sie ihre E-Mailadresse ein"),
         "enterYourPassword":
@@ -74,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orContinueWithSocialAccount": MessageLookupByLibrary.simpleMessage(
             "Oder fahren Sie mit dem sozialen Konto fort"),
         "password": MessageLookupByLibrary.simpleMessage("Passwort"),
+        "passwordIsValid":
+            MessageLookupByLibrary.simpleMessage("Passwort ist gültig"),
         "preview": MessageLookupByLibrary.simpleMessage("Vorschau"),
         "save": MessageLookupByLibrary.simpleMessage("Speichern"),
         "searchYourFocus":
@@ -82,14 +91,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Einstellung"),
         "signIn": MessageLookupByLibrary.simpleMessage("Einloggen"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("Einloggen"),
+        "signInFailed":
+            MessageLookupByLibrary.simpleMessage("Unterschreiben Sie im Feld"),
+        "signInSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Melden Sie sich erfolgreich an"),
         "signInWithFacebook":
             MessageLookupByLibrary.simpleMessage("Mit Facebook anmelden"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Anmeldung mit Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Anmeldung"),
+        "signUpFailed": MessageLookupByLibrary.simpleMessage("Feld anmelden"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
                 "Registrieren Sie sich oder melden\nSie sich bei Ihrem Premium-Konto an,\n um unbegrenzten Zugriff zu erhalten."),
+        "signUpSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Melden Sie sich erfolgreich an"),
         "uncompleted": MessageLookupByLibrary.simpleMessage("Unvollendet"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Willkommen zurück in Udemy, Explore Course"),

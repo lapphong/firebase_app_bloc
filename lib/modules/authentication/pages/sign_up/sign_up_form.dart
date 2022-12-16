@@ -82,7 +82,7 @@ class SignUpForm extends StatelessWidget {
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: Text(
-                        'Sign in',
+                        S.of(context).signIn,
                         style: TxtStyle.headline5.copyWith(
                           color: DarkTheme.primaryBlue600,
                         ),

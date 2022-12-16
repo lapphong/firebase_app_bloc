@@ -51,5 +51,14 @@
     "editAvatarAreVisibleOnlyOnUdemy": "アバターの編集は Udemy でのみ表示されます。",
     "editInformation": "編集情報",
     "name": "名前",
-    "email": "Eメール"
+    "email": "Eメール",
+    "createHere": "ここで作成します",
+    "emailIsValid": "電子メールは有効です",
+    "passwordIsValid": "パスワードは有効です",
+    "signInFailed": "サインインフィールド",
+    "signInSuccessfully": "サインインに成功します",
+    "confirmPasswordIsValid": "パスワードが有効であることを確認してください",
+    "signUpSuccessfully": "正常にサインアップしてください",
+    "signUpFailed": "フィールドにサインアップします",
+    "alreadyAccount": "すでにアカウントをお持ちですか？"
 }

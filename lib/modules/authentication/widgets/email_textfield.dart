@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,14 +19,14 @@ class TextFieldEmail extends StatelessWidget {
     this.onSubmit,
     this.enable = true,
     this.readOnly = false,
-    this.initialValue='',
+    this.initialValue = '',
   }) : super(key: key);
 
   final FocusNode? emailFocusNode;
   final TextEditingController? emailController;
   final ValueChanged<String>? onChange, onSubmit;
   final bool enable, readOnly;
-  final String? errorText,initialValue;
+  final String? errorText, initialValue;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onEditingComplete;
   final String? Function(String?)? validator;
@@ -37,8 +38,8 @@ class TextFieldEmail extends StatelessWidget {
       validator: validator,
       errorText: errorText,
       controller: emailController,
-      hintText: 'Enter your Email',
-      label: 'Email',
+      hintText: S.of(context).enterYourEmailAddress,
+      label: S.of(context).email,
       enable: enable,
       readOnly: readOnly,
       focusNode: emailFocusNode,

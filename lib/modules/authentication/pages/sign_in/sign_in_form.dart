@@ -115,25 +115,25 @@ class SignInForm extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                ClassicButton(
-                  onTap: () {},
-                  width: size.width,
-                  widthRadius: 0,
-                  radius: 12,
-                  height: 52,
-                  color: DarkTheme.primaryBlueButton900,
-                  colorRadius: DarkTheme.primaryBlueButton900,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.phone, color: DarkTheme.green),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Text('Sign In with Phone number'),
-                      ),
-                    ],
-                  ),
-                ),
+                // ClassicButton(
+                //   onTap: () {},
+                //   width: size.width,
+                //   widthRadius: 0,
+                //   radius: 12,
+                //   height: 52,
+                //   color: DarkTheme.primaryBlueButton900,
+                //   colorRadius: DarkTheme.primaryBlueButton900,
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: const [
+                //       Icon(Icons.phone, color: DarkTheme.green),
+                //       Padding(
+                //         padding: EdgeInsets.only(left: 20.0),
+                //         child: Text('Sign In with Phone number'),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 buildGoToSignUpPage(context),
               ],
             ),
@@ -162,6 +162,8 @@ class SignInForm extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return PasswordTextField(
+          label: S.of(context).password,
+          hintText: S.of(context).enterYourPassword,
           key: const Key('loginForm_passwordInput_textField'),
           onChange: (password) => debounce
               .run(() => context.read<SignInCubit>().passwordChanged(password)),
@@ -215,7 +217,7 @@ class SignInForm extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      "Sign in Successfully",
+      "h",
       Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }

@@ -51,5 +51,14 @@
     "editAvatarAreVisibleOnlyOnUdemy": "Edit avatar hanya terlihat di Udemy.",
     "editInformation": "EDIT INFORMASI",
     "name": "Nama",
-    "email": "Surel"
+    "email": "Surel",
+    "createHere": "Buat di sini",
+    "emailIsValid": "Email valid",
+    "passwordIsValid": "Kata sandi valid",
+    "signInFailed": "Masuk di bidang",
+    "signInSuccessfully": "Masuk dengan sukses",
+    "confirmPasswordIsValid": "Konfirmasi kata sandi itu valid",
+    "signUpSuccessfully": "Mendaftar dengan sukses",
+    "signUpFailed": "Daftar Bidang",
+    "alreadyAccount": "Sudah memiliki akun?"
 }

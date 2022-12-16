@@ -579,6 +579,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Create Here`
+  String get createHere {
+    return Intl.message(
+      'Create Here',
+      name: 'createHere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is valid`
+  String get emailIsValid {
+    return Intl.message(
+      'Email is valid',
+      name: 'emailIsValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is valid`
+  String get passwordIsValid {
+    return Intl.message(
+      'Password is valid',
+      name: 'passwordIsValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in field`
+  String get signInFailed {
+    return Intl.message(
+      'Sign in field',
+      name: 'signInFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in Successfully`
+  String get signInSuccessfully {
+    return Intl.message(
+      'Sign in Successfully',
+      name: 'signInSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password is valid`
+  String get confirmPasswordIsValid {
+    return Intl.message(
+      'Confirm Password is valid',
+      name: 'confirmPasswordIsValid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up Successfully`
+  String get signUpSuccessfully {
+    return Intl.message(
+      'Sign up Successfully',
+      name: 'signUpSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up field`
+  String get signUpFailed {
+    return Intl.message(
+      'Sign up field',
+      name: 'signUpFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get alreadyAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'alreadyAccount',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

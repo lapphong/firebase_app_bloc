@@ -51,5 +51,15 @@
     "editAvatarAreVisibleOnlyOnUdemy": "Avatar bearbeiten sind nur auf ontari sichtbar.",
     "editInformation": "INFORMATIONEN BEARBEITEN",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "createHere": "Hier erstellen",
+    "emailIsValid": "E -Mail ist gültig",
+    "passwordIsValid": "Passwort ist gültig",
+    "signInFailed": "Unterschreiben Sie im Feld",
+    "signInSuccessfully": "Melden Sie sich erfolgreich an",
+    "confirmPasswordIsValid": "Bestätigen Sie das Passwort gültig",
+    "signUpSuccessfully": "Melden Sie sich erfolgreich an",
+    "signUpFailed": "Feld anmelden",
+    "alreadyAccount": "Sie haben bereits ein Konto?"
+
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/widgets/stateless/common_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +15,8 @@ class PasswordTextField extends StatefulWidget {
     this.errorText,
     this.inputFormatters,
     this.onChange,
-    this.hintText = 'Enter your password',
-    this.label = 'Password',
+    this.hintText ,
+    this.label ,
     this.onEditingComplete,
     this.validator,
     this.onSubmit,
