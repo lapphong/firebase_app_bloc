@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/modules/setting/blocs/blocs.dart';
 import 'package:firebase_app_bloc/repositories/storage_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,7 @@ class EditProfilePage extends StatelessWidget {
           //   },
           //   child: _buildBody(),
           // );
-          return _buildBody();
+          return _buildBody(context);
         },
       ),
     );
@@ -75,25 +76,26 @@ class EditProfilePage extends StatelessWidget {
           onChange: (name) => debounce.run(() => context
               .read<EditProfileBloc>()
               .add(NameChangedEvent(name: name))),
-          errorText: state.name.invalid ? 'Name is valid' : null,
+          errorText: state.name.invalid ? S.of(context).nameIsValid : null,
         );
       },
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildTitleAndSave(),
-              const TitleOptionSettings(title: 'EDIT AVATAR', height: 32),
+              buildTitleAndSave(context),
+              TitleOptionSettings(title: S.of(context).editAvatar, height: 32),
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: buildChangeAvatar(),
               ),
-              const TitleOptionSettings(title: 'EDIT INFORMATION', height: 32),
+              TitleOptionSettings(
+                  title: S.of(context).editInformation, height: 32),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
@@ -116,7 +118,7 @@ class EditProfilePage extends StatelessWidget {
     return BlocBuilder<EditProfileBloc, EditProfileState>(
       builder: (context, state) {
         return BodyItemNetwork(
-          height: 64,
+          height: 70,
           widthImg: 64,
           mid: Padding(
             padding: const EdgeInsets.only(left: 16.0),
@@ -135,7 +137,7 @@ class EditProfilePage extends StatelessWidget {
                   colorRadius: DarkTheme.primaryBlue600,
                   child: Center(
                     child: Text(
-                      'Change Avatar',
+                      S.of(context).changeAvatar,
                       style: TxtStyle.buttonSmall.copyWith(
                         color: DarkTheme.primaryBlue600,
                       ),
@@ -143,7 +145,7 @@ class EditProfilePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Edit avatar are visible only on ontari.',
+                  S.of(context).editAvatarAreVisibleOnlyOnUdemy,
                   style: TxtStyle.headline6
                       .copyWith(color: DarkTheme.greyScale500),
                 ),
@@ -239,13 +241,13 @@ class EditProfilePage extends StatelessWidget {
     );
   }
 
-  Widget buildTitleAndSave() {
+  Widget buildTitleAndSave(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const TitleSetting(title: 'Edit Profile'),
+          TitleSetting(title: S.of(context).editProfile),
           BlocBuilder<EditProfileBloc, EditProfileState>(
             builder: (context, state) {
               return ClassicButton(
@@ -276,7 +278,7 @@ class EditProfilePage extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      "Updated info Successfully",
+      S.of(context).snackBarSuccessfully(S.of(context).editProfile),
       Image.asset(AssetPath.iconUser),
     );
   }
@@ -284,7 +286,7 @@ class EditProfilePage extends StatelessWidget {
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
-      'Updated field : $e',
+      '${S.of(context).snackBarFailed(S.of(context).editProfile)} : $e',
       Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }

@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "こんにちは ${name}";
 
+  static String m1(name) => "${name} 分野";
+
+  static String m2(name) => "${name}正常に";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting": MessageLookupByLibrary.simpleMessage("アカウントの設定"),
@@ -47,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadVideo": MessageLookupByLibrary.simpleMessage("ビデオをダウンロード"),
         "editAvatar": MessageLookupByLibrary.simpleMessage("アバターを編集"),
         "editAvatarAreVisibleOnlyOnUdemy":
-            MessageLookupByLibrary.simpleMessage("アバターの編集は Udemy でのみ表示されます。"),
+            MessageLookupByLibrary.simpleMessage("アバターの編集は Udemy でのみ表示さ\nれます。"),
         "editInformation": MessageLookupByLibrary.simpleMessage("編集情報"),
         "editProfile": MessageLookupByLibrary.simpleMessage("プロファイル編集"),
         "email": MessageLookupByLibrary.simpleMessage("Eメール"),
@@ -86,20 +90,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("設定"),
         "signIn": MessageLookupByLibrary.simpleMessage("ログイン"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("ログイン"),
-        "signInFailed": MessageLookupByLibrary.simpleMessage("サインインフィールド"),
-        "signInSuccessfully":
-            MessageLookupByLibrary.simpleMessage("サインインに成功します"),
         "signInWithFacebook":
             MessageLookupByLibrary.simpleMessage("Facebookでサインイン"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Google でサインイン"),
         "signUp": MessageLookupByLibrary.simpleMessage("サインアップ"),
-        "signUpFailed": MessageLookupByLibrary.simpleMessage("フィールドにサインアップします"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
                 "プレミアム アカウントにサイン\nアップまたはログインすると、無制限\nにアクセスできます。"),
-        "signUpSuccessfully":
-            MessageLookupByLibrary.simpleMessage("正常にサインアップしてください"),
+        "snackBarFailed": m1,
+        "snackBarSuccessfully": m2,
         "uncompleted": MessageLookupByLibrary.simpleMessage("未完成"),
         "welcomeBackToUdemy":
             MessageLookupByLibrary.simpleMessage("オンタリへようこそ、コースを探索"),

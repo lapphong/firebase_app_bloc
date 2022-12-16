@@ -134,7 +134,18 @@ class SignInForm extends StatelessWidget {
                 //     ],
                 //   ),
                 // ),
-                buildGoToSignUpPage(context),
+                Text(S.of(context).donotHaveAnAccount,
+                    style: TxtStyle.headline5),
+                TextButton(
+                  key: const Key('loginForm_createAccount_flatButton'),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(RouteName.signUpPage),
+                  child: Text(
+                    S.of(context).createHere,
+                    style: TxtStyle.headline5
+                        .copyWith(color: DarkTheme.primaryBlue600),
+                  ),
+                ),
               ],
             ),
           ),
@@ -189,28 +200,10 @@ class SignInForm extends StatelessWidget {
     );
   }
 
-  buildGoToSignUpPage(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(S.current.donotHaveAnAccount, style: TxtStyle.headline5),
-        TextButton(
-          key: const Key('loginForm_createAccount_flatButton'),
-          onPressed: () =>
-              Navigator.of(context).pushNamed(RouteName.signUpPage),
-          child: Text(
-            S.of(context).createHere,
-            style: TxtStyle.headline5.copyWith(color: DarkTheme.primaryBlue600),
-          ),
-        ),
-      ],
-    );
-  }
-
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
-      '${S.of(context).signInFailed} : $e',
+      '${S.of(context).snackBarFailed(S.of(context).signIn)} : $e',
       Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }
@@ -218,7 +211,7 @@ class SignInForm extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      S.of(context).signInSuccessfully,
+      S.of(context).snackBarSuccessfully(S.of(context).signIn),
       Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }

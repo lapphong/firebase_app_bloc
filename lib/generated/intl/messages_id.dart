@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Hai ${name}";
 
+  static String m1(name) => "${name} bidang";
+
+  static String m2(name) => "${name} Berhasil";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting":
@@ -96,20 +100,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Pengaturan"),
         "signIn": MessageLookupByLibrary.simpleMessage("Masuk"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("Masuk"),
-        "signInFailed": MessageLookupByLibrary.simpleMessage("Masuk di bidang"),
-        "signInSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Masuk dengan sukses"),
         "signInWithFacebook":
             MessageLookupByLibrary.simpleMessage("Masuk dengan Facebook"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Masuk dengan Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Daftar"),
-        "signUpFailed": MessageLookupByLibrary.simpleMessage("Daftar Bidang"),
         "signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess":
             MessageLookupByLibrary.simpleMessage(
                 "Daftar atau masuk ke akun premium\nAnda untuk mendapatkan akses tanpa\n batas."),
-        "signUpSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Mendaftar dengan sukses"),
+        "snackBarFailed": m1,
+        "snackBarSuccessfully": m2,
         "uncompleted": MessageLookupByLibrary.simpleMessage("Belum selesai"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Selamat datang kembali di Udemy, Jelajahi Kursus"),

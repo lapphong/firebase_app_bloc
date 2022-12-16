@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Привет ${name}";
 
+  static String m1(name) => "${name} поле";
+
+  static String m2(name) => "${name} Успешно";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting":
@@ -51,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "editAvatar":
             MessageLookupByLibrary.simpleMessage("РЕДАКТИРОВАТЬ ABATAPA"),
         "editAvatarAreVisibleOnlyOnUdemy": MessageLookupByLibrary.simpleMessage(
-            "Редактировать аватарку можно только на онтари."),
+            "Редактировать аватарку можно только\nна онтари."),
         "editInformation":
             MessageLookupByLibrary.simpleMessage("ИЗМЕНИТЬ ИНФОРМАЦИЮ"),
         "editProfile":
@@ -100,18 +104,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Параметр"),
         "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("Войти"),
-        "signInFailed": MessageLookupByLibrary.simpleMessage("Войти в поле"),
-        "signInSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Включите успешно"),
         "signInWithFacebook": MessageLookupByLibrary.simpleMessage(
             "Авторизоваться c помощью Фэйсбука"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Войти через Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("Зарегистрироваться"),
-        "signUpFailed":
-            MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь поле"),
-        "signUpSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Зарегистрируйтесь успешно"),
+        "snackBarFailed": m1,
+        "snackBarSuccessfully": m2,
         "uncompleted": MessageLookupByLibrary.simpleMessage("незавершенный"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Добро пожаловать обратно в Онтари, Исследуйте курс"),

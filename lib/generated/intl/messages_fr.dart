@@ -22,6 +22,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Salut ${name}";
 
+  static String m1(name) => "${name} champ";
+
+  static String m2(name) => "${name} Avec succès";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "accountSetting":
@@ -102,17 +106,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("Paramètre"),
         "signIn": MessageLookupByLibrary.simpleMessage("S\'identifier"),
         "signInBtn": MessageLookupByLibrary.simpleMessage("S\'identifier"),
-        "signInFailed": MessageLookupByLibrary.simpleMessage("Se connecter"),
-        "signInSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Connectez-vous avec succès"),
         "signInWithFacebook": MessageLookupByLibrary.simpleMessage(
             "Connectez-vous avec Facebook"),
         "signInWithGoogle":
             MessageLookupByLibrary.simpleMessage("Se connecter avec Google"),
         "signUp": MessageLookupByLibrary.simpleMessage("S\'inscrire"),
-        "signUpFailed": MessageLookupByLibrary.simpleMessage("Inscrivez-vous"),
-        "signUpSuccessfully":
-            MessageLookupByLibrary.simpleMessage("Inscrivez-vous avec succès"),
+        "snackBarFailed": m1,
+        "snackBarSuccessfully": m2,
         "uncompleted": MessageLookupByLibrary.simpleMessage("Inachevé"),
         "welcomeBackToUdemy": MessageLookupByLibrary.simpleMessage(
             "Bienvenue de nouveau en Udemy, cours Explore"),

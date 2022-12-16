@@ -610,23 +610,23 @@ class S {
     );
   }
 
-  /// `Sign in field`
-  String get signInFailed {
+  /// `{name} field`
+  String snackBarFailed(Object name) {
     return Intl.message(
-      'Sign in field',
-      name: 'signInFailed',
+      '$name field',
+      name: 'snackBarFailed',
       desc: '',
-      args: [],
+      args: [name],
     );
   }
 
-  /// `Sign in Successfully`
-  String get signInSuccessfully {
+  /// `{name} Successfully`
+  String snackBarSuccessfully(Object name) {
     return Intl.message(
-      'Sign in Successfully',
-      name: 'signInSuccessfully',
+      '$name Successfully',
+      name: 'snackBarSuccessfully',
       desc: '',
-      args: [],
+      args: [name],
     );
   }
 
@@ -635,26 +635,6 @@ class S {
     return Intl.message(
       'Confirm Password is valid',
       name: 'confirmPasswordIsValid',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sign up Successfully`
-  String get signUpSuccessfully {
-    return Intl.message(
-      'Sign up Successfully',
-      name: 'signUpSuccessfully',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Sign up field`
-  String get signUpFailed {
-    return Intl.message(
-      'Sign up field',
-      name: 'signUpFailed',
       desc: '',
       args: [],
     );

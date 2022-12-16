@@ -128,6 +128,8 @@ class SignUpForm extends StatelessWidget {
     return BlocBuilder<SignUpCubit, SignUpState>(
       builder: (context, state) {
         return PasswordTextField(
+          label: S.of(context).password,
+          hintText: S.of(context).enterYourPassword,
           key: const Key('signUpForm_passwordInput_textField'),
           onChange: (password) => debounce
               .run(() => context.read<SignUpCubit>().passwordChanged(password)),
@@ -161,7 +163,7 @@ class SignUpForm extends StatelessWidget {
   void snackBarError(BuildContext context, String e) {
     return showSnackBar(
       context,
-      '${S.of(context).signInFailed} : $e',
+      '${S.of(context).snackBarFailed(S.of(context).signUp)} : $e',
       Image.asset(AssetPath.iconClose, color: DarkTheme.red),
     );
   }
@@ -169,7 +171,7 @@ class SignUpForm extends StatelessWidget {
   void snackBarSuccess(BuildContext context) {
     return showSnackBar(
       context,
-      S.of(context).signInSuccessfully,
+      S.of(context).snackBarSuccessfully(S.of(context).signUp),
       Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }
