@@ -18,8 +18,6 @@ class OpenImagePickerEvent extends EditProfileEvent {
   List<Object> get props => [imageSource];
 }
 
-class CloseOptionImageEvent extends EditProfileEvent {}
-
 class NameChangedEvent extends EditProfileEvent {
   final String name;
 

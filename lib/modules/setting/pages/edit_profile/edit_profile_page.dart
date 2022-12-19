@@ -99,8 +99,6 @@ class _EditProfileViewState extends State<EditProfileView> {
           inputType: TextInputAction.done,
           autoFocus: true,
           nameFocusNode: _nameFocusNode,
-          onEditingComplete: () =>
-              context.read<EditProfileBloc>().add(SaveProfileChanges()),
           onChange: (name) => debounce.run(() => context
               .read<EditProfileBloc>()
               .add(NameChangedEvent(name: name))),

@@ -30,9 +30,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(state.copyWith(imageSourceActionSheetIsVisible: true));
     });
     on<OpenImagePickerEvent>(_onOpenImagePicker);
-    on<CloseOptionImageEvent>((event, emit) {
-      emit(state.copyWith(imageSourceActionSheetIsVisible: false));
-    });
     on<NameChangedEvent>(_onNameChanged);
     on<NameUnfocusedEvent>(_onNameUnfocused);
     on<SaveProfileChanges>(_onSaveProfileChanges);
@@ -50,8 +47,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     );
 
     if (pickedImage == null) return;
-    print(pickedImage.path);
-
     emit(state.copyWith(avatarPath: pickedImage.path));
   }
 
@@ -64,8 +59,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     NameUnfocusedEvent event,
     Emitter<EditProfileState> emit,
   ) {
-    final name = Name.dirty(event.nameOld);
-    emit(state.copyWith(name: name, status: Formz.validate([name])));
+    final nameOld = Name.dirty(event.nameOld);
+    emit(state.copyWith(name: nameOld, status: Formz.validate([nameOld])));
   }
 
   Future<void> _onSaveProfileChanges(

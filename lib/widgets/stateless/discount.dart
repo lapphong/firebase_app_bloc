@@ -41,11 +41,13 @@ class Discount extends StatelessWidget {
                   children: [
                     Text(
                       S.of(context).get20Discount,
-                      style: TxtStyle.headline3,
+                      style:
+                          TxtStyle.headline3.copyWith(color: DarkTheme.white),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      S.of(context)
+                      S
+                          .of(context)
                           .signUpOrLoginToYourPremiumAccountToGetUnlimitedAccess,
                       textAlign: TextAlign.start,
                       style: TxtStyle.headline6
