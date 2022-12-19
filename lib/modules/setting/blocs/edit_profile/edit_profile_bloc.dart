@@ -48,6 +48,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       source: event.imageSource,
       imageQuality: 90,
     );
+
     if (pickedImage == null) return;
     print(pickedImage.path);
 
@@ -63,7 +64,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     NameUnfocusedEvent event,
     Emitter<EditProfileState> emit,
   ) {
-    final name = Name.dirty(state.name.value);
+    final name = Name.dirty(event.nameOld);
     emit(state.copyWith(name: name, status: Formz.validate([name])));
   }
 
@@ -75,8 +76,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
     try {
-      final linkImage = await storageRepository.uploadImageToStorage(
-          file: File(state.avatarPath!));
+      final linkImage = state.avatarPath != null
+          ? await storageRepository.uploadImageToStorage(
+              file: File(state.avatarPath!))
+          : user.profileImage;
 
       final updateUser = state.user.copyWith(
         name: state.name.value,
@@ -87,10 +90,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on CustomError catch (e) {
       emit(
-        state.copyWith(
-          errorMessage: e,
-          status: FormzStatus.submissionFailure,
-        ),
+        state.copyWith(errorMessage: e, status: FormzStatus.submissionFailure),
       );
     } catch (_) {
       emit(state.copyWith(status: FormzStatus.submissionCanceled));

@@ -20,32 +20,37 @@ class TextFieldName extends StatelessWidget {
     this.enable = true,
     this.initialValue = '',
     this.readOnly = false,
+    this.autoFocus = false,
+    this.inputType,
   }) : super(key: key);
 
   final FocusNode? nameFocusNode;
   final TextEditingController? nameController;
   final ValueChanged<String>? onChange, onSubmit;
-  final bool enable, readOnly;
+  final bool enable, readOnly, autoFocus;
   final String? errorText, initialValue;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onEditingComplete;
   final String? Function(String?)? validator;
+  final TextInputAction? inputType;
 
   @override
   Widget build(BuildContext context) {
     return CommonTextField(
       initialValue: initialValue,
+      autoFocus: autoFocus,
       validator: validator,
       errorText: errorText,
       readOnly: readOnly,
       controller: nameController,
       hintText: S.of(context).enterYourName,
       label: S.of(context).name,
+      onEditingComplete: onEditingComplete,
       enable: enable,
       focusNode: nameFocusNode,
       inputFormatters: inputFormatters,
       inputType: TextInputType.name,
-      inputAction: TextInputAction.next,
+      inputAction: inputType ?? TextInputAction.next,
       onChange: onChange,
       onSubmit: onSubmit,
       prefixIcon: const Align(

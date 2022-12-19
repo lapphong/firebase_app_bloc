@@ -22,7 +22,6 @@ import 'package:formz/formz.dart';
 class EditProfilePage extends StatelessWidget {
   const EditProfilePage({Key? key, required this.user}) : super(key: key);
   final User user;
-  static final debounce = Debounce(milliseconds: 1000);
 
   @override
   Widget build(BuildContext context) {
@@ -32,38 +31,62 @@ class EditProfilePage extends StatelessWidget {
         storageRepository: context.read<StorageRepository>(),
         user: user,
       ),
-      child: BlocConsumer<EditProfileBloc, EditProfileState>(
-        listener: (context, state) {
-          if (state.imageSourceActionSheetIsVisible) {
-            _showImageSourceActionSheet(context);
-          }
-          if (state.status.isSubmissionSuccess) {
-            Navigator.pop(context);
-            context.read<ProfileCubit>().getProfile(uid: user.id);
-            snackBarSuccess(context);
-          }
-          if (state.status.isSubmissionCanceled) {
-            Navigator.pop(context);
-          }
-          if (state.status.isSubmissionCanceled) {
-            print("LỖI UPDATE:${state.errorMessage.toString()}");
-            snackBarError(context, state.errorMessage.toString());
-          }
-        },
-        builder: (context, state) {
-          // return WillPopScope(
-          //   onWillPop: () async {
-          //     Navigator.pop(context);
-          //     if (state.imageSourceActionSheetIsVisible) {
-          //       context.read<EditProfileBloc>().add(CloseOptionImageEvent());
-          //     }
-          //     return true;
-          //   },
-          //   child: _buildBody(),
-          // );
-          return _buildBody(context);
-        },
-      ),
+      child: EditProfileView(user: user),
+    );
+  }
+}
+
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key, required this.user});
+  final User user;
+
+  @override
+  State<EditProfileView> createState() => _EditProfileViewState();
+}
+
+class _EditProfileViewState extends State<EditProfileView> {
+  static final debounce = Debounce(milliseconds: 1000);
+  final _nameFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameFocusNode.addListener(() {
+      if (!_nameFocusNode.hasFocus) {
+        print('⚡⚡ co vao');
+        context
+            .read<EditProfileBloc>()
+            .add(NameUnfocusedEvent(nameOld: widget.user.name));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _nameFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<EditProfileBloc, EditProfileState>(
+      listener: (context, state) {
+        if (state.imageSourceActionSheetIsVisible) {
+          _showImageSourceActionSheet(context);
+        }
+        if (state.status.isSubmissionSuccess) {
+          Navigator.pop(context);
+          context.read<ProfileCubit>().getProfile(uid: widget.user.id);
+          snackBarSuccess(context);
+        }
+        if (state.status.isSubmissionFailure) {
+          print("LỖI UPDATE:${state.errorMessage.toString()}");
+          snackBarError(context, state.errorMessage.toString());
+        }
+      },
+      builder: (context, state) {
+        return _buildBody(context);
+      },
     );
   }
 
@@ -71,8 +94,13 @@ class EditProfilePage extends StatelessWidget {
     return BlocBuilder<EditProfileBloc, EditProfileState>(
       builder: (context, state) {
         return TextFieldName(
-          initialValue: user.name,
+          initialValue: widget.user.name,
           key: const Key('editForm_nameInput_textField'),
+          inputType: TextInputAction.done,
+          autoFocus: true,
+          nameFocusNode: _nameFocusNode,
+          onEditingComplete: () =>
+              context.read<EditProfileBloc>().add(SaveProfileChanges()),
           onChange: (name) => debounce.run(() => context
               .read<EditProfileBloc>()
               .add(NameChangedEvent(name: name))),
@@ -156,7 +184,7 @@ class EditProfilePage extends StatelessWidget {
           child: state.avatarPath != null
               ? Image.file(File(state.avatarPath!), fit: BoxFit.cover)
               : CachedNetworkImage(
-                  imageUrl: user.profileImage,
+                  imageUrl: widget.user.profileImage,
                   fit: BoxFit.cover,
                   placeholder: (_, __) =>
                       const Image(image: AssetImage(AssetPath.imgLoading)),
@@ -235,7 +263,7 @@ class EditProfilePage extends StatelessWidget {
   Widget buildTextFieldEmail() {
     return TextFieldEmail(
       key: const Key('editForm_emailInput_textField'),
-      initialValue: user.email,
+      initialValue: widget.user.email,
       enable: false,
       readOnly: true,
     );

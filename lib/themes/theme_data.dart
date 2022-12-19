@@ -6,6 +6,7 @@ class ThemeDataApp {
     return ThemeData(
       scaffoldBackgroundColor: DarkTheme.white,
       fontFamily: 'manrope',
+      dividerColor: DarkTheme.greyScale700,
       textTheme: ThemeData().textTheme.apply(
             bodyColor: DarkTheme.greyScale700,
             displayColor: DarkTheme.greyScale700,
@@ -17,6 +18,7 @@ class ThemeDataApp {
     return ThemeData(
       scaffoldBackgroundColor: DarkTheme.greyScale900,
       fontFamily: 'manrope',
+      dividerColor: DarkTheme.white,
       textTheme: ThemeData()
           .textTheme
           .apply(bodyColor: DarkTheme.white, displayColor: DarkTheme.white),

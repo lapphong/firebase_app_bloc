@@ -29,6 +29,13 @@ class NameChangedEvent extends EditProfileEvent {
   List<Object> get props => [name];
 }
 
-class NameUnfocusedEvent extends EditProfileEvent {}
+class NameUnfocusedEvent extends EditProfileEvent {
+  final String nameOld;
+
+  const NameUnfocusedEvent({required this.nameOld});
+
+  @override
+  List<Object> get props => [nameOld];
+}
 
 class SaveProfileChanges extends EditProfileEvent {}
