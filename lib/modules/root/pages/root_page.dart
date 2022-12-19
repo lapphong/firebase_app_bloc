@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:firebase_app_bloc/repositories/profile_repository.dart';
 import 'package:firebase_app_bloc/repositories/storage_repository.dart';
+import 'package:firebase_app_bloc/services/notification_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -122,31 +126,101 @@ class _RootViewState extends State<RootView> {
 }
 
 class ActivityPage extends StatelessWidget {
-  const ActivityPage({super.key});
+  const ActivityPage({super.key, this.payload});
+  final String? payload;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text(
-          'Activity Page',
-          style: TxtStyle.headline1,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Activity'),
+            Text(
+              payload ?? 'abc',
+              style: TxtStyle.headline1,
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});
 
   @override
+  State<CategoryPage> createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+  final _notificationService = NotificationService();
+
+  @override
+  void initState() {
+    super.initState();
+    listenToNotificationStream();
+  }
+
+  void listenToNotificationStream() {
+    _notificationService.selectNotificationStream.stream
+        .listen((String? payload) async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ActivityPage(payload: payload)),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text(
-          'CategoryPage Page',
-          style: TxtStyle.headline1,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('Category Page', style: TxtStyle.headline1),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(DarkTheme.primaryBlue600),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  onPressed: () async {
+                    print('click');
+
+                    await _notificationService.showScheduledLocalNotification(
+                      id: 1,
+                      title: "Drink Water",
+                      body: "Time to drink some water!",
+                      payload: "You just took water! Hurray!",
+                      seconds: 10,
+                    );
+
+                    //await _notificationService.showGroupedNotifications();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AssetPath.iconBell, color: DarkTheme.white),
+                      const SizedBox(width: 10),
+                      const Text('Show notification'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

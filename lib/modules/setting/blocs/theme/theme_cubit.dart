@@ -5,21 +5,21 @@ import 'package:firebase_app_bloc/resources/theme_manager.dart';
 part 'theme_state.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  final ThemeManager themeManager = ThemeManager();
+  final _themeManager = ThemeManager();
   ThemeCubit() : super(ThemeState.initial());
 
   Future<void> changeTheme(bool theme) async {
     if (theme) {
-      await themeManager.saveTheme(theme);
+      await _themeManager.saveTheme(theme);
       emit(state.copyWith(appTheme: AppTheme.dark));
     } else {
-      await themeManager.saveTheme(theme);
+      await _themeManager.saveTheme(theme);
       emit(state.copyWith(appTheme: AppTheme.light));
     }
   }
 
   Future<void> getTheme() async {
-    final themeMode = await themeManager.getTheme();
+    final themeMode = await _themeManager.getTheme();
     if (themeMode != true) {
       emit(state.copyWith(appTheme: AppTheme.light));
     }
