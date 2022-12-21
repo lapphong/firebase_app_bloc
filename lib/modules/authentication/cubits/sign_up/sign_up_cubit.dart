@@ -83,9 +83,15 @@ class SignUpCubit extends Cubit<SignUpState> {
     );
   }
 
+  void checkChanged(bool value) {
+    emit(state.copyWith(check: value));
+  }
+
   Future<void> signUpFormSubmitted() async {
     if (!state.status.isValidated) return;
+    if (!state.check) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
+
     try {
       await authRepository.signUp(
         name: state.name.value,

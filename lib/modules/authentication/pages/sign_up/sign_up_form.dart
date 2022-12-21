@@ -1,4 +1,6 @@
 import 'package:firebase_app_bloc/generated/l10n.dart';
+import 'package:firebase_app_bloc/modules/authentication/pages/sign_up/pdf_view_page.dart';
+import 'package:firebase_app_bloc/repositories/policy_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -31,7 +33,7 @@ class SignUpForm extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
@@ -46,10 +48,22 @@ class SignUpForm extends StatelessWidget {
                 buildTextFieldPassword(),
                 const SizedBox(height: 16),
                 buildTextFieldConfirmedPassword(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 28),
-                  child: Terms(size: size),
+                const SizedBox(height: 20),
+                Terms(
+                  value: context.watch<SignUpCubit>().state.check,
+                  onChanged: (value) =>
+                      context.read<SignUpCubit>().checkChanged(value!),
+                  onTap: () async {
+                    final file = await PolicyRepository().loadPdfFirebase();
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PDFViewerPage(file: file),
+                      ),
+                    );
+                  },
                 ),
+                const SizedBox(height: 28),
                 BlocBuilder<SignUpCubit, SignUpState>(
                   builder: (context, state) {
                     return ClassicButton(

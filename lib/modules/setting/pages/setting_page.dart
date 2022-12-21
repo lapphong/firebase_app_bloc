@@ -30,7 +30,6 @@ class SettingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(S.of(context).setting, style: TxtStyle.title),
-                      //buildToggleSwitchMode(),
                       const BellButton(),
                     ],
                   ),
@@ -79,9 +78,7 @@ class SettingPage extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, RouteName.languagePage),
             ),
             const SizedBox(height: 16),
-            //buildListView(applicationToggle, 1),
             buildSettingItemsSwitchDarkMode(),
-
             const SizedBox(height: 16),
 
             const TitleOptionSettings(height: 16),
@@ -151,26 +148,6 @@ class SettingPage extends StatelessWidget {
       },
     );
   }
-
-  // Widget buildToggleSwitchMode() {
-  //   return BlocBuilder<ThemeCubit, ThemeState>(
-  //     builder: (context, state) {
-  //       return Row(
-  //         children: [
-  //           const Image(image: AssetImage(AssetPath.iconDarkMode)),
-  //           ToggleSwitchButton(
-  //             value: context.select((ThemeCubit bloc) => bloc.state.appTheme) ==
-  //                     AppTheme.dark
-  //                 ? true
-  //                 : false,
-  //             onChanged: (value) =>
-  //                 context.read<ThemeCubit>().changeTheme(value),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   Future<void> _confirmSignOut(BuildContext context) async {
     final didRequestSignOut = await showAlertDialog(

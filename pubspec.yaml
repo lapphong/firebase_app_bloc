@@ -27,7 +27,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   flutter_bloc: ^8.1.1
-  validators: ^3.0.0
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.4
   cloud_firestore: ^4.1.0
@@ -40,6 +39,11 @@ dependencies:
   flutter_local_notifications: ^12.0.4
   timezone: ^0.9.0
   flutter_native_timezone: ^2.0.0
+  ##
+  path_provider: ^2.0.11
+  pdf: ^3.8.4
+  flutter_pdfview: ^1.2.5
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:

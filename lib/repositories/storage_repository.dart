@@ -12,9 +12,9 @@ class StorageRepository {
         .child('user_images')
         .child(DateTime.now().toString());
     final uploadTask = ref.putFile(file);
-    final imageUrl =
-        (await uploadTask.whenComplete(() {})).ref.getDownloadURL();
+    TaskSnapshot snapshot = await uploadTask;
+    String imageUrl = await snapshot.ref.getDownloadURL();
 
-    return await imageUrl;
+    return imageUrl;
   }
 }

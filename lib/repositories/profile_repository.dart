@@ -5,9 +5,7 @@ import '../models/models.dart';
 
 class ProfileRepository {
   final FirebaseFirestore firebaseFirestore;
-  ProfileRepository({
-    required this.firebaseFirestore,
-  });
+  ProfileRepository({required this.firebaseFirestore});
 
   Future<User> getProfile({required String uid}) async {
     try {
