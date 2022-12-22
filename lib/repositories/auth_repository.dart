@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
-import '../configs/db_config.dart';
+import '../configs/api_path.dart';
 import '../models/custom_error.dart';
 
 class AuthRepository {
@@ -25,7 +25,10 @@ class AuthRepository {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       final signedInUser = userCredential.user!;
-      await userRef.doc(signedInUser.uid).set({
+      await firebaseFirestore
+          .collection(ApiPath.user())
+          .doc(signedInUser.uid)
+          .set({
         'name': name,
         'email': email,
         'profileImage': 'https://picsum.photos/300',

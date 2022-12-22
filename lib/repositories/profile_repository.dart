@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../configs/db_config.dart';
+import '../configs/api_path.dart';
 import '../models/models.dart';
 
 class ProfileRepository {
@@ -9,7 +9,8 @@ class ProfileRepository {
 
   Future<User> getProfile({required String uid}) async {
     try {
-      final DocumentSnapshot userDoc = await userRef.doc(uid).get();
+      final DocumentSnapshot userDoc =
+          await firebaseFirestore.collection(ApiPath.user()).doc(uid).get();
 
       if (userDoc.exists) {
         final currentUser = User.fromDoc(userDoc);
@@ -34,7 +35,7 @@ class ProfileRepository {
 
   Future<void> update({required User user}) async {
     try {
-      await userRef.doc(user.id).update({
+      await firebaseFirestore.collection(ApiPath.user()).doc(user.id).update({
         'name': user.name,
         'profileImage': user.profileImage,
       });
