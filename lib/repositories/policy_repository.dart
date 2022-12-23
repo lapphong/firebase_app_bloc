@@ -27,7 +27,7 @@ class PolicyRepository {
   // Future<String> getUrlPdf() async {
   //   try {
   //     Reference ref =
-  //         firebaseStorage!.ref().child('policy_terms/policy_terms.pdf');
+  //         FirebaseStorage.instance.ref().child('policy_terms/policy_terms.pdf');
 
   //     final url = await ref.getDownloadURL();
 

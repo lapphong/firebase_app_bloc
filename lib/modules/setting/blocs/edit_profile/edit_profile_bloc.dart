@@ -81,7 +81,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         profileImage: linkImage,
       );
 
-      await profileRepository.update(user: updateUser);
+      await profileRepository.updateProfile(user: updateUser);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on CustomError catch (e) {
       emit(

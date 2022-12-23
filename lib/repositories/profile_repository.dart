@@ -33,7 +33,7 @@ class ProfileRepository {
     }
   }
 
-  Future<void> update({required User user}) async {
+  Future<void> updateProfile({required User user}) async {
     try {
       await firebaseFirestore.collection(ApiPath.user()).doc(user.id).update({
         'name': user.name,
