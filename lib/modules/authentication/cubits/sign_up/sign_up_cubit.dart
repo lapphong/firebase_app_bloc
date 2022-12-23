@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_app_bloc/utils/formz/name_formz.dart';
 import 'package:formz/formz.dart';
 
 import '../../../../models/custom_error.dart';
@@ -85,6 +86,11 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   void checkChanged(bool value) {
     emit(state.copyWith(check: value));
+  }
+
+  Future<File> loadPdf() async {
+    final file = await authRepository.loadPdfFirebase();
+    return file;
   }
 
   Future<void> signUpFormSubmitted() async {

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/assets/assets_path.dart';
-import 'package:firebase_app_bloc/repositories/profile_repository.dart';
-import 'package:firebase_app_bloc/repositories/storage_repository.dart';
+import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
+import 'package:firebase_app_bloc/repositories/user_repository/user_repository.dart';
 import 'package:firebase_app_bloc/services/notification_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -25,25 +25,19 @@ class RootPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<ProfileRepository>(
-          create: (context) => ProfileRepository(
+        RepositoryProvider<UserBase>(
+          create: (context) => UserRepository(
             firebaseFirestore: FirebaseFirestore.instance,
-          ),
-        ),
-        RepositoryProvider<StorageRepository>(
-          create: (context) => StorageRepository(
             firebaseStorage: FirebaseStorage.instance,
           ),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (_) => TabCubit(),
-          ),
+          BlocProvider(create: (_) => TabCubit()),
           BlocProvider<ProfileCubit>(
             create: (context) => ProfileCubit(
-              profileRepository: context.read<ProfileRepository>(),
+              userBase: context.read<UserBase>(),
             )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
           ),
         ],
@@ -197,8 +191,6 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                   ),
                   onPressed: () async {
-                    print('click');
-
                     await _notificationService.showScheduledLocalNotification(
                       id: 1,
                       title: "Drink Water",

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +23,13 @@ class HomePage extends StatelessWidget {
                 buildTextFieldSearch(context),
                 const SizedBox(height: 20),
                 const Discount(),
-                buildTitleContentHome(S.of(context).bestMentors, S.current.seeAll),
+                buildTitleContentHome(
+                    S.of(context).bestMentors, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildListMentors(),
                 const SizedBox(height: 20),
-                buildTitleContentHome(S.of(context).classPreview, S.current.seeAll),
+                buildTitleContentHome(
+                    S.of(context).classPreview, S.current.seeAll),
                 const SizedBox(height: 14),
                 //buildGridViewPreview(),
               ],
@@ -142,7 +145,7 @@ class HomePage extends StatelessWidget {
       children: [
         Text(textTitle, style: TxtStyle.headline3),
         TextButton(
-          onPressed: () => {},
+          onPressed: () {},
           child: Text(
             textButton,
             style: TxtStyle.headline6.copyWith(color: DarkTheme.primaryBlue600),

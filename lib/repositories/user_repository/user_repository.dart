@@ -1,12 +1,23 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-import '../configs/api_path.dart';
-import '../models/models.dart';
+import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 
-class ProfileRepository {
+import '../../configs/api_path.dart';
+import '../../models/models.dart';
+
+class UserRepository implements UserBase {
   final FirebaseFirestore firebaseFirestore;
-  ProfileRepository({required this.firebaseFirestore});
+  final FirebaseStorage firebaseStorage;
 
+  UserRepository({
+    required this.firebaseFirestore,
+    required this.firebaseStorage,
+  });
+
+  @override
   Future<User> getProfile({required String uid}) async {
     try {
       final DocumentSnapshot userDoc =
@@ -33,6 +44,7 @@ class ProfileRepository {
     }
   }
 
+  @override
   Future<void> updateProfile({required User user}) async {
     try {
       await firebaseFirestore.collection(ApiPath.user()).doc(user.id).update({
@@ -46,5 +58,18 @@ class ProfileRepository {
         plugin: 'flutter_error/server_error',
       );
     }
+  }
+
+  @override
+  Future<String> uploadImageToStorage({required File file}) async {
+    Reference ref = firebaseStorage
+        .ref()
+        .child(ApiPath.user_images())
+        .child(DateTime.now().toString());
+    final uploadTask = ref.putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String imageUrl = await snapshot.ref.getDownloadURL();
+
+    return imageUrl;
   }
 }

@@ -4,26 +4,22 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_app_bloc/models/models.dart';
+import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:formz/formz.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../repositories/profile_repository.dart';
-import '../../../../repositories/storage_repository.dart';
 import '../../../../utils/formz/name_formz.dart';
 
 part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
 
 class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
-  final ProfileRepository profileRepository;
-  final StorageRepository storageRepository;
+  final UserBase userBase;
   final User user;
 
   final ImagePicker _picker = ImagePicker();
 
   EditProfileBloc({
-    required this.profileRepository,
-    required this.storageRepository,
+    required this.userBase,
     required this.user,
   }) : super(EditProfileState(user: user)) {
     on<ChangeAvatarEvent>((event, emit) {
@@ -72,7 +68,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
     try {
       final linkImage = state.avatarPath != null
-          ? await storageRepository.uploadImageToStorage(
+          ? await userBase.uploadImageToStorage(
               file: File(state.avatarPath!))
           : user.profileImage;
 
@@ -81,7 +77,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         profileImage: linkImage,
       );
 
-      await profileRepository.updateProfile(user: updateUser);
+      await userBase.updateProfile(user: updateUser);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on CustomError catch (e) {
       emit(

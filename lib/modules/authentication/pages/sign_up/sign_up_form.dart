@@ -1,6 +1,5 @@
 import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/modules/authentication/pages/sign_up/pdf_view_page.dart';
-import 'package:firebase_app_bloc/repositories/policy_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
@@ -54,7 +53,7 @@ class SignUpForm extends StatelessWidget {
                   onChanged: (value) =>
                       context.read<SignUpCubit>().checkChanged(value!),
                   onTap: () async {
-                    final file = await PolicyRepository().loadPdfFirebase();
+                    final file = await context.read<SignUpCubit>().loadPdf();
 
                     Navigator.of(context).push(
                       MaterialPageRoute(

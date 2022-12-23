@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/modules/setting/blocs/blocs.dart';
-import 'package:firebase_app_bloc/repositories/storage_repository.dart';
+import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../assets/assets_path.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../models/models.dart';
-import '../../../../repositories/profile_repository.dart';
 import '../../../../themes/themes.dart';
 import '../../../../utils/utils.dart';
 import '../../../../widgets/stateless/stateless.dart';
@@ -27,9 +26,8 @@ class EditProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => EditProfileBloc(
-        profileRepository: context.read<ProfileRepository>(),
-        storageRepository: context.read<StorageRepository>(),
-        user: user,
+        userBase: context.read<UserBase>(),
+        user: user, 
       ),
       child: EditProfileView(user: user),
     );
