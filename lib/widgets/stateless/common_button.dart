@@ -69,10 +69,10 @@ class CircleButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
         child: Align(
-          child: Image(
+          child: Image.asset(
+            assetPath!,
             width: widthIcon,
             height: heightIcon,
-            image: AssetImage(assetPath!),
             color: DarkTheme.white,
           ),
         ),

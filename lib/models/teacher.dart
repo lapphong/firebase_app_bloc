@@ -21,7 +21,7 @@ class Teacher extends Equatable {
       id: teacherDoc.id,
       name: teacherData['name'],
       imgUrl: teacherData['imgUrl'],
-      specialize: teacherData['specialize'],
+      specialize: List.from(teacherData['specialize']),
     );
   }
 

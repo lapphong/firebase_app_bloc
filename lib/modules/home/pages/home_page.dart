@@ -1,10 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
+import 'package:firebase_app_bloc/repositories/test_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
+import '../blocs/blocs.dart';
 import '../widgets/home_widgets.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,7 +32,8 @@ class HomePage extends StatelessWidget {
                 buildTitleContentHome(
                     S.of(context).classPreview, S.current.seeAll),
                 const SizedBox(height: 14),
-                //buildGridViewPreview(),
+                buildGridViewPreview(),
+                const SizedBox(height: 24),
               ],
             ),
           ),
@@ -92,24 +94,37 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // GridView buildGridViewPreview() {
-  //   return GridView.count(
-  //     crossAxisCount: 2,
-  //     shrinkWrap: true,
-  //     mainAxisSpacing: 23,
-  //     crossAxisSpacing: 23,
-  //     childAspectRatio: 5 / 6.299,
-  //     physics: const ScrollPhysics(),
-  //     children: preview
-  //         .map(
-  //           (e) => ClassPreview(
-  //             title: e.title,
-  //             assetName: e.imageUrl,
-  //           ),
-  //         )
-  //         .toList(),
-  //   );
-  // }
+  Widget buildGridViewPreview() {
+    return BlocConsumer<HomeBloc, HomeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state.status == HomeStatus.initial) {
+          return Container();
+        } else if (state.status == HomeStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.status == HomeStatus.error) {
+          return const ProfileStatusError();
+        }
+        return GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          mainAxisSpacing: 23,
+          crossAxisSpacing: 23,
+          childAspectRatio: 5 / 6.299,
+          physics: const ScrollPhysics(),
+          children: state.list
+              .map(
+                (e) => ClassPreview(
+                  onTap: () {},
+                  field: e.field,
+                  assetName: e.image,
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
 
   // SizedBox buildListMentors() {
   //   return SizedBox(
@@ -145,7 +160,24 @@ class HomePage extends StatelessWidget {
       children: [
         Text(textTitle, style: TxtStyle.headline3),
         TextButton(
-          onPressed: () {},
+          onPressed: () async {
+            // final list = await TestRepo().getValueInDocumentID(
+            //   path: ApiPath.product(),
+            //   key: 'course_teacher_id',
+            // );
+            // for (var i = 0; i < list.length; i++) {
+            //   print('⚡⚡ $i: ${list[i]}');
+            // }
+
+            // final list2 = await TestRepo().getAllProduct();
+            // for (var i = 0; i < list2.length; i++) {
+            //   print('⚡⚡ $i: ${list2[i]}');
+            // }
+
+            // final teacher =
+            //     await TestRepo().getTeacher(id: '2EkoAjhWrF5k3vJBges5');
+            // print(teacher);
+          },
           child: Text(
             textButton,
             style: TxtStyle.headline6.copyWith(color: DarkTheme.primaryBlue600),

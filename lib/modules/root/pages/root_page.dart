@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/assets/assets_path.dart';
+import 'package:firebase_app_bloc/modules/home/blocs/bloc/home_bloc.dart';
+import 'package:firebase_app_bloc/repositories/app_repository/app_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_repository.dart';
 import 'package:firebase_app_bloc/services/notification_service.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../blocs/blocs.dart';
+import '../../../repositories/app_repository/app_repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
 import '../../home/pages/home_page.dart';
@@ -31,6 +34,12 @@ class RootPage extends StatelessWidget {
             firebaseStorage: FirebaseStorage.instance,
           ),
         ),
+        RepositoryProvider<AppBase>(
+          create: (context) => AppRepository(
+            firebaseFirestore: FirebaseFirestore.instance,
+            firebaseStorage: FirebaseStorage.instance,
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -39,6 +48,9 @@ class RootPage extends StatelessWidget {
             create: (context) => ProfileCubit(
               userBase: context.read<UserBase>(),
             )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
+          ),
+          BlocProvider(
+            create: (context) => HomeBloc(appBase: context.read<AppBase>()),
           ),
         ],
         child: const RootView(),
@@ -55,6 +67,12 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(GetListCourseEvent());
+  }
+
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
     TabItem.activity: GlobalKey<NavigatorState>(),

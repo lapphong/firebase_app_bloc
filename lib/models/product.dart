@@ -32,7 +32,7 @@ class Product extends Equatable {
       description: productData['course_description'],
       field: productData['course_field'],
       duration: productData['course_duration'],
-      requirements: productData['course_requirements'],
+      requirements: List.from(productData['course_requirements']),
       teacherID: productData['course_teacher_id'],
     );
   }
