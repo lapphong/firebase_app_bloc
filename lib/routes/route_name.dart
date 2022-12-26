@@ -16,7 +16,7 @@ class RouteName {
   static const String activityPage = 'ActivityPage';
   static const String categoryPage = 'CategoryPage';
   static const String searchMentorPage = 'SearchMentorPage';
-  static const String detailMentorPage = 'DetailMentorPage';
+  static const String detailCoursePage = 'DetailCoursePage';
   static const String playingCoursePage = 'PlayingCoursePage';
 
   static const String fullscreenVideoPage = 'FullscreenVideoPage';

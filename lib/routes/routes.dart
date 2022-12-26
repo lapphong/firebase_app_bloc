@@ -1,4 +1,5 @@
 import 'package:firebase_app_bloc/modules/dashboardPage.dart';
+import 'package:firebase_app_bloc/modules/details/pages/detail_course_page.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,12 @@ class Routes {
         final user = settings.arguments;
         if (user is User) {
           return _buildRoute(settings, EditProfilePage(user: user));
+        }
+        break;
+      case RouteName.detailCoursePage:
+        final product = settings.arguments;
+        if (product is Product) {
+          return _buildRoute(settings, DeTailCoursePage(product: product));
         }
         return _errorRoute(settings);
       // case RouteName.verifyYourPage:

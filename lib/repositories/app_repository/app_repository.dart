@@ -15,11 +15,12 @@ class AppRepository implements AppBase {
   });
 
   @override
-  Future<List<Product>> getAllProduct() async {
+  Future<List<Product>> getAllProduct(int limit) async {
     List<Product> list = [];
     try {
-      final productDoc = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(ApiPath.product())
+          .limit(limit)
           .get()
           .then((value) {
         value.docs.forEach((element) => list.add(Product.fromDoc(element)));

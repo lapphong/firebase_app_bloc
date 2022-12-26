@@ -1,6 +1,7 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
-import 'package:firebase_app_bloc/repositories/test_repo.dart';
+import 'package:firebase_app_bloc/routes/route_name.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../themes/themes.dart';
@@ -101,7 +102,7 @@ class HomePage extends StatelessWidget {
         if (state.status == HomeStatus.initial) {
           return Container();
         } else if (state.status == HomeStatus.loading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CupertinoActivityIndicator());
         } else if (state.status == HomeStatus.error) {
           return const ProfileStatusError();
         }
@@ -115,7 +116,10 @@ class HomePage extends StatelessWidget {
           children: state.list
               .map(
                 (e) => ClassPreview(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(RouteName.detailCoursePage, arguments: e);
+                  },
                   field: e.field,
                   assetName: e.image,
                 ),
@@ -169,9 +173,9 @@ class HomePage extends StatelessWidget {
             //   print('⚡⚡ $i: ${list[i]}');
             // }
 
-            // final list2 = await TestRepo().getAllProduct();
-            // for (var i = 0; i < list2.length; i++) {
-            //   print('⚡⚡ $i: ${list2[i]}');
+            // final list = await TestRepo().getAllProduct();
+            // for (var i = 0; i < list.length; i++) {
+            //   print('⚡⚡ List đầu tiên: ${list[i]}');
             // }
 
             // final teacher =

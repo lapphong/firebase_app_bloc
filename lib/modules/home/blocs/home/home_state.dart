@@ -6,6 +6,7 @@ class HomeState extends Equatable {
   final HomeStatus status;
   final List<Product> list;
   final CustomError error;
+  
   const HomeState({
     required this.status,
     required this.list,

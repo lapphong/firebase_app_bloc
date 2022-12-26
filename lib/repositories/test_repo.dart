@@ -7,8 +7,9 @@ class TestRepo {
   // Future<List<Product>> getAllProduct() async {
   //   List<Product> list = [];
   //   try {
-  //     final productDoc = await FirebaseFirestore.instance
+  //     await FirebaseFirestore.instance
   //         .collection(ApiPath.product())
+  //         .limit(2)
   //         .get()
   //         .then((value) {
   //       value.docs.forEach((element) => list.add(Product.fromDoc(element)));

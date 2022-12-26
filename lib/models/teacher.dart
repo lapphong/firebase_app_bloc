@@ -5,7 +5,7 @@ class Teacher extends Equatable {
   final String id;
   final String name;
   final String imgUrl;
-  final List<String> specialize;
+  final String specialize;
 
   const Teacher({
     required this.id,
@@ -14,6 +14,15 @@ class Teacher extends Equatable {
     required this.specialize,
   });
 
+  factory Teacher.initialTeacher() {
+    return const Teacher(
+      id: '',
+      name: '',
+      imgUrl: '',
+      specialize: '',
+    );
+  }
+
   factory Teacher.fromDoc(DocumentSnapshot teacherDoc) {
     final teacherData = teacherDoc.data() as Map<String, dynamic>;
 
@@ -21,7 +30,7 @@ class Teacher extends Equatable {
       id: teacherDoc.id,
       name: teacherData['name'],
       imgUrl: teacherData['imgUrl'],
-      specialize: List.from(teacherData['specialize']),
+      specialize: teacherData['specialize'],
     );
   }
 
@@ -37,7 +46,7 @@ class Teacher extends Equatable {
     String? id,
     String? name,
     String? imgUrl,
-    List<String>? specialize,
+    String? specialize,
   }) {
     return Teacher(
       id: id ?? this.id,
