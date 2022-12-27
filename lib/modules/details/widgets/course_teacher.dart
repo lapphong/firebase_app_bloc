@@ -11,10 +11,11 @@ class CourseTeacher extends StatelessWidget {
     required this.assetName,
     this.fullName = '',
     this.specialize = '',
+    this.voted = '',
     required this.onTap,
   }) : super(key: key);
 
-  final String? fullName, specialize;
+  final String? fullName, specialize, voted;
   final String? assetName;
   final VoidCallback? onTap;
 
@@ -39,25 +40,23 @@ class CourseTeacher extends StatelessWidget {
         ),
       ),
       right: Padding(
-        padding: const EdgeInsets.only(left: 10.0),
+        padding: const EdgeInsets.only(left: 30.0),
         child: Container(
           height: 40,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: DarkTheme.white,
-            ),
+            border: Border.all(width: 2, color: Colors.pink),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.favorite_border,
-                color: DarkTheme.greyScale400,
+              const Icon(Icons.favorite_outline_sharp, color: Colors.pink),
+              const SizedBox(width: 5),
+              Text(
+                voted!,
+                style:
+                    TxtStyle.headline4.copyWith(color: DarkTheme.greyScale500),
               ),
-              Text('Subscribe',
-                  style: TxtStyle.headline5
-                      .copyWith(color: DarkTheme.primaryBlue500)),
             ],
           ),
         ),

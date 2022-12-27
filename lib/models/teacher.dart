@@ -5,7 +5,7 @@ class Teacher extends Equatable {
   final String id;
   final String name;
   final String imgUrl;
-  final String voted;
+  final int voted;
   final String specialize;
 
   const Teacher({
@@ -21,7 +21,7 @@ class Teacher extends Equatable {
       id: '',
       name: '',
       imgUrl: '',
-      voted: '',
+      voted: 0,
       specialize: '',
     );
   }
@@ -33,7 +33,7 @@ class Teacher extends Equatable {
       id: teacherDoc.id,
       name: teacherData['name'],
       imgUrl: teacherData['imgUrl'],
-      voted: teacherData['voted'] ,
+      voted: teacherData['voted'],
       specialize: teacherData['specialize'],
     );
   }
@@ -50,7 +50,7 @@ class Teacher extends Equatable {
     String? id,
     String? name,
     String? imgUrl,
-    String? voted,
+    int? voted,
     String? specialize,
   }) {
     return Teacher(

@@ -17,26 +17,40 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              children: [
-                buildDeTailAccount(),
-                buildTextFieldSearch(context),
-                const SizedBox(height: 20),
-                const Discount(),
-                buildTitleContentHome(
-                    S.of(context).bestMentors, S.current.seeAll),
-                const SizedBox(height: 14),
-                buildListMentors(),
-                const SizedBox(height: 20),
-                buildTitleContentHome(
-                    S.of(context).classPreview, S.current.seeAll),
-                const SizedBox(height: 14),
-                buildGridViewPreview(),
-                const SizedBox(height: 24),
-              ],
-            ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    buildDeTailAccount(),
+                    buildTextFieldSearch(context),
+                    const SizedBox(height: 20),
+                    const Discount(),
+                    buildTitleContentHome(
+                        S.of(context).bestMentors, S.current.seeAll),
+                    const SizedBox(height: 14),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: buildListBestMentors(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    buildTitleContentHome(
+                        S.of(context).classPreview, S.current.seeAll),
+                    const SizedBox(height: 14),
+                    buildGridViewPreview(),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -83,7 +97,7 @@ class HomePage extends StatelessWidget {
                 const BellButton(),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Text(S.current.hi(state.user.name), style: TxtStyle.headline2),
             Text(
               S.of(context).welcomeBackToUdemy,
@@ -129,7 +143,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildListMentors() {
+  Widget buildListBestMentors() {
     return SizedBox(
       height: 175,
       child: BlocBuilder<MentorBloc, MentorState>(
@@ -150,7 +164,7 @@ class HomePage extends StatelessWidget {
                   ? BestMentor(
                       imgUrl: mentorData.imgUrl,
                       name: mentorData.name,
-                      voted: mentorData.voted,
+                      voted: mentorData.voted.toString(),
                       onTap: () {},
                     )
                   : Padding(
@@ -158,7 +172,7 @@ class HomePage extends StatelessWidget {
                       child: BestMentor(
                         imgUrl: mentorData.imgUrl,
                         name: mentorData.name,
-                        voted: mentorData.voted,
+                        voted: mentorData.voted.toString(),
                         onTap: () {},
                       ),
                     );

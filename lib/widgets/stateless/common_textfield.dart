@@ -31,6 +31,7 @@ class CommonTextField extends StatelessWidget {
     this.initialValue,
     this.prefix,
     this.isRequired,
+    this.sizedBox = 16,
     Key? key,
   }) : super(key: key);
 
@@ -53,6 +54,7 @@ class CommonTextField extends StatelessWidget {
   final bool? isRequired;
   final void Function()? onEditingComplete;
   final String? Function(String?)? validator;
+  final double sizedBox;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class CommonTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: TxtStyle.headline4),
-        const SizedBox(height: 16),
+        SizedBox(height: sizedBox),
         Theme(
           data: Theme.of(context).copyWith(
             iconTheme: const IconThemeData(

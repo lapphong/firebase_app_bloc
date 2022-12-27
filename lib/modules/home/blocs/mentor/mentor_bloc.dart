@@ -17,13 +17,13 @@ class MentorBloc extends Bloc<MentorEvent, MentorState> {
   final AppBase appBase;
 
   MentorBloc({required this.appBase}) : super(MentorState.initial()) {
-    on<GetListMentorEvent>(
+    on<GetListBestMentorEvent>(
       _getAllMentor,
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
   }
 
-  EventTransformer<GetListMentorEvent> debounce<GetListCourseEvent>(
+  EventTransformer<GetListBestMentorEvent> debounce<GetListCourseEvent>(
       Duration duration) {
     return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
   }
@@ -35,7 +35,7 @@ class MentorBloc extends Bloc<MentorEvent, MentorState> {
     emit(state.copyWith(status: MentorStatus.loading));
 
     try {
-      final List<Teacher> listTeacher = await appBase.getAllMentor(_limit);
+      final List<Teacher> listTeacher = await appBase.getAllBestMentor(_limit);
       emit(state.copyWith(status: MentorStatus.loaded, list: listTeacher));
     } on CustomError catch (e) {
       emit(state.copyWith(status: MentorStatus.error, error: e));

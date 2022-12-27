@@ -170,6 +170,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                         }
                         return CourseTeacher(
                           onTap: () {},
+                          voted: state.teacher.voted.toString(),
                           assetName: state.teacher.imgUrl,
                           fullName: state.teacher.name,
                           specialize: state.teacher.specialize,

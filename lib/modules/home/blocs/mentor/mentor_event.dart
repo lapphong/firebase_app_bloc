@@ -7,4 +7,4 @@ abstract class MentorEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetListMentorEvent extends MentorEvent {}
+class GetListBestMentorEvent extends MentorEvent {}

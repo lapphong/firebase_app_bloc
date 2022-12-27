@@ -43,11 +43,13 @@ class AppRepository implements AppBase {
   }
 
   @override
-  Future<List<Teacher>> getAllMentor(int limit) async {
+  Future<List<Teacher>> getAllBestMentor(int limit) async {
     List<Teacher> list = [];
     try {
       await FirebaseFirestore.instance
-          .collection(ApiPath.teacher())
+          .collection(ApiPath.teacher())  
+          .orderBy('voted',descending: true)
+          .where('voted',isGreaterThanOrEqualTo: 100)
           .limit(limit)
           .get()
           .then((value) {
