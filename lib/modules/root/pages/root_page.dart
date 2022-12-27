@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app_bloc/assets/assets_path.dart';
-import 'package:firebase_app_bloc/modules/home/blocs/home/home_bloc.dart';
 import 'package:firebase_app_bloc/repositories/app_repository/app_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_repository.dart';
@@ -16,6 +15,7 @@ import '../../../repositories/app_repository/app_repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
 import '../../details/blocs/blocs.dart';
+import '../../home/blocs/blocs.dart';
 import '../../home/pages/home_page.dart';
 import '../../setting/pages/setting_page.dart';
 import '../cubits/cubits.dart';
@@ -51,7 +51,10 @@ class RootPage extends StatelessWidget {
             )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
           ),
           BlocProvider(
-            create: (context) => HomeBloc(appBase: context.read<AppBase>()),
+            create: (context) => ClassBloc(appBase: context.read<AppBase>()),
+          ),
+          BlocProvider(
+            create: (context) => MentorBloc(appBase: context.read<AppBase>()),
           ),
           BlocProvider(
             create: (context) => DetailBloc(appBase: context.read<AppBase>()),
@@ -74,7 +77,8 @@ class _RootViewState extends State<RootView> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(GetListCourseEvent());
+    context.read<ClassBloc>().add(GetListCourseEvent());
+    context.read<MentorBloc>().add(GetListMentorEvent());
   }
 
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {

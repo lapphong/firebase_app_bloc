@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ProfileStatusError extends StatelessWidget {
-  const ProfileStatusError({
+class StatusError extends StatelessWidget {
+  const StatusError({
     Key? key,
   }) : super(key: key);
 

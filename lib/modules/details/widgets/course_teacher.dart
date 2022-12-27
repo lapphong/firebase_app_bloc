@@ -10,11 +10,11 @@ class CourseTeacher extends StatelessWidget {
     Key? key,
     required this.assetName,
     this.fullName = '',
-    this.specialize='',
+    this.specialize = '',
     required this.onTap,
   }) : super(key: key);
 
-  final String? fullName,specialize;
+  final String? fullName, specialize;
   final String? assetName;
   final VoidCallback? onTap;
 
@@ -38,9 +38,29 @@ class CourseTeacher extends StatelessWidget {
           ],
         ),
       ),
-      right: const Image(
-        alignment: Alignment.centerRight,
-        image: AssetImage(AssetPath.iconArrowRight),
+      right: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 2,
+              color: DarkTheme.white,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.favorite_border,
+                color: DarkTheme.greyScale400,
+              ),
+              Text('Subscribe',
+                  style: TxtStyle.headline5
+                      .copyWith(color: DarkTheme.primaryBlue500)),
+            ],
+          ),
+        ),
       ),
       child: ClipOval(
         child: SizedBox(

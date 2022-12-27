@@ -1,21 +1,21 @@
-part of 'home_bloc.dart';
+part of 'class_bloc.dart';
 
-enum HomeStatus { initial, loading, loaded, error }
+enum ClassStatus { initial, loading, loaded, error }
 
-class HomeState extends Equatable {
-  final HomeStatus status;
+class ClassState extends Equatable {
+  final ClassStatus status;
   final List<Product> list;
   final CustomError error;
   
-  const HomeState({
+  const ClassState({
     required this.status,
     required this.list,
     required this.error,
   });
 
-  factory HomeState.initial() {
-    return const HomeState(
-      status: HomeStatus.initial,
+  factory ClassState.initial() {
+    return const ClassState(
+      status: ClassStatus.initial,
       list: [],
       error: CustomError(),
     );
@@ -25,14 +25,14 @@ class HomeState extends Equatable {
   List<Object> get props => [status, list, error];
 
   @override
-  String toString() => 'HomeState(status: $status, list: $list, error: $error)';
+  String toString() => 'ClassState(status: $status, list: $list, error: $error)';
 
-  HomeState copyWith({
-    HomeStatus? status,
+  ClassState copyWith({
+    ClassStatus? status,
     List<Product>? list,
     CustomError? error,
   }) {
-    return HomeState(
+    return ClassState(
       status: status ?? this.status,
       list: list ?? this.list,
       error: error ?? this.error,

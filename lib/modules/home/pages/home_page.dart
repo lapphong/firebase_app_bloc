@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                 buildTitleContentHome(
                     S.of(context).bestMentors, S.current.seeAll),
                 const SizedBox(height: 14),
-                //buildListMentors(),
+                buildListMentors(),
                 const SizedBox(height: 20),
                 buildTitleContentHome(
                     S.of(context).classPreview, S.current.seeAll),
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
         } else if (state.profileStatus == ProfileStatus.loading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state.profileStatus == ProfileStatus.error) {
-          return const ProfileStatusError();
+          return const StatusError();
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,15 +96,14 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildGridViewPreview() {
-    return BlocConsumer<HomeBloc, HomeState>(
-      listener: (context, state) {},
+    return BlocBuilder<ClassBloc, ClassState>(
       builder: (context, state) {
-        if (state.status == HomeStatus.initial) {
+        if (state.status == ClassStatus.initial) {
           return Container();
-        } else if (state.status == HomeStatus.loading) {
+        } else if (state.status == ClassStatus.loading) {
           return const Center(child: CupertinoActivityIndicator());
-        } else if (state.status == HomeStatus.error) {
-          return const ProfileStatusError();
+        } else if (state.status == ClassStatus.error) {
+          return const StatusError();
         }
         return GridView.count(
           crossAxisCount: 2,
@@ -130,33 +129,45 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // SizedBox buildListMentors() {
-  //   return SizedBox(
-  //     height: 192,
-  //     child: ListView.builder(
-  //       itemCount: mentor.length,
-  //       scrollDirection: Axis.horizontal,
-  //       itemBuilder: (context, index) {
-  //         return index == 0
-  //             ? Mentor(
-  //                 assetName: mentor[index].imageUrl,
-  //                 name: mentor[index].name,
-  //                 title: mentor[index].title,
-  //                 onTap: () {},
-  //               )
-  //             : Padding(
-  //                 padding: const EdgeInsets.only(left: 10.0),
-  //                 child: Mentor(
-  //                   assetName: mentor[index].imageUrl,
-  //                   name: mentor[index].name,
-  //                   title: mentor[index].title,
-  //                   onTap: () {},
-  //                 ),
-  //               );
-  //       },
-  //     ),
-  //   );
-  // }
+  Widget buildListMentors() {
+    return SizedBox(
+      height: 175,
+      child: BlocBuilder<MentorBloc, MentorState>(
+        builder: (context, state) {
+          if (state.status == MentorStatus.initial) {
+            return Container();
+          } else if (state.status == MentorStatus.loading) {
+            return const Center(child: CupertinoActivityIndicator());
+          } else if (state.status == MentorStatus.error) {
+            return const StatusError();
+          }
+          return ListView.builder(
+            itemCount: state.list.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              final mentorData = state.list[index];
+              return index == 0
+                  ? BestMentor(
+                      imgUrl: mentorData.imgUrl,
+                      name: mentorData.name,
+                      voted: mentorData.voted,
+                      onTap: () {},
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: BestMentor(
+                        imgUrl: mentorData.imgUrl,
+                        name: mentorData.name,
+                        voted: mentorData.voted,
+                        onTap: () {},
+                      ),
+                    );
+            },
+          );
+        },
+      ),
+    );
+  }
 
   Widget buildTitleContentHome(String textTitle, String textButton) {
     return Row(

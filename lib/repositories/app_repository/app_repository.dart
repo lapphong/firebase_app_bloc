@@ -43,6 +43,34 @@ class AppRepository implements AppBase {
   }
 
   @override
+  Future<List<Teacher>> getAllMentor(int limit) async {
+    List<Teacher> list = [];
+    try {
+      await FirebaseFirestore.instance
+          .collection(ApiPath.teacher())
+          .limit(limit)
+          .get()
+          .then((value) {
+        value.docs.forEach((element) => list.add(Teacher.fromDoc(element)));
+      });
+
+      if (list.isNotEmpty) {
+        return list;
+      }
+
+      throw 'Teacher is empty';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
   Future<Teacher> getTeacherByID({required String id}) async {
     try {
       final teacherDoc = await FirebaseFirestore.instance

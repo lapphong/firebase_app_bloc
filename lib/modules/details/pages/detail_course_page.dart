@@ -60,7 +60,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                     elevation: 0,
                     automaticallyImplyLeading: false,
                     pinned: true,
-                    expandedHeight: 360.0,
+                    expandedHeight: 340.0,
                     collapsedHeight: 140,
                     forceElevated: innerBoxIsScrolled,
                     flexibleSpace: Stack(
@@ -71,8 +71,8 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                           child: CachedNetworkImage(
                             imageUrl: widget.product.image,
                             width: MediaQuery.of(context).size.width,
-                            height: 360,
-                            fit: BoxFit.cover,
+                            height: 340,
+                            fit: BoxFit.fill,
                             placeholder: (_, __) => const Image(
                                 image: AssetImage(AssetPath.imgLoading)),
                             errorWidget: (context, url, error) => const Image(
@@ -84,68 +84,8 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: () => Navigator.pop(context),
-                                    child: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          width: 1,
-                                          color: DarkTheme.greyScale100,
-                                        ),
-                                      ),
-                                      child: Image.asset(
-                                        AssetPath.iconArrowLeft,
-                                        color: DarkTheme.white,
-                                      ),
-                                    ),
-                                  ),
-                                  Image.asset(
-                                    AssetPath.iconMyFavorite,
-                                    width: 30,
-                                    height: 30,
-                                    fit: BoxFit.cover,
-                                    color: DarkTheme.greyScale400,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                          context
-                                              .watch<DetailBloc>()
-                                              .state
-                                              .teacher
-                                              .name,
-                                          style: TxtStyle.headline3),
-                                      Text(widget.product.field,
-                                          style: TxtStyle.headline4),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 52,
-                                    height: 52,
-                                    child: CircleButton(
-                                      widthIcon: 24,
-                                      heightIcon: 24,
-                                      bgColor: DarkTheme.primaryBlue600,
-                                      assetPath: AssetPath.iconPlay,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              buildWidgetInImageTop(context),
+                              buildWidgetInImageBottom(context),
                             ],
                           ),
                         ),
@@ -199,7 +139,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -226,7 +166,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                             color: DarkTheme.white,
                           ));
                         } else if (state.status == DetailStatus.error) {
-                          return const ProfileStatusError();
+                          return const StatusError();
                         }
                         return CourseTeacher(
                           onTap: () {},
@@ -304,6 +244,52 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
           ],
         );
       },
+    );
+  }
+
+  Widget buildWidgetInImageBottom(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        Text(''),
+        SizedBox(
+          width: 52,
+          height: 52,
+          child: CircleButton(
+            widthIcon: 24,
+            heightIcon: 24,
+            bgColor: DarkTheme.primaryBlue600,
+            assetPath: AssetPath.iconPlay,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildWidgetInImageTop(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(width: 2, color: DarkTheme.white),
+            ),
+            child: Image.asset(AssetPath.iconArrowLeft, color: DarkTheme.white),
+          ),
+        ),
+        Image.asset(
+          AssetPath.iconMyFavorite,
+          width: 30,
+          height: 30,
+          fit: BoxFit.cover,
+          color: DarkTheme.greyScale500,
+        ),
+      ],
     );
   }
 

@@ -6,16 +6,16 @@ import 'package:firebase_app_bloc/models/models.dart';
 import 'package:firebase_app_bloc/repositories/app_repository/app_base.dart';
 import 'package:rxdart/rxdart.dart';
 
-part 'home_event.dart';
-part 'home_state.dart';
+part 'class_event.dart';
+part 'class_state.dart';
 
 const _limit = 20;
 const _duration = 300;
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
+class ClassBloc extends Bloc<ClassEvent, ClassState> {
   final AppBase appBase;
 
-  HomeBloc({required this.appBase}) : super(HomeState.initial()) {
+  ClassBloc({required this.appBase}) : super(ClassState.initial()) {
     on<GetListCourseEvent>(
       _getListCourse,
       transformer: debounce(const Duration(milliseconds: _duration)),
@@ -29,15 +29,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> _getListCourse(
     GetListCourseEvent event,
-    Emitter<HomeState> emit,
+    Emitter<ClassState> emit,
   ) async {
-    emit(state.copyWith(status: HomeStatus.loading));
+    emit(state.copyWith(status: ClassStatus.loading));
 
     try {
       final List<Product> listProduct = await appBase.getAllProduct(_limit);
-      emit(state.copyWith(status: HomeStatus.loaded, list: listProduct));
+      emit(state.copyWith(status: ClassStatus.loaded, list: listProduct));
     } on CustomError catch (e) {
-      emit(state.copyWith(status: HomeStatus.error, error: e));
+      emit(state.copyWith(status: ClassStatus.error, error: e));
     }
   }
 }

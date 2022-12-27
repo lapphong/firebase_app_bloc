@@ -31,7 +31,7 @@ class ClassPreview extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: CachedNetworkImage(
                 imageUrl: assetName,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 placeholder: (_, __) =>
                     const Image(image: AssetImage(AssetPath.imgLoading)),
                 errorWidget: (context, url, error) =>

@@ -5,12 +5,14 @@ class Teacher extends Equatable {
   final String id;
   final String name;
   final String imgUrl;
+  final String voted;
   final String specialize;
 
   const Teacher({
     required this.id,
     required this.name,
     required this.imgUrl,
+    required this.voted,
     required this.specialize,
   });
 
@@ -19,6 +21,7 @@ class Teacher extends Equatable {
       id: '',
       name: '',
       imgUrl: '',
+      voted: '',
       specialize: '',
     );
   }
@@ -30,28 +33,31 @@ class Teacher extends Equatable {
       id: teacherDoc.id,
       name: teacherData['name'],
       imgUrl: teacherData['imgUrl'],
+      voted: teacherData['voted'] ,
       specialize: teacherData['specialize'],
     );
   }
 
   @override
-  List<Object> get props => [id, name, imgUrl, specialize];
+  List<Object> get props => [id, name, imgUrl, voted, specialize];
 
   @override
   String toString() {
-    return 'Teacher(id: $id,name: $name,imgUrl:$imgUrl,specialize:$specialize)';
+    return 'Teacher(id: $id,name: $name,imgUrl:$imgUrl,voted: $voted,specialize:$specialize)';
   }
 
   Teacher copyWith({
     String? id,
     String? name,
     String? imgUrl,
+    String? voted,
     String? specialize,
   }) {
     return Teacher(
       id: id ?? this.id,
       name: name ?? this.name,
       imgUrl: imgUrl ?? this.imgUrl,
+      voted: voted ?? this.voted,
       specialize: specialize ?? this.specialize,
     );
   }

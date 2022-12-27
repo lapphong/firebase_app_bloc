@@ -107,7 +107,7 @@ class SettingPage extends StatelessWidget {
         } else if (state.profileStatus == ProfileStatus.loading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state.profileStatus == ProfileStatus.error) {
-          return const ProfileStatusError();
+          return const StatusError();
         }
         return SettingAccount(
           onTap: () => Navigator.of(context).pushNamed(
