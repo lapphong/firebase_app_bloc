@@ -111,7 +111,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage> {
                   duration: widget.product.duration,
                   requirements: widget.product.requirements,
                 ),
-                TabCoursePage(),
+                TabCoursePage(listVideoID: widget.product.listVideoID),
               ],
             ),
           ),

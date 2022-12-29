@@ -1,41 +1,59 @@
 part of 'detail_bloc.dart';
 
-enum DetailStatus { initial, loading, loaded, error }
+enum OverviewStatus { initial, loading, loaded, error }
+
+enum CourseStatus { initial, loading, loaded, error }
 
 class DetailState extends Equatable {
-  final DetailStatus status;
+  final OverviewStatus statusOverview;
+  final CourseStatus statusCourse;
   final Teacher teacher;
+  final List<VideoCourse> videoCourse;
   final CustomError error;
 
   const DetailState({
-    required this.status,
+    required this.statusOverview,
+    required this.statusCourse,
     required this.teacher,
+    required this.videoCourse,
     required this.error,
   });
 
   factory DetailState.initial() {
     return DetailState(
-      status: DetailStatus.initial,
+      statusOverview: OverviewStatus.initial,
+      statusCourse: CourseStatus.initial,
       teacher: Teacher.initialTeacher(),
+      videoCourse: const [],
       error: const CustomError(),
     );
   }
 
   @override
-  List<Object> get props => [status, teacher, error];
+  List<Object> get props => [
+        statusOverview,
+        statusCourse,
+        teacher,
+        videoCourse,
+        error,
+      ];
 
   @override
   String toString() =>
-      'DetailState(status: $status, teacher: $teacher, error: $error)';
+      'DetailState(statusOverview: $statusOverview,statusCourse: $statusCourse, teacher: $teacher,videoCourse: $videoCourse, error: $error)';
 
   DetailState copyWith({
-    DetailStatus? status,
+    OverviewStatus? statusOverview,
+    CourseStatus? statusCourse,
     Teacher? teacher,
+    List<VideoCourse>? videoCourse,
     CustomError? error,
   }) {
     return DetailState(
-      status: status ?? this.status,
+      statusOverview: statusOverview ?? this.statusOverview,
+      statusCourse: statusCourse ?? this.statusCourse,
       teacher: teacher ?? this.teacher,
+      videoCourse: videoCourse ?? this.videoCourse,
       error: error ?? this.error,
     );
   }

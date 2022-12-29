@@ -1,5 +1,7 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
+import 'package:firebase_app_bloc/models/models.dart';
+import 'package:firebase_app_bloc/repositories/test_repo.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -190,6 +192,10 @@ class HomePage extends StatelessWidget {
         Text(textTitle, style: TxtStyle.headline3),
         TextButton(
           onPressed: () async {
+            // final VideoCourse aaa =
+            //     await TestRepo().getVideoCourseByID(id: 'VO5NnMa4O3oyX9sgKHk3');
+            // print(aaa);
+
             // final list = await TestRepo().getValueInDocumentID(
             //   path: ApiPath.product(),
             //   key: 'course_teacher_id',

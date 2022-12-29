@@ -18,7 +18,7 @@ class AppRepository implements AppBase {
   Future<List<Product>> getAllProduct(int limit) async {
     List<Product> list = [];
     try {
-      await FirebaseFirestore.instance
+      await firebaseFirestore
           .collection(ApiPath.product())
           .limit(limit)
           .get()
@@ -46,10 +46,10 @@ class AppRepository implements AppBase {
   Future<List<Teacher>> getAllBestMentor(int limit) async {
     List<Teacher> list = [];
     try {
-      await FirebaseFirestore.instance
-          .collection(ApiPath.teacher())  
-          .orderBy('voted',descending: true)
-          .where('voted',isGreaterThanOrEqualTo: 100)
+      await firebaseFirestore
+          .collection(ApiPath.teacher())
+          .orderBy('voted', descending: true)
+          .where('voted', isGreaterThanOrEqualTo: 100)
           .limit(limit)
           .get()
           .then((value) {
@@ -72,10 +72,12 @@ class AppRepository implements AppBase {
     }
   }
 
+  /*--------------------------------------------------------------------------*/
+
   @override
   Future<Teacher> getTeacherByID({required String id}) async {
     try {
-      final teacherDoc = await FirebaseFirestore.instance
+      final teacherDoc = await firebaseFirestore
           .collection(ApiPath.teacher())
           .doc(id)
           .get();
@@ -86,6 +88,31 @@ class AppRepository implements AppBase {
       }
 
       throw 'Teacher not found';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<VideoCourse> getVideoCourseByID({required String id}) async {
+    try {
+      final videoDoc = await firebaseFirestore
+          .collection(ApiPath.video())
+          .doc(id)
+          .get();
+
+      if (videoDoc.exists) {
+        final currentVideo = VideoCourse.fromDoc(videoDoc);
+        return currentVideo;
+      }
+
+      throw 'Video not found';
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {

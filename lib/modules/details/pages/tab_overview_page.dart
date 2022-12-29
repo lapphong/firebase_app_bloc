@@ -44,7 +44,7 @@ class _TabOverviewPageState extends State<TabOverviewPage> {
                     const SizedBox(height: 24),
                     BlocConsumer<DetailBloc, DetailState>(
                       listener: (context, state) {
-                        if (state.status == DetailStatus.error) {
+                        if (state.statusOverview == OverviewStatus.error) {
                           showAlertDialog(
                             context,
                             title: 'ERROR',
@@ -54,14 +54,16 @@ class _TabOverviewPageState extends State<TabOverviewPage> {
                         }
                       },
                       builder: (context, state) {
-                        if (state.status == DetailStatus.initial) {
+                        if (state.statusOverview == OverviewStatus.initial) {
                           return Container();
-                        } else if (state.status == DetailStatus.loading) {
+                        } else if (state.statusOverview ==
+                            OverviewStatus.loading) {
                           return const Center(
                               child: CupertinoActivityIndicator(
                             color: DarkTheme.white,
                           ));
-                        } else if (state.status == DetailStatus.error) {
+                        } else if (state.statusOverview ==
+                            OverviewStatus.error) {
                           return const StatusError();
                         }
                         return CourseTeacher(
@@ -78,6 +80,9 @@ class _TabOverviewPageState extends State<TabOverviewPage> {
                     const SizedBox(height: 14),
                     Text(
                       widget.description,
+                      softWrap: false,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TxtStyle.headline4.copyWith(
                         color: DarkTheme.greyScale500,
                       ),

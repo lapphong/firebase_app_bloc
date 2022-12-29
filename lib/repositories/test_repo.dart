@@ -4,6 +4,30 @@ import 'package:firebase_app_bloc/configs/api_path.dart';
 import '../models/models.dart';
 
 class TestRepo {
+  Future<VideoCourse> getVideoCourseByID({required String id}) async {
+    try {
+      final videoDoc = await FirebaseFirestore.instance
+          .collection(ApiPath.video())
+          .doc(id)
+          .get();
+
+      if (videoDoc.exists) {
+        final currentVideo = VideoCourse.fromDoc(videoDoc);
+        return currentVideo;
+      }
+
+      throw 'Video not found';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
   // Future<List<Product>> getAllProduct() async {
   //   List<Product> list = [];
   //   try {
