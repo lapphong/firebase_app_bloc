@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_app_bloc/assets/assets_path.dart';
-import 'package:firebase_app_bloc/modules/details/widgets/course_teacher.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_app_bloc/modules/details/pages/tab_course_page.dart';
+import 'package:firebase_app_bloc/modules/details/pages/tab_overview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,10 +18,7 @@ class DeTailCoursePage extends StatefulWidget {
   State<DeTailCoursePage> createState() => _DeTailCoursePageState();
 }
 
-class _DeTailCoursePageState extends State<DeTailCoursePage>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
+class _DeTailCoursePageState extends State<DeTailCoursePage> {
   final List<Tab> myTabs = <Tab>[
     const Tab(text: 'Overview'),
     const Tab(text: 'Course'),
@@ -32,15 +29,7 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
     context
         .read<DetailBloc>()
         .add(GetTeacherByIDEvent(id: widget.product.teacherID));
-    _tabController = TabController(length: myTabs.length, vsync: this);
-    _tabController.addListener(() => setState(() {}));
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -98,7 +87,6 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
                   delegate: SliverPersistentHeaderDelegateImpl(
                     tabBar: TabBar(
                       tabs: myTabs,
-                      controller: _tabController,
                       physics: const NeverScrollableScrollPhysics(),
                       indicatorSize: TabBarIndicatorSize.tab,
                       labelStyle: TxtStyle.headline4.copyWith(
@@ -116,10 +104,14 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
               ];
             },
             body: TabBarView(
-              controller: _tabController,
               children: [
-                buildTabLeft(),
-                buildTabRight(),
+                TabOverviewPage(
+                  title: widget.product.title,
+                  description: widget.product.description,
+                  duration: widget.product.duration,
+                  requirements: widget.product.requirements,
+                ),
+                TabCoursePage(),
               ],
             ),
           ),
@@ -128,135 +120,16 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
     );
   }
 
-  Widget buildTabLeft() {
-    return Builder(
-      builder: (BuildContext context) {
-        return CustomScrollView(
-          key: PageStorageKey(myTabs[0]),
-          slivers: <Widget>[
-            SliverOverlapInjector(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 12),
-                    Text(widget.product.title, style: TxtStyle.headline1),
-                    const SizedBox(height: 24),
-                    BlocConsumer<DetailBloc, DetailState>(
-                      listener: (context, state) {
-                        if (state.status == DetailStatus.error) {
-                          showAlertDialog(
-                            context,
-                            title: 'ERROR',
-                            content: state.error.toString(),
-                            defaultActionText: 'OK',
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state.status == DetailStatus.initial) {
-                          return Container();
-                        } else if (state.status == DetailStatus.loading) {
-                          return const Center(
-                              child: CupertinoActivityIndicator(
-                            color: DarkTheme.white,
-                          ));
-                        } else if (state.status == DetailStatus.error) {
-                          return const StatusError();
-                        }
-                        return CourseTeacher(
-                          onTap: () {},
-                          voted: state.teacher.voted.toString(),
-                          assetName: state.teacher.imgUrl,
-                          fullName: state.teacher.name,
-                          specialize: state.teacher.specialize,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    buildTitle('Description'),
-                    const SizedBox(height: 14),
-                    Text(
-                      widget.product.description,
-                      style: TxtStyle.headline4.copyWith(
-                        color: DarkTheme.greyScale500,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    buildTitle('What you\'ll get'),
-                    const SizedBox(height: 14),
-                    buildItemSubjectGet(
-                      title: '${widget.product.duration} Hours of Demand Video',
-                      icon: AssetPath.iconTime,
-                    ),
-                    const SizedBox(height: 14),
-                    buildItemSubjectGet(
-                      title: 'Exclusive learning materials',
-                      icon: AssetPath.iconFile,
-                    ),
-                    const SizedBox(height: 14),
-                    buildItemSubjectGet(
-                      title: 'Full lifetime access',
-                      icon: AssetPath.iconInfinity,
-                    ),
-                    const SizedBox(height: 24),
-                    buildTitle('Requirements'),
-                    const SizedBox(height: 10),
-                    buildListViewGet(),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget buildTabRight() {
-    return Builder(
-      builder: (BuildContext context) {
-        return CustomScrollView(
-          key: PageStorageKey(myTabs[1]),
-          slivers: <Widget>[
-            SliverOverlapInjector(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        // buildListCourse(
-                        //     courseItem, context),
-                      ],
-                    ),
-                    const SizedBox(height: 100),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Widget buildWidgetInImageBottom(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
-        Text(''),
+      children: [
+        const Text(''),
         SizedBox(
           width: 52,
           height: 52,
           child: CircleButton(
+            onTap: () {},
             widthIcon: 24,
             heightIcon: 24,
             bgColor: DarkTheme.primaryBlue600,
@@ -292,41 +165,6 @@ class _DeTailCoursePageState extends State<DeTailCoursePage>
         ),
       ],
     );
-  }
-
-  Widget buildListViewGet() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: widget.product.requirements.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 14),
-          child: Text(
-            '• ${widget.product.requirements[index]}',
-            style: TxtStyle.headline5,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget buildItemSubjectGet({required String title, required String icon}) {
-    return BodyItemAsset(
-      assetName: AssetPath.imgBackgroundItems,
-      height: 32,
-      widthImg: 32,
-      mid: Padding(
-        padding: const EdgeInsets.only(left: 12.0),
-        child: Center(child: Text(title, style: TxtStyle.headline4)),
-      ),
-      right: const Text(''),
-      child: Center(child: Image.asset(icon, width: 15, height: 15)),
-    );
-  }
-
-  Widget buildTitle(String text) {
-    return Text(text, style: TxtStyle.headline3);
   }
 }
 
