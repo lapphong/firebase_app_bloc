@@ -23,9 +23,11 @@ class TabOverviewPage extends StatefulWidget {
   State<TabOverviewPage> createState() => _TabOverviewPageState();
 }
 
-class _TabOverviewPageState extends State<TabOverviewPage> {
+class _TabOverviewPageState extends State<TabOverviewPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Builder(
       builder: (BuildContext context) {
         return CustomScrollView(
@@ -150,4 +152,7 @@ class _TabOverviewPageState extends State<TabOverviewPage> {
   }
 
   Widget buildTitle(String text) => Text(text, style: TxtStyle.headline3);
+
+  @override
+  bool get wantKeepAlive => true;
 }

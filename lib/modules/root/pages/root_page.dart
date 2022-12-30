@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:firebase_app_bloc/repositories/app_repository/app_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_repository.dart';
-import 'package:firebase_app_bloc/services/notification_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +12,7 @@ import '../../../blocs/blocs.dart';
 import '../../../repositories/app_repository/app_repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
+import '../../category/pages/category_page.dart';
 import '../../details/blocs/blocs.dart';
 import '../../home/blocs/blocs.dart';
 import '../../home/pages/home_page.dart';
@@ -168,79 +167,79 @@ class ActivityPage extends StatelessWidget {
   }
 }
 
-class CategoryPage extends StatefulWidget {
-  const CategoryPage({super.key});
+// class CategoryPage extends StatefulWidget {
+//   const CategoryPage({super.key});
 
-  @override
-  State<CategoryPage> createState() => _CategoryPageState();
-}
+//   @override
+//   State<CategoryPage> createState() => _CategoryPageState();
+// }
 
-class _CategoryPageState extends State<CategoryPage> {
-  final _notificationService = NotificationService();
+// class _CategoryPageState extends State<CategoryPage> {
+//   final _notificationService = NotificationService();
 
-  @override
-  void initState() {
-    super.initState();
-    listenToNotificationStream();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     listenToNotificationStream();
+//   }
 
-  void listenToNotificationStream() {
-    _notificationService.selectNotificationStream.stream
-        .listen((String? payload) async {
-      await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ActivityPage(payload: payload)),
-      );
-    });
-  }
+//   void listenToNotificationStream() {
+//     _notificationService.selectNotificationStream.stream
+//         .listen((String? payload) async {
+//       await Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) => ActivityPage(payload: payload)),
+//       );
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 80.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Category Page', style: TxtStyle.headline1),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(DarkTheme.primaryBlue600),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
-                  onPressed: () async {
-                    await _notificationService.showScheduledLocalNotification(
-                      id: 1,
-                      title: "Drink Water",
-                      body: "Time to drink some water!",
-                      payload: "You just took water! Hurray!",
-                      seconds: 10,
-                    );
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 80.0),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               const Text('Category Page', style: TxtStyle.headline1),
+//               const SizedBox(height: 16),
+//               SizedBox(
+//                 height: 50,
+//                 child: ElevatedButton(
+//                   style: ButtonStyle(
+//                     backgroundColor:
+//                         MaterialStateProperty.all(DarkTheme.primaryBlue600),
+//                     shape: MaterialStateProperty.all(
+//                       RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(10)),
+//                     ),
+//                   ),
+//                   onPressed: () async {
+//                     await _notificationService.showScheduledLocalNotification(
+//                       id: 1,
+//                       title: "Drink Water",
+//                       body: "Time to drink some water!",
+//                       payload: "You just took water! Hurray!",
+//                       seconds: 10,
+//                     );
 
-                    //await _notificationService.showGroupedNotifications();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(AssetPath.iconBell, color: DarkTheme.white),
-                      const SizedBox(width: 10),
-                      const Text('Show notification'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//                     //await _notificationService.showGroupedNotifications();
+//                   },
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Image.asset(AssetPath.iconBell, color: DarkTheme.white),
+//                       const SizedBox(width: 10),
+//                       const Text('Show notification'),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

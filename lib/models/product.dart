@@ -8,6 +8,7 @@ class Product extends Equatable {
   final String description;
   final String field;
   final String duration;
+  final String category;
   final List<String> requirements;
   final List<String> listVideoID;
   final String teacherID;
@@ -19,6 +20,7 @@ class Product extends Equatable {
     required this.description,
     required this.field,
     required this.duration,
+    required this.category,
     required this.requirements,
     required this.listVideoID,
     required this.teacherID,
@@ -34,6 +36,7 @@ class Product extends Equatable {
       description: productData['course_description'],
       field: productData['course_field'],
       duration: productData['course_duration'],
+      category: productData['course_category'],
       requirements: List.from(productData['course_requirements']),
       listVideoID: List.from(productData['course_video_id']),
       teacherID: productData['course_teacher_id'],
@@ -49,6 +52,7 @@ class Product extends Equatable {
       description,
       field,
       duration,
+      category,
       requirements,
       listVideoID,
       teacherID,
@@ -62,6 +66,7 @@ class Product extends Equatable {
     String? description,
     String? field,
     String? duration,
+    String? category,
     List<String>? requirements,
     List<String>? listVideoID,
     String? teacherID,
@@ -73,6 +78,7 @@ class Product extends Equatable {
       description: description ?? this.description,
       field: field ?? this.field,
       duration: duration ?? this.duration,
+      category: category ?? this.category,
       requirements: requirements ?? this.requirements,
       listVideoID: listVideoID ?? this.listVideoID,
       teacherID: teacherID ?? this.teacherID,

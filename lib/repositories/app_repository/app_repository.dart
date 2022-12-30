@@ -72,15 +72,40 @@ class AppRepository implements AppBase {
     }
   }
 
+  @override
+  Future<List<Category>> getNameCategory() async {
+    List<Category> list = [];
+    try {
+      await firebaseFirestore
+          .collection(ApiPath.category())
+          .get()
+          .then((value) {
+        value.docs.forEach((element) => list.add(Category.fromDoc(element)));
+      });
+
+      if (list.isNotEmpty) {
+        return list;
+      }
+
+      throw 'Category is empty';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
   /*--------------------------------------------------------------------------*/
 
   @override
   Future<Teacher> getTeacherByID({required String id}) async {
     try {
-      final teacherDoc = await firebaseFirestore
-          .collection(ApiPath.teacher())
-          .doc(id)
-          .get();
+      final teacherDoc =
+          await firebaseFirestore.collection(ApiPath.teacher()).doc(id).get();
 
       if (teacherDoc.exists) {
         final currentTeacher = Teacher.fromDoc(teacherDoc);
@@ -102,10 +127,8 @@ class AppRepository implements AppBase {
   @override
   Future<VideoCourse> getVideoCourseByID({required String id}) async {
     try {
-      final videoDoc = await firebaseFirestore
-          .collection(ApiPath.video())
-          .doc(id)
-          .get();
+      final videoDoc =
+          await firebaseFirestore.collection(ApiPath.video()).doc(id).get();
 
       if (videoDoc.exists) {
         final currentVideo = VideoCourse.fromDoc(videoDoc);

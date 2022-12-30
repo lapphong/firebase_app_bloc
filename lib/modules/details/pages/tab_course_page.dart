@@ -14,11 +14,11 @@ class TabCoursePage extends StatefulWidget {
   State<TabCoursePage> createState() => _TabCoursePageState();
 }
 
-class _TabCoursePageState extends State<TabCoursePage> {
+class _TabCoursePageState extends State<TabCoursePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-
     context
         .read<DetailBloc>()
         .add(GetListVideoByIDEvent(courseVideoId: widget.listVideoID));
@@ -26,6 +26,7 @@ class _TabCoursePageState extends State<TabCoursePage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Builder(
       builder: (BuildContext context) {
         return CustomScrollView(
@@ -79,4 +80,7 @@ class _TabCoursePageState extends State<TabCoursePage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

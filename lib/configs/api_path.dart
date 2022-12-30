@@ -3,6 +3,7 @@ class ApiPath {
   static String user() => 'user';
   static String teacher() => 'teacher';
   static String product() => 'product';
+  static String category() => 'category';
   static String video() => 'video';
 
   /*-------------------------------- Storage ---------------------------------*/
