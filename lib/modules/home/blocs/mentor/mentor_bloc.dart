@@ -35,7 +35,8 @@ class MentorBloc extends Bloc<MentorEvent, MentorState> {
     emit(state.copyWith(status: MentorStatus.loading));
 
     try {
-      final List<Teacher> listTeacher = await appBase.getAllBestMentor(_limit);
+      final List<Teacher> listTeacher =
+          await appBase.getBestMentorByLimit(_limit);
       emit(state.copyWith(status: MentorStatus.loaded, list: listTeacher));
     } on CustomError catch (e) {
       emit(state.copyWith(status: MentorStatus.error, error: e));

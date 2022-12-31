@@ -21,7 +21,7 @@ class BestMentor extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 140,
+        width: 130,
         decoration: const BoxDecoration(
           color: DarkTheme.greyScale800,
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -29,7 +29,7 @@ class BestMentor extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              width: 144,
+              width: 130,
               height: 128,
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(

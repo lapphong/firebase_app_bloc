@@ -15,7 +15,7 @@ class AppRepository implements AppBase {
   });
 
   @override
-  Future<List<Product>> getAllProduct(int limit) async {
+  Future<List<Product>> getProductByLimit(int limit) async {
     List<Product> list = [];
     try {
       await firebaseFirestore
@@ -43,7 +43,7 @@ class AppRepository implements AppBase {
   }
 
   @override
-  Future<List<Teacher>> getAllBestMentor(int limit) async {
+  Future<List<Teacher>> getBestMentorByLimit(int limit) async {
     List<Teacher> list = [];
     try {
       await firebaseFirestore
@@ -136,6 +136,35 @@ class AppRepository implements AppBase {
       }
 
       throw 'Video not found';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<List<Product>> getListProductInCategoryByID({
+    required String id,
+    required int limit,
+  }) async {
+    try {
+      List<Product> list = [];
+
+      await firebaseFirestore
+          .collection(ApiPath.product())
+          .where('course_category', isEqualTo: id)
+          .limit(limit)
+          .get()
+          .then((value) {
+        value.docs.forEach((element) => list.add(Product.fromDoc(element)));
+      });
+
+      return list;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {

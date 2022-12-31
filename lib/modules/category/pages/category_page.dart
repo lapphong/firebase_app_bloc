@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +8,7 @@ import '../../../models/models.dart';
 import '../../../repositories/app_repository/app_base.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
+import '../../home/blocs/blocs.dart';
 import '../cubits/cubits.dart';
 import '../widgets/widgets.dart';
 
@@ -24,6 +26,20 @@ class CategoryPage extends StatelessWidget {
         BlocProvider<CategoryFilterCubit>(
           create: (context) => CategoryFilterCubit(
             categoryNameCubit: BlocProvider.of<CategoryNameCubit>(context),
+          ),
+          lazy: false,
+        ),
+        BlocProvider<CategoryListProductCubit>(
+          create: (context) => CategoryListProductCubit(
+            appBase: context.read<AppBase>(),
+            categoryFilterCubit: BlocProvider.of<CategoryFilterCubit>(context),
+          ),
+          lazy: false,
+        ),
+        BlocProvider<CategoryFilteredCubit>(
+          create: (context) => CategoryFilteredCubit(
+            categoryListProductCubit:
+                BlocProvider.of<CategoryListProductCubit>(context),
           ),
           lazy: false,
         ),
@@ -66,11 +82,53 @@ class _CategoryViewState extends State<CategoryView> {
                   '0 Result',
                   style: TxtStyle.headline3.copyWith(color: DarkTheme.red),
                 ),
+                buildListProductFiltered(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildListProductFiltered() {
+    return BlocBuilder<CategoryFilteredCubit, CategoryFilteredState>(
+      builder: (context, state) {
+        if (state.status == CategoryFilteredStatus.isEmpty) {
+          return const CategoryEmptyPage();
+        } else if (state.status == CategoryFilteredStatus.isLoading) {
+          return Center(
+              child: Column(
+            children: const [
+              SizedBox(height: 40),
+              CupertinoActivityIndicator(
+                color: DarkTheme.white,
+              ),
+            ],
+          ));
+        }
+        return ListView.separated(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: state.filteredProduct.length,
+          separatorBuilder: (BuildContext context, int index) {
+            return const Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Divider(),
+            );
+          },
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: ItemsFilteredCategory(
+                titleCourse: state.filteredProduct[index].title,
+                teacherID: state.filteredProduct[index].teacherID,
+                imgUrl: state.filteredProduct[index].image,
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -83,7 +141,7 @@ class _CategoryViewState extends State<CategoryView> {
           itemBuilder: (_, index) {
             return Padding(
               padding: const EdgeInsets.only(right: 20.0),
-              child: filterButton(context, state.list[index]),
+              child: filterButton(context, state.list[index], index),
             );
           },
         );
@@ -91,24 +149,20 @@ class _CategoryViewState extends State<CategoryView> {
     );
   }
 
-  Widget filterButton(BuildContext context, Category categoryName) {
+  Widget filterButton(BuildContext context, Category categoryName, index) {
     return TextButton(
       onPressed: () =>
-          context.read<CategoryFilterCubit>().changeFilter(categoryName),
+          context.read<CategoryFilterCubit>().changeFilter(categoryName, index),
       child: Text(
         categoryName.categoryName,
-        style: TxtStyle.headline2
-            .copyWith(color: textColor(context, categoryName)),
+        style: TxtStyle.headline2.copyWith(
+          color: context.watch<CategoryFilterCubit>().state.filterCategory ==
+                  categoryName
+              ? DarkTheme.primaryBlue600
+              : DarkTheme.greyScale500,
+        ),
       ),
     );
-  }
-
-  Color textColor(BuildContext context, Category categoryName) {
-    final currentFilter =
-        context.watch<CategoryFilterCubit>().state.filterCategory;
-    return currentFilter == categoryName
-        ? DarkTheme.primaryBlue600
-        : DarkTheme.greyScale500;
   }
 
   Widget buildTextFieldSearch(BuildContext context) {
@@ -130,11 +184,7 @@ class _CategoryViewState extends State<CategoryView> {
             bgColor: DarkTheme.greyScale800,
             edge: 40,
             radius: 10,
-            child: ImageIcon(
-              size: 13,
-              color: DarkTheme.white,
-              AssetImage(AssetPath.iconBell),
-            ),
+            child: ImageIcon(size: 13, AssetImage(AssetPath.iconBell)),
           ),
         ],
       ),

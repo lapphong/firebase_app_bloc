@@ -9,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 part 'class_event.dart';
 part 'class_state.dart';
 
-const _limit = 20;
+const _limit = 2;
 const _duration = 300;
 
 class ClassBloc extends Bloc<ClassEvent, ClassState> {
@@ -34,7 +34,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
     emit(state.copyWith(status: ClassStatus.loading));
 
     try {
-      final List<Product> listProduct = await appBase.getAllProduct(_limit);
+      final List<Product> listProduct = await appBase.getProductByLimit(_limit);
       emit(state.copyWith(status: ClassStatus.loaded, list: listProduct));
     } on CustomError catch (e) {
       emit(state.copyWith(status: ClassStatus.error, error: e));
