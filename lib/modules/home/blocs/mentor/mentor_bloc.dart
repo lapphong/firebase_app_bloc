@@ -10,34 +10,60 @@ import '../../../../repositories/app_repository/app_base.dart';
 part 'mentor_event.dart';
 part 'mentor_state.dart';
 
-const _limit = 20;
-const _duration = 300;
+const _limit = 3;
+
+EventTransformer<SetSearchTermEvent> debounce<SetSearchTermEvent>(
+    Duration duration) {
+  return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
+}
 
 class MentorBloc extends Bloc<MentorEvent, MentorState> {
   final AppBase appBase;
 
   MentorBloc({required this.appBase}) : super(MentorState.initial()) {
-    on<GetListBestMentorEvent>(
-      _getAllMentor,
-      transformer: debounce(const Duration(milliseconds: _duration)),
+    on<GetListBestMentorEvent>(_getBestMentor);
+    on<LoadMoreBestMentorEvent>(
+      _getNextBestMentor,
+      transformer: debounce(const Duration(milliseconds: 2000)),
     );
   }
 
-  EventTransformer<GetListBestMentorEvent> debounce<GetListCourseEvent>(
-      Duration duration) {
-    return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
-  }
-
-  Future<void> _getAllMentor(
+  Future<void> _getBestMentor(
     MentorEvent event,
     Emitter<MentorState> emit,
   ) async {
     emit(state.copyWith(status: MentorStatus.loading));
 
     try {
-      final List<Teacher> listTeacher =
-          await appBase.getBestMentorByLimit(_limit);
-      emit(state.copyWith(status: MentorStatus.loaded, list: listTeacher));
+      final listTeacher = await appBase.getBestMentorByLimit(_limit);
+      emit(state.copyWith(
+        status: MentorStatus.loaded,
+        list: listTeacher,
+        hasReachedMax: false,
+      ));
+    } on CustomError catch (e) {
+      emit(state.copyWith(status: MentorStatus.error, error: e));
+    }
+  }
+
+  Future<void> _getNextBestMentor(
+    LoadMoreBestMentorEvent event,
+    Emitter<MentorState> emit,
+  ) async {
+    try {
+      if (state.hasReachedMax) return;
+      final listNextTeacher = await appBase.getNextBestMentorByLimit(
+        limit: _limit,
+        nextVoted: state.list.last.voted,
+      );
+
+      listNextTeacher.isEmpty
+          ? emit(state.copyWith(hasReachedMax: true))
+          : emit(state.copyWith(
+              status: MentorStatus.loaded,
+              list: List.from(state.list)..addAll(listNextTeacher),
+              hasReachedMax: false,
+            ));
     } on CustomError catch (e) {
       emit(state.copyWith(status: MentorStatus.error, error: e));
     }

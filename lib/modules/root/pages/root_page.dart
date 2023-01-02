@@ -76,8 +76,6 @@ class _RootViewState extends State<RootView> {
   @override
   void initState() {
     super.initState();
-    context.read<ClassBloc>().add(GetListCourseEvent());
-    context.read<MentorBloc>().add(GetListBestMentorEvent());
   }
 
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {

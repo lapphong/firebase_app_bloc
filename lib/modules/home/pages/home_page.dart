@@ -1,18 +1,52 @@
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
-import 'package:firebase_app_bloc/models/models.dart';
 import 'package:firebase_app_bloc/repositories/test_repo.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 import '../widgets/home_widgets.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _scrollListBestMentorController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ClassBloc>().add(GetListCourseEvent());
+    context.read<MentorBloc>().add(GetListBestMentorEvent());
+    _scrollListBestMentorController.addListener(_onScrollListBestMentor);
+  }
+
+  @override
+  void dispose() {
+    _scrollListBestMentorController
+      ..removeListener(_onScrollListBestMentor)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _onScrollListBestMentor() {
+    if (_isBottom) context.read<MentorBloc>().add(LoadMoreBestMentorEvent());
+  }
+
+  bool get _isBottom {
+    if (!_scrollListBestMentorController.hasClients) return false;
+    final maxScroll = _scrollListBestMentorController.position.maxScrollExtent;
+    final currentScroll = _scrollListBestMentorController.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,16 +93,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildTextFieldSearch(BuildContext context) {
-    return TextFieldSearch(
-      hintText: S.of(context).searchYourFocus,
-      key: const Key('homePage_searchInput_textField'),
-      onChange: (textSearch) => {},
-      //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
-      //errorText: state.email.invalid ? 'Email is valid' : null,
-    );
-  }
-
   Widget buildDeTailAccount() {
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
@@ -111,6 +135,46 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget buildListBestMentors() {
+    return SizedBox(
+      height: 175,
+      child: BlocBuilder<MentorBloc, MentorState>(
+        builder: (context, state) {
+          if (state.status == MentorStatus.initial) {
+            return Container();
+          } else if (state.status == MentorStatus.loading) {
+            return const Center(child: CupertinoActivityIndicator());
+          } else if (state.status == MentorStatus.error) {
+            return const StatusError();
+          } else if (state.hasReachedMax) {
+            snackBar(context);
+          }
+          return ListView.builder(
+            controller: _scrollListBestMentorController,
+            itemCount:
+                state.hasReachedMax ? state.list.length : state.list.length + 1,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return index >= state.list.length
+                  ? const SizedBox(
+                      height: 50,
+                      child: Center(child: CircularProgressIndicator()))
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: BestMentor(
+                        imgUrl: state.list[index].imgUrl,
+                        name: state.list[index].name,
+                        voted: state.list[index].voted.toString(),
+                        onTap: () {},
+                      ),
+                    );
+            },
+          );
+        },
+      ),
+    );
+  }
+
   Widget buildGridViewPreview() {
     return BlocBuilder<ClassBloc, ClassState>(
       builder: (context, state) {
@@ -145,43 +209,21 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildListBestMentors() {
-    return SizedBox(
-      height: 175,
-      child: BlocBuilder<MentorBloc, MentorState>(
-        builder: (context, state) {
-          if (state.status == MentorStatus.initial) {
-            return Container();
-          } else if (state.status == MentorStatus.loading) {
-            return const Center(child: CupertinoActivityIndicator());
-          } else if (state.status == MentorStatus.error) {
-            return const StatusError();
-          }
-          return ListView.builder(
-            itemCount: state.list.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final mentorData = state.list[index];
-              return index == 0
-                  ? BestMentor(
-                      imgUrl: mentorData.imgUrl,
-                      name: mentorData.name,
-                      voted: mentorData.voted.toString(),
-                      onTap: () {},
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: BestMentor(
-                        imgUrl: mentorData.imgUrl,
-                        name: mentorData.name,
-                        voted: mentorData.voted.toString(),
-                        onTap: () {},
-                      ),
-                    );
-            },
-          );
-        },
-      ),
+  Widget buildTextFieldSearch(BuildContext context) {
+    return TextFieldSearch(
+      hintText: S.of(context).searchYourFocus,
+      key: const Key('homePage_searchInput_textField'),
+      onChange: (textSearch) => {},
+      //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
+      //errorText: state.email.invalid ? 'Email is valid' : null,
+    );
+  }
+
+  void snackBar(BuildContext context) {
+    return showSnackBar(
+      context,
+      'Max limit has been reached',
+      const Text(''),
     );
   }
 
@@ -195,6 +237,10 @@ class HomePage extends StatelessWidget {
             // final VideoCourse aaa =
             //     await TestRepo().getVideoCourseByID(id: 'VO5NnMa4O3oyX9sgKHk3');
             // print(aaa);
+
+            // final aaa = await TestRepo()
+            //     .getNextBestMentorByLimit(limit: 3, nextVoted: 110);
+            // print(aaa.length);
 
             // final list = await TestRepo().getValueInDocumentID(
             //   path: ApiPath.product(),

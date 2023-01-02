@@ -6,11 +6,13 @@ class MentorState extends Equatable {
   final MentorStatus status;
   final List<Teacher> list;
   final CustomError error;
+  final bool hasReachedMax;
 
   const MentorState({
     required this.status,
     required this.list,
     required this.error,
+    required this.hasReachedMax,
   });
 
   factory MentorState.initial() {
@@ -18,6 +20,7 @@ class MentorState extends Equatable {
       status: MentorStatus.initial,
       list: [],
       error: CustomError(),
+      hasReachedMax: false,
     );
   }
 
@@ -32,11 +35,13 @@ class MentorState extends Equatable {
     MentorStatus? status,
     List<Teacher>? list,
     CustomError? error,
+    bool? hasReachedMax,
   }) {
     return MentorState(
       status: status ?? this.status,
       list: list ?? this.list,
       error: error ?? this.error,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
     );
   }
 }

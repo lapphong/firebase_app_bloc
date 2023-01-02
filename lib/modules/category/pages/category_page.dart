@@ -6,6 +6,7 @@ import '../../../assets/assets_path.dart';
 import '../../../generated/l10n.dart';
 import '../../../models/models.dart';
 import '../../../repositories/app_repository/app_base.dart';
+import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
@@ -143,8 +144,11 @@ class _CategoryViewState extends State<CategoryView> {
             return Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: ItemsFilteredCategory(
+                onTap: () {
+                  Navigator.of(context).pushNamed(RouteName.detailCoursePage,
+                      arguments: state.filteredProduct[index]);
+                },
                 titleCourse: state.filteredProduct[index].title,
-                teacherID: state.filteredProduct[index].teacherID,
                 imgUrl: state.filteredProduct[index].image,
                 assessmentScore: state.filteredProduct[index].assessmentScore,
                 reviewer: state.filteredProduct[index].reviewer,

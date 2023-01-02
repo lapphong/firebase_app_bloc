@@ -4,19 +4,24 @@ import 'package:firebase_app_bloc/configs/api_path.dart';
 import '../models/models.dart';
 
 class TestRepo {
-  Future<VideoCourse> getVideoCourseByID({required String id}) async {
+  Future<List<Teacher>> getNextBestMentorByLimit({
+    required int limit,
+    required int nextVoted,
+  }) async {
+    List<Teacher> list = [];
     try {
-      final videoDoc = await FirebaseFirestore.instance
-          .collection(ApiPath.video())
-          .doc(id)
-          .get();
+      await FirebaseFirestore.instance
+          .collection(ApiPath.teacher())
+          .orderBy('voted')
+          .where('voted', isGreaterThanOrEqualTo: 100)
+          .endBefore([nextVoted])
+          .limit(limit)
+          .get()
+          .then((value) {
+            value.docs.forEach((element) => list.add(Teacher.fromDoc(element)));
+          });
 
-      if (videoDoc.exists) {
-        final currentVideo = VideoCourse.fromDoc(videoDoc);
-        return currentVideo;
-      }
-
-      throw 'Video not found';
+      return list;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {
@@ -27,6 +32,41 @@ class TestRepo {
       );
     }
   }
+
+  Future<void> getMore() async {
+    await FirebaseFirestore.instance
+        .collection(ApiPath.teacher())
+        .orderBy('voted')
+        .endBefore([130])
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              print(element.data());
+            }));
+  }
+
+  // Future<VideoCourse> getVideoCourseByID({required String id}) async {
+  //   try {
+  //     final videoDoc = await FirebaseFirestore.instance
+  //         .collection(ApiPath.video())
+  //         .doc(id)
+  //         .get();
+
+  //     if (videoDoc.exists) {
+  //       final currentVideo = VideoCourse.fromDoc(videoDoc);
+  //       return currentVideo;
+  //     }
+
+  //     throw 'Video not found';
+  //   } on FirebaseException catch (e) {
+  //     throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+  //   } catch (e) {
+  //     throw CustomError(
+  //       code: 'Exception',
+  //       message: e.toString(),
+  //       plugin: 'flutter_error/server_error',
+  //     );
+  //   }
+  // }
 
   // Future<List<Product>> getAllProduct() async {
   //   List<Product> list = [];

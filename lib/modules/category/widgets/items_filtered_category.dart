@@ -2,38 +2,31 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../assets/assets_path.dart';
-import '../../../models/models.dart';
 import '../../../themes/themes.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../widgets/stateless/stateless.dart';
-import '../../home/blocs/blocs.dart';
 
-class ItemsFilteredCategory extends StatefulWidget {
-  const ItemsFilteredCategory({
+class ItemsFilteredCategory extends StatelessWidget {
+  ItemsFilteredCategory({
     Key? key,
+    required this.onTap,
     required this.titleCourse,
-    required this.teacherID,
     required this.imgUrl,
     required this.assessmentScore,
     required this.reviewer,
     required this.duration,
   }) : super(key: key);
 
-  final String? titleCourse, teacherID, imgUrl, assessmentScore, reviewer;
-  final String? duration;
+  final String? titleCourse, imgUrl, assessmentScore, reviewer, duration;
+  final VoidCallback? onTap;
 
-  @override
-  State<ItemsFilteredCategory> createState() => _ItemsFilteredCategoryState();
-}
-
-class _ItemsFilteredCategoryState extends State<ItemsFilteredCategory> {
-  late String assessmentScore =
-      (double.parse(widget.assessmentScore!) / double.parse(widget.reviewer!))
+  late final String _assessmentScore =
+      (double.parse(assessmentScore!) / double.parse(reviewer!))
           .toStringAsFixed(1);
 
   @override
   Widget build(BuildContext context) {
     return BodyItemNetwork(
+      onTap: onTap,
       widthImg: 112,
       height: 90,
       mid: Padding(
@@ -44,21 +37,21 @@ class _ItemsFilteredCategoryState extends State<ItemsFilteredCategory> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.titleCourse!, style: TxtStyle.headline4),
+              Text(titleCourse!, style: TxtStyle.headline4),
               Text(
-                'Course duration: ${widget.duration}h',
+                'Course duration: ${duration}h',
                 style:
                     TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
               ),
               Row(
                 children: [
                   Text(
-                    '$assessmentScore/5 ⭐  (',
+                    '$_assessmentScore/5 ⭐  (',
                     style: TxtStyle.headline5
                         .copyWith(color: DarkTheme.greyScale500),
                   ),
                   Image.asset(AssetPath.iconUser, height: 12),
-                  Text(' ${widget.reviewer})',
+                  Text(' $reviewer)',
                       style: TxtStyle.headline5
                           .copyWith(color: DarkTheme.greyScale500)),
                 ],
@@ -71,7 +64,7 @@ class _ItemsFilteredCategoryState extends State<ItemsFilteredCategory> {
       right: const Text(''),
       child: CachedNetworkImage(
         height: 90,
-        imageUrl: widget.imgUrl!,
+        imageUrl: imgUrl!,
         fit: BoxFit.cover,
         placeholder: (_, __) =>
             const Image(image: AssetImage(AssetPath.imgLoading)),

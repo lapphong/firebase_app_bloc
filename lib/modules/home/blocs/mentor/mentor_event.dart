@@ -8,3 +8,5 @@ abstract class MentorEvent extends Equatable {
 }
 
 class GetListBestMentorEvent extends MentorEvent {}
+
+class LoadMoreBestMentorEvent extends MentorEvent {}
