@@ -13,7 +13,6 @@ class CategoryFilteredCubit extends Cubit<CategoryFilteredState> {
 
   late final StreamSubscription categoryListProductSubscription;
 
-
   CategoryFilteredCubit({
     required this.categoryListProductCubit,
   }) : super(CategoryFilteredState.initial()) {
@@ -23,7 +22,9 @@ class CategoryFilteredCubit extends Cubit<CategoryFilteredState> {
           ? emit(state.copyWith(
               filteredProduct: categoryListProductState.list,
               status: CategoryFilteredStatus.isNotEmpty))
-          : emit(state.copyWith(status: CategoryFilteredStatus.isEmpty));
+          : emit(state.copyWith(
+              filteredProduct: categoryListProductState.list,
+              status: CategoryFilteredStatus.isEmpty));
     });
   }
 

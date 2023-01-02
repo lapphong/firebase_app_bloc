@@ -7,6 +7,7 @@ import '../../../generated/l10n.dart';
 import '../../../models/models.dart';
 import '../../../repositories/app_repository/app_base.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../../home/blocs/blocs.dart';
 import '../cubits/cubits.dart';
@@ -29,15 +30,27 @@ class CategoryPage extends StatelessWidget {
           ),
           lazy: false,
         ),
+        BlocProvider<CategorySearchCubit>(
+          create: (context) => CategorySearchCubit(),
+          lazy: false,
+        ),
         BlocProvider<CategoryListProductCubit>(
           create: (context) => CategoryListProductCubit(
             appBase: context.read<AppBase>(),
             categoryFilterCubit: BlocProvider.of<CategoryFilterCubit>(context),
+            categorySearchCubit: BlocProvider.of<CategorySearchCubit>(context),
           ),
           lazy: false,
         ),
         BlocProvider<CategoryFilteredCubit>(
           create: (context) => CategoryFilteredCubit(
+            categoryListProductCubit:
+                BlocProvider.of<CategoryListProductCubit>(context),
+          ),
+          lazy: false,
+        ),
+        BlocProvider<CategoryActiveCountCubit>(
+          create: (context) => CategoryActiveCountCubit(
             categoryListProductCubit:
                 BlocProvider.of<CategoryListProductCubit>(context),
           ),
@@ -57,6 +70,8 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
+  final debounce = Debounce(milliseconds: 1000);
+
   @override
   void initState() {
     super.initState();
@@ -78,16 +93,24 @@ class _CategoryViewState extends State<CategoryView> {
                 const SizedBox(height: 24),
                 SizedBox(height: 36, child: buildListCategoryName()),
                 const SizedBox(height: 24),
-                Text(
-                  '0 Result',
-                  style: TxtStyle.headline3.copyWith(color: DarkTheme.red),
-                ),
+                buildActiveProductCount(),
                 buildListProductFiltered(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildActiveProductCount() {
+    return BlocBuilder<CategoryActiveCountCubit, CategoryActiveCountState>(
+      builder: (context, state) {
+        return Text(
+          '${state.activeProductCount} items Result',
+          style: TxtStyle.headline3.copyWith(color: DarkTheme.red),
+        );
+      },
     );
   }
 
@@ -98,14 +121,13 @@ class _CategoryViewState extends State<CategoryView> {
           return const CategoryEmptyPage();
         } else if (state.status == CategoryFilteredStatus.isLoading) {
           return Center(
-              child: Column(
-            children: const [
-              SizedBox(height: 40),
-              CupertinoActivityIndicator(
-                color: DarkTheme.white,
-              ),
-            ],
-          ));
+            child: Column(
+              children: const [
+                SizedBox(height: 40),
+                CupertinoActivityIndicator(color: DarkTheme.white),
+              ],
+            ),
+          );
         }
         return ListView.separated(
           primary: false,
@@ -169,8 +191,8 @@ class _CategoryViewState extends State<CategoryView> {
     return TextFieldSearch(
       hintText: S.of(context).searchYourFocus,
       key: const Key('categoryPage_searchInput_textField'),
-      onChange: (textSearch) => {},
-      //debounce.run(() => context.read<SignInCubit>().emailChanged(email)),
+      onChange: (textSearch) => debounce.run(() =>
+          context.read<CategorySearchCubit>().setSearchProduct(textSearch)),
     );
   }
 
@@ -184,7 +206,11 @@ class _CategoryViewState extends State<CategoryView> {
             bgColor: DarkTheme.greyScale800,
             edge: 40,
             radius: 10,
-            child: ImageIcon(size: 13, AssetImage(AssetPath.iconBell)),
+            child: ImageIcon(
+              size: 13,
+              AssetImage(AssetPath.iconBell),
+              color: DarkTheme.white,
+            ),
           ),
         ],
       ),

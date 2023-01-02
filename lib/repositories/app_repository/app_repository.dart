@@ -163,7 +163,7 @@ class AppRepository implements AppBase {
           .then((value) {
         value.docs.forEach((element) => list.add(Product.fromDoc(element)));
       });
-
+      
       return list;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
