@@ -146,6 +146,9 @@ class _CategoryViewState extends State<CategoryView> {
                 titleCourse: state.filteredProduct[index].title,
                 teacherID: state.filteredProduct[index].teacherID,
                 imgUrl: state.filteredProduct[index].image,
+                assessmentScore: state.filteredProduct[index].assessmentScore,
+                reviewer: state.filteredProduct[index].reviewer,
+                duration: state.filteredProduct[index].duration,
               ),
             );
           },
@@ -162,7 +165,7 @@ class _CategoryViewState extends State<CategoryView> {
           itemCount: state.list.length,
           itemBuilder: (_, index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: filterButton(context, state.list[index], index),
             );
           },
@@ -172,16 +175,26 @@ class _CategoryViewState extends State<CategoryView> {
   }
 
   Widget filterButton(BuildContext context, Category categoryName, index) {
-    return TextButton(
-      onPressed: () =>
-          context.read<CategoryFilterCubit>().changeFilter(categoryName, index),
-      child: Text(
-        categoryName.categoryName,
-        style: TxtStyle.headline2.copyWith(
-          color: context.watch<CategoryFilterCubit>().state.filterCategory ==
-                  categoryName
-              ? DarkTheme.primaryBlue600
-              : DarkTheme.greyScale500,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: context.watch<CategoryFilterCubit>().state.filterCategory ==
+                categoryName
+            ? DarkTheme.primaryBlue600
+            : DarkTheme.greyScale900,
+      ),
+      child: TextButton(
+        onPressed: () => context
+            .read<CategoryFilterCubit>()
+            .changeFilter(categoryName, index),
+        child: Text(
+          categoryName.categoryName,
+          style: TxtStyle.headline3.copyWith(
+            color: context.watch<CategoryFilterCubit>().state.filterCategory ==
+                    categoryName
+                ? DarkTheme.white
+                : DarkTheme.greyScale500,
+          ),
         ),
       ),
     );

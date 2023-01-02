@@ -11,6 +11,8 @@ class Product extends Equatable {
   final String category;
   final List<String> requirements;
   final List<String> listVideoID;
+  final String assessmentScore;
+  final String reviewer;
   final String teacherID;
 
   const Product({
@@ -23,6 +25,8 @@ class Product extends Equatable {
     required this.category,
     required this.requirements,
     required this.listVideoID,
+    required this.assessmentScore,
+    required this.reviewer,
     required this.teacherID,
   });
 
@@ -39,6 +43,8 @@ class Product extends Equatable {
       category: productData['course_category'],
       requirements: List.from(productData['course_requirements']),
       listVideoID: List.from(productData['course_video_id']),
+      assessmentScore: productData['course_assessment_score'],
+      reviewer: productData['course_reviewer'],
       teacherID: productData['course_teacher_id'],
     );
   }
@@ -55,6 +61,8 @@ class Product extends Equatable {
       category,
       requirements,
       listVideoID,
+      assessmentScore,
+      reviewer,
       teacherID,
     ];
   }
@@ -69,6 +77,8 @@ class Product extends Equatable {
     String? category,
     List<String>? requirements,
     List<String>? listVideoID,
+    String? assessmentScore,
+    String? reviewer,
     String? teacherID,
   }) {
     return Product(
@@ -81,6 +91,8 @@ class Product extends Equatable {
       category: category ?? this.category,
       requirements: requirements ?? this.requirements,
       listVideoID: listVideoID ?? this.listVideoID,
+      assessmentScore: assessmentScore ?? this.assessmentScore,
+      reviewer: reviewer ?? this.reviewer,
       teacherID: teacherID ?? this.teacherID,
     );
   }

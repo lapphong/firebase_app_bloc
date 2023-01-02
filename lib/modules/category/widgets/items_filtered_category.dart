@@ -14,26 +14,22 @@ class ItemsFilteredCategory extends StatefulWidget {
     required this.titleCourse,
     required this.teacherID,
     required this.imgUrl,
+    required this.assessmentScore,
+    required this.reviewer,
+    required this.duration,
   }) : super(key: key);
 
-  final String? titleCourse, teacherID, imgUrl;
+  final String? titleCourse, teacherID, imgUrl, assessmentScore, reviewer;
+  final String? duration;
 
   @override
   State<ItemsFilteredCategory> createState() => _ItemsFilteredCategoryState();
 }
 
 class _ItemsFilteredCategoryState extends State<ItemsFilteredCategory> {
-  // late final Teacher teacher;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   teacher = context
-  //       .read<MentorBloc>()
-  //       .state
-  //       .list
-  //       .where((Teacher teacher) => widget.teacherID == teacher.id)
-  //       .first;
-  // }
+  late String assessmentScore =
+      (double.parse(widget.assessmentScore!) / double.parse(widget.reviewer!))
+          .toStringAsFixed(1);
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +41,27 @@ class _ItemsFilteredCategoryState extends State<ItemsFilteredCategory> {
         child: SizedBox(
           width: 180,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.titleCourse!, style: TxtStyle.headline4),
               Text(
-                widget.teacherID!,
+                'Course duration: ${widget.duration}h',
                 style:
-                    TxtStyle.headline6.copyWith(color: DarkTheme.greyScale500),
+                    TxtStyle.headline5.copyWith(color: DarkTheme.greyScale500),
+              ),
+              Row(
+                children: [
+                  Text(
+                    '$assessmentScore/5 ⭐  (',
+                    style: TxtStyle.headline5
+                        .copyWith(color: DarkTheme.greyScale500),
+                  ),
+                  Image.asset(AssetPath.iconUser, height: 12),
+                  Text(' ${widget.reviewer})',
+                      style: TxtStyle.headline5
+                          .copyWith(color: DarkTheme.greyScale500)),
+                ],
               ),
             ],
           ),
