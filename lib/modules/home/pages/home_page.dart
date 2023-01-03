@@ -51,7 +51,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onScrollListProduct() {
-    if (_isBottom && !context.read<ClassBloc>().state.hasReachedMax) {
+    if (!_scrollListProductController.hasClients) return;
+
+    final thresholdReached = _scrollListProductController.position.extentAfter <
+        _scrollListBestMentorController.position.maxScrollExtent - 150;
+
+    if (thresholdReached && !context.read<ClassBloc>().state.hasReachedMax) {
       context.read<ClassBloc>().add(LoadMoreProductEvent());
     }
   }
@@ -68,6 +73,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollListProductController,
           child: Column(
             children: [
               Padding(
@@ -212,26 +218,19 @@ class _HomePageState extends State<HomePage> {
         } else if (state.status == ClassStatus.error) {
           return const StatusError();
         }
-        return GridView.builder(
-          controller: _scrollListProductController,
+        return CustomScrollView(
           shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
- crossAxisCount: 2,
-            mainAxisExtent: 182,
-            mainAxisSpacing: 23,
-            crossAxisSpacing: 23,
-            childAspectRatio: 5 / 6.299,
-          ),
-          itemCount: state.hasReachedMax == true
-              ? state.list.length
-              : state.list.length + 2,
-          itemBuilder: (context, index) {
-            return index >= state.list.length
-                ? const SizedBox(
-                    height: 50,
-                    child: Center(child: CircularProgressIndicator()),
-                  )
-                : ClassPreview(
+          slivers: [
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 5 / 6.299,
+                crossAxisSpacing: 23,
+                mainAxisSpacing: 23,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return ClassPreview(
                     field: state.list[index].field,
                     assetName: state.list[index].image,
                     onTap: () {
@@ -241,7 +240,20 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                   );
-          },
+                },
+                childCount: state.list.length,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: !state.hasReachedMax
+                  ? Container(
+                      padding: const EdgeInsets.only(top: 16),
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
+                    )
+                  : const SizedBox(),
+            ),
+          ],
         );
       },
     );
@@ -261,7 +273,7 @@ class _HomePageState extends State<HomePage> {
     return showSnackBar(
       context,
       'Max limit has been reached',
-      Image.asset(AssetPath.iconCheck, color: DarkTheme.green),
+      Image.asset(AssetPath.iconChecked, color: DarkTheme.green),
     );
   }
 
@@ -277,8 +289,9 @@ class _HomePageState extends State<HomePage> {
             // print(aaa);
 
             // final aaa = await TestRepo()
-            //     .getNextBestMentorByLimit(limit: 3, nextVoted: 110);
-            // print(aaa.length);
+            //     .getNextProductByLimit(limit: 2, nextAssessmentScore: 71);
+            // print(aaa.first.assessmentScore);
+            // print(aaa.last.assessmentScore);
 
             // final list = await TestRepo().getValueInDocumentID(
             //   path: ApiPath.product(),

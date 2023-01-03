@@ -53,7 +53,7 @@ class AppRepository implements AppBase {
       await firebaseFirestore
           .collection(ApiPath.product())
           .orderBy('course_assessment_score', descending: true)
-          .endBefore([nextAssessmentScore])
+          .startAfter([nextAssessmentScore])
           .limit(limit)
           .get()
           .then((value) {

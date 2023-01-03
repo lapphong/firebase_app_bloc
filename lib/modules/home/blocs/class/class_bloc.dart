@@ -53,6 +53,8 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
         nextAssessmentScore: state.list.last.assessmentScore,
       );
 
+      print('⚡⚡ List Next Product: $listNextProduct');
+
       listNextProduct.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
           : emit(state.copyWith(
