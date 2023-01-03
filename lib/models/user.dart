@@ -7,12 +7,14 @@ class User extends Equatable {
     required this.name,
     required this.email,
     required this.profileImage,
+    required this.favorites,
   });
 
   final String id;
   final String name;
   final String email;
   final String profileImage;
+  final List<String> favorites;
 
   factory User.fromDoc(DocumentSnapshot userDoc) {
     final userData = userDoc.data() as Map<String, dynamic>?;
@@ -22,6 +24,7 @@ class User extends Equatable {
       name: userData!['name'],
       email: userData['email'],
       profileImage: userData['profileImage'],
+      favorites: List.from(userData['favorites']),
     );
   }
 
@@ -31,15 +34,16 @@ class User extends Equatable {
       name: '',
       email: '',
       profileImage: '',
+      favorites: [],
     );
   }
 
   @override
-  List<Object> get props => [id, name, email, profileImage];
+  List<Object> get props => [id, name, email, profileImage, favorites];
 
   @override
   String toString() {
-    return 'User(id:$id,name:$name,email:$email,profileImage:$profileImage)';
+    return 'User(id:$id,name:$name,email:$email,profileImage:$profileImage,favorites:$favorites)';
   }
 
   User copyWith({
@@ -47,12 +51,14 @@ class User extends Equatable {
     String? name,
     String? email,
     String? profileImage,
+    List<String>? favorites,
   }) {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
       profileImage: profileImage ?? this.profileImage,
+      favorites: favorites ?? this.favorites,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
+import '../../../blocs/blocs.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
@@ -25,6 +26,17 @@ class TabOverviewPage extends StatefulWidget {
 
 class _TabOverviewPageState extends State<TabOverviewPage>
     with AutomaticKeepAliveClientMixin {
+  bool? getLikeCount(String idTeacher) {
+    final listFavoriteFromUser =
+        context.read<ProfileCubit>().state.user.favorites;
+    for (var i = 0; i < listFavoriteFromUser.length; i++) {
+      if (listFavoriteFromUser[i] == idTeacher) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -69,11 +81,17 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                           return const StatusError();
                         }
                         return CourseTeacher(
-                          onTap: () {},
-                          voted: state.teacher.voted.toString(),
+                          onTap: (isLiked) async {
+                            // state.teacher.voted = !isLiked;
+                            // widget.voted += widget.isLiked ? 1 : -1;
+
+                            return isLiked;
+                          },
+                          voted: state.teacher.voted,
                           assetName: state.teacher.imgUrl,
                           fullName: state.teacher.name,
                           specialize: state.teacher.specialize,
+                          isLiked: getLikeCount(state.teacher.id),
                         );
                       },
                     ),

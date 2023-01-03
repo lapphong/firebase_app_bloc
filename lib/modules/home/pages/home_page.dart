@@ -53,8 +53,8 @@ class _HomePageState extends State<HomePage> {
   void _onScrollListProduct() {
     if (!_scrollListProductController.hasClients) return;
 
-    final thresholdReached = _scrollListProductController.position.extentAfter <
-        _scrollListBestMentorController.position.maxScrollExtent - 150;
+    final thresholdReached = _scrollListProductController.position.extentAfter <=
+        _scrollListBestMentorController.position.maxScrollExtent - 120;
 
     if (thresholdReached && !context.read<ClassBloc>().state.hasReachedMax) {
       context.read<ClassBloc>().add(LoadMoreProductEvent());
