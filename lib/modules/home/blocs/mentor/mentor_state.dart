@@ -25,11 +25,11 @@ class MentorState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, list, error];
+  List<Object> get props => [status, list, error, hasReachedMax];
 
   @override
   String toString() =>
-      'MentorState(status: $status, list: $list, error: $error)';
+      'MentorState(status: $status, list: $list, error: $error,hasReachedMax: $hasReachedMax)';
 
   MentorState copyWith({
     MentorStatus? status,

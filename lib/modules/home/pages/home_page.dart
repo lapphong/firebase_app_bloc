@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/assets/assets_path.dart';
 import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/generated/l10n.dart';
 import 'package:firebase_app_bloc/repositories/test_repo.dart';
@@ -20,13 +21,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _scrollListBestMentorController = ScrollController();
+  final _scrollListProductController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    context.read<ClassBloc>().add(GetListCourseEvent());
+    context.read<ClassBloc>().add(GetListProductEvent());
     context.read<MentorBloc>().add(GetListBestMentorEvent());
     _scrollListBestMentorController.addListener(_onScrollListBestMentor);
+    _scrollListProductController.addListener(_onScrollListProduct);
   }
 
   @override
@@ -34,18 +37,30 @@ class _HomePageState extends State<HomePage> {
     _scrollListBestMentorController
       ..removeListener(_onScrollListBestMentor)
       ..dispose();
+
+    _scrollListProductController
+      ..removeListener(_onScrollListProduct)
+      ..dispose();
     super.dispose();
   }
 
   void _onScrollListBestMentor() {
-    if (_isBottom) context.read<MentorBloc>().add(LoadMoreBestMentorEvent());
+    if (_isBottom && !context.read<MentorBloc>().state.hasReachedMax) {
+      context.read<MentorBloc>().add(LoadMoreBestMentorEvent());
+    }
+  }
+
+  void _onScrollListProduct() {
+    if (_isBottom && !context.read<ClassBloc>().state.hasReachedMax) {
+      context.read<ClassBloc>().add(LoadMoreProductEvent());
+    }
   }
 
   bool get _isBottom {
     if (!_scrollListBestMentorController.hasClients) return false;
     final maxScroll = _scrollListBestMentorController.position.maxScrollExtent;
     final currentScroll = _scrollListBestMentorController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return currentScroll >= (maxScroll * 0.5);
   }
 
   @override
@@ -138,7 +153,12 @@ class _HomePageState extends State<HomePage> {
   Widget buildListBestMentors() {
     return SizedBox(
       height: 175,
-      child: BlocBuilder<MentorBloc, MentorState>(
+      child: BlocConsumer<MentorBloc, MentorState>(
+        listener: (context, state) {
+          if (state.hasReachedMax) {
+            snackBar(context);
+          }
+        },
         builder: (context, state) {
           if (state.status == MentorStatus.initial) {
             return Container();
@@ -146,19 +166,21 @@ class _HomePageState extends State<HomePage> {
             return const Center(child: CupertinoActivityIndicator());
           } else if (state.status == MentorStatus.error) {
             return const StatusError();
-          } else if (state.hasReachedMax) {
-            snackBar(context);
           }
           return ListView.builder(
             controller: _scrollListBestMentorController,
-            itemCount:
-                state.hasReachedMax ? state.list.length : state.list.length + 1,
+            itemCount: state.hasReachedMax == true
+                ? state.list.length
+                : state.list.length + 1,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return index >= state.list.length
                   ? const SizedBox(
                       height: 50,
-                      child: Center(child: CircularProgressIndicator()))
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
                   : Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: BestMentor(
@@ -176,7 +198,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildGridViewPreview() {
-    return BlocBuilder<ClassBloc, ClassState>(
+    return BlocConsumer<ClassBloc, ClassState>(
+      listener: (context, state) {
+        if (state.hasReachedMax) {
+          snackBar(context);
+        }
+      },
       builder: (context, state) {
         if (state.status == ClassStatus.initial) {
           return Container();
@@ -185,25 +212,36 @@ class _HomePageState extends State<HomePage> {
         } else if (state.status == ClassStatus.error) {
           return const StatusError();
         }
-        return GridView.count(
-          crossAxisCount: 2,
+        return GridView.builder(
+          controller: _scrollListProductController,
           shrinkWrap: true,
-          mainAxisSpacing: 23,
-          crossAxisSpacing: 23,
-          childAspectRatio: 5 / 6.299,
-          physics: const ScrollPhysics(),
-          children: state.list
-              .map(
-                (e) => ClassPreview(
-                  onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(RouteName.detailCoursePage, arguments: e);
-                  },
-                  field: e.field,
-                  assetName: e.image,
-                ),
-              )
-              .toList(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+ crossAxisCount: 2,
+            mainAxisExtent: 182,
+            mainAxisSpacing: 23,
+            crossAxisSpacing: 23,
+            childAspectRatio: 5 / 6.299,
+          ),
+          itemCount: state.hasReachedMax == true
+              ? state.list.length
+              : state.list.length + 2,
+          itemBuilder: (context, index) {
+            return index >= state.list.length
+                ? const SizedBox(
+                    height: 50,
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+                : ClassPreview(
+                    field: state.list[index].field,
+                    assetName: state.list[index].image,
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        RouteName.detailCoursePage,
+                        arguments: state.list[index],
+                      );
+                    },
+                  );
+          },
         );
       },
     );
@@ -223,7 +261,7 @@ class _HomePageState extends State<HomePage> {
     return showSnackBar(
       context,
       'Max limit has been reached',
-      const Text(''),
+      Image.asset(AssetPath.iconCheck, color: DarkTheme.green),
     );
   }
 

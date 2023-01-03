@@ -12,11 +12,6 @@ part 'mentor_state.dart';
 
 const _limit = 3;
 
-EventTransformer<SetSearchTermEvent> debounce<SetSearchTermEvent>(
-    Duration duration) {
-  return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
-}
-
 class MentorBloc extends Bloc<MentorEvent, MentorState> {
   final AppBase appBase;
 
@@ -28,6 +23,11 @@ class MentorBloc extends Bloc<MentorEvent, MentorState> {
     );
   }
 
+  EventTransformer<SetSearchTermEvent> debounce<SetSearchTermEvent>(
+      Duration duration) {
+    return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
+  }
+
   Future<void> _getBestMentor(
     MentorEvent event,
     Emitter<MentorState> emit,
@@ -36,11 +36,7 @@ class MentorBloc extends Bloc<MentorEvent, MentorState> {
 
     try {
       final listTeacher = await appBase.getBestMentorByLimit(_limit);
-      emit(state.copyWith(
-        status: MentorStatus.loaded,
-        list: listTeacher,
-        hasReachedMax: false,
-      ));
+      emit(state.copyWith(status: MentorStatus.loaded, list: listTeacher));
     } on CustomError catch (e) {
       emit(state.copyWith(status: MentorStatus.error, error: e));
     }

@@ -21,6 +21,7 @@ class AppRepository implements AppBase {
       await firebaseFirestore
           .collection(ApiPath.product())
           .limit(limit)
+          .orderBy('course_assessment_score', descending: true)
           .get()
           .then((value) {
         value.docs.forEach((element) => list.add(Product.fromDoc(element)));
@@ -31,6 +32,35 @@ class AppRepository implements AppBase {
       }
 
       throw 'Product is empty';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<List<Product>> getNextProductByLimit({
+    required int limit,
+    required int nextAssessmentScore,
+  }) async {
+    List<Product> list = [];
+    try {
+      await firebaseFirestore
+          .collection(ApiPath.product())
+          .orderBy('course_assessment_score', descending: true)
+          .endBefore([nextAssessmentScore])
+          .limit(limit)
+          .get()
+          .then((value) {
+            value.docs.forEach((element) => list.add(Product.fromDoc(element)));
+          });
+
+      return list;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {
@@ -79,7 +109,7 @@ class AppRepository implements AppBase {
   }) async {
     List<Teacher> list = [];
     try {
-      await FirebaseFirestore.instance
+      await firebaseFirestore
           .collection(ApiPath.teacher())
           .orderBy('voted')
           .where('voted', isGreaterThanOrEqualTo: 100)

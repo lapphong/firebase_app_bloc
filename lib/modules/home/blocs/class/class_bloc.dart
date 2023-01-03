@@ -10,14 +10,15 @@ part 'class_event.dart';
 part 'class_state.dart';
 
 const _limit = 2;
-const _duration = 300;
+const _duration = 2000;
 
 class ClassBloc extends Bloc<ClassEvent, ClassState> {
   final AppBase appBase;
 
   ClassBloc({required this.appBase}) : super(ClassState.initial()) {
-    on<GetListCourseEvent>(
-      _getListCourse,
+    on<GetListProductEvent>(_getListCourse);
+    on<LoadMoreProductEvent>(
+      _getNextProduct,
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
   }
@@ -28,7 +29,7 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
   }
 
   Future<void> _getListCourse(
-    GetListCourseEvent event,
+    GetListProductEvent event,
     Emitter<ClassState> emit,
   ) async {
     emit(state.copyWith(status: ClassStatus.loading));
@@ -36,6 +37,29 @@ class ClassBloc extends Bloc<ClassEvent, ClassState> {
     try {
       final List<Product> listProduct = await appBase.getProductByLimit(_limit);
       emit(state.copyWith(status: ClassStatus.loaded, list: listProduct));
+    } on CustomError catch (e) {
+      emit(state.copyWith(status: ClassStatus.error, error: e));
+    }
+  }
+
+  Future<void> _getNextProduct(
+    LoadMoreProductEvent event,
+    Emitter<ClassState> emit,
+  ) async {
+    try {
+      if (state.hasReachedMax) return;
+      final listNextProduct = await appBase.getNextProductByLimit(
+        limit: _limit,
+        nextAssessmentScore: state.list.last.assessmentScore,
+      );
+
+      listNextProduct.isEmpty
+          ? emit(state.copyWith(hasReachedMax: true))
+          : emit(state.copyWith(
+              status: ClassStatus.loaded,
+              list: List.from(state.list)..addAll(listNextProduct),
+              hasReachedMax: false,
+            ));
     } on CustomError catch (e) {
       emit(state.copyWith(status: ClassStatus.error, error: e));
     }

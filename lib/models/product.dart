@@ -11,8 +11,8 @@ class Product extends Equatable {
   final String category;
   final List<String> requirements;
   final List<String> listVideoID;
-  final String assessmentScore;
-  final String reviewer;
+  final int assessmentScore;
+  final int reviewer;
   final String teacherID;
 
   const Product({
@@ -77,8 +77,8 @@ class Product extends Equatable {
     String? category,
     List<String>? requirements,
     List<String>? listVideoID,
-    String? assessmentScore,
-    String? reviewer,
+    int? assessmentScore,
+    int? reviewer,
     String? teacherID,
   }) {
     return Product(

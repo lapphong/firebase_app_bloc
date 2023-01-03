@@ -16,12 +16,12 @@ class ItemsFilteredCategory extends StatelessWidget {
     required this.duration,
   }) : super(key: key);
 
-  final String? titleCourse, imgUrl, assessmentScore, reviewer, duration;
+  final String? titleCourse, imgUrl, duration;
+  final int assessmentScore, reviewer;
   final VoidCallback? onTap;
 
-  late final String _assessmentScore =
-      (double.parse(assessmentScore!) / double.parse(reviewer!))
-          .toStringAsFixed(1);
+  late final  String _assessmentScore =
+      (assessmentScore / reviewer).toDouble().toStringAsFixed(1);
 
   @override
   Widget build(BuildContext context) {
