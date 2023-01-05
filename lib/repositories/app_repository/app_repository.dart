@@ -235,4 +235,26 @@ class AppRepository implements AppBase {
       );
     }
   }
+
+  @override
+  Future<void> updateFavoriteInTeacher({
+    required Teacher teacher,
+    required bool idLike,
+  }) async {
+    try {
+      final voted = idLike ? teacher.voted + 1 : teacher.voted - 1;
+      await firebaseFirestore
+          .collection(ApiPath.teacher())
+          .doc(teacher.id)
+          .update({
+        'voted': voted,
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }

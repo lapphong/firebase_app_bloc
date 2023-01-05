@@ -72,4 +72,40 @@ class UserRepository implements UserBase {
 
     return imageUrl;
   }
+
+  @override
+  Future<void> updateFavoriteByUser({
+    required String userID,
+    required String teacherID,
+  }) async {
+    try {
+      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
+        'favorites': FieldValue.arrayUnion([teacherID]),
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> deleteFavoriteByUser({
+    required String userID,
+    required String teacherID,
+  }) async {
+    try {
+      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
+        'favorites': FieldValue.arrayRemove([teacherID]),
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }

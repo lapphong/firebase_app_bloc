@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_app_bloc/blocs/blocs.dart';
+import 'package:firebase_app_bloc/modules/details/blocs/like/like_cubit.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../models/models.dart';
@@ -14,14 +16,42 @@ const _duration = 300;
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final AppBase appBase;
+  final LikeCubit likeCubit;
 
-  DetailBloc({required this.appBase}) : super(DetailState.initial()) {
+  late final StreamSubscription likeSubscription;
+
+  DetailBloc({
+    required this.appBase,
+    required this.likeCubit,
+  }) : super(DetailState.initial()) {
     on<GetTeacherByIDEvent>(
       _getTeacherByID,
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
     on<GetListVideoByIDEvent>(_getListVideoByID,
         transformer: debounce(const Duration(milliseconds: _duration)));
+
+    likeSubscription = likeCubit.stream.listen((likeState) {
+      updateVotedTeacher();
+    });
+  }
+
+  Future<void> updateVotedTeacher() async {
+    try {
+      if (likeCubit.state.status == Status.like) {
+        await appBase.updateFavoriteInTeacher(
+          teacher: state.teacher,
+          idLike: true,
+        );
+      } else if (likeCubit.state.status == Status.unlike) {
+        await appBase.updateFavoriteInTeacher(
+          teacher: state.teacher,
+          idLike: false,
+        );
+      }
+    } on CustomError catch (e) {
+      emit(state.copyWith(error: CustomError(message: e.message)));
+    }
   }
 
   EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
@@ -53,8 +83,6 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     emit(state.copyWith(statusCourse: CourseStatus.loading));
     try {
       for (var i = 0; i < event.courseVideoId.length; i++) {
-        print('⚡⚡ $event.courseVideoId[i]');
-
         videoCourse =
             await appBase.getVideoCourseByID(id: event.courseVideoId[i]);
         listVideoFromDoc.add(videoCourse);

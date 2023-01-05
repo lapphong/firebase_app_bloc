@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Category extends Equatable {
   final String id;

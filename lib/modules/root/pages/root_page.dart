@@ -49,14 +49,21 @@ class RootPage extends StatelessWidget {
               userBase: context.read<UserBase>(),
             )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
           ),
-          BlocProvider(
+          BlocProvider<ClassBloc>(
             create: (context) => ClassBloc(appBase: context.read<AppBase>()),
           ),
-          BlocProvider(
+          BlocProvider<MentorBloc>(
             create: (context) => MentorBloc(appBase: context.read<AppBase>()),
           ),
-          BlocProvider(
-            create: (context) => DetailBloc(appBase: context.read<AppBase>()),
+          BlocProvider<LikeCubit>(
+            create: (context) => LikeCubit(userBase: context.read<UserBase>()),
+          ),
+          BlocProvider<DetailBloc>(
+            create: (context) => DetailBloc(
+              appBase: context.read<AppBase>(),
+              likeCubit: BlocProvider.of<LikeCubit>(context),
+            ),
+            lazy: false,
           ),
         ],
         child: const RootView(),
@@ -73,11 +80,6 @@ class RootView extends StatefulWidget {
 }
 
 class _RootViewState extends State<RootView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   static final Map<TabItem, GlobalKey<NavigatorState>> navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
     TabItem.activity: GlobalKey<NavigatorState>(),
@@ -154,10 +156,7 @@ class ActivityPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Activity'),
-            Text(
-              payload ?? 'abc',
-              style: TxtStyle.headline1,
-            ),
+            Text(payload ?? 'abc', style: TxtStyle.headline1),
           ],
         ),
       ),

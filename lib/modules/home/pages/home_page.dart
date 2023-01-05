@@ -53,8 +53,9 @@ class _HomePageState extends State<HomePage> {
   void _onScrollListProduct() {
     if (!_scrollListProductController.hasClients) return;
 
-    final thresholdReached = _scrollListProductController.position.extentAfter <=
-        _scrollListBestMentorController.position.maxScrollExtent - 120;
+    final thresholdReached =
+        _scrollListProductController.position.extentAfter <=
+            _scrollListBestMentorController.position.maxScrollExtent - 120;
 
     if (thresholdReached && !context.read<ClassBloc>().state.hasReachedMax) {
       context.read<ClassBloc>().add(LoadMoreProductEvent());
@@ -282,8 +283,12 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(textTitle, style: TxtStyle.headline3),
+        
         TextButton(
           onPressed: () async {
+            //await TestRepo().getCategory();
+            // await TestRepo()
+            //     .deleteFavoriteByUser('qoEIEgYoeTWrHvQ0sybDgZUcoXd2', '123');
             // final VideoCourse aaa =
             //     await TestRepo().getVideoCourseByID(id: 'VO5NnMa4O3oyX9sgKHk3');
             // print(aaa);

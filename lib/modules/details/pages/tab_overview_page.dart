@@ -82,15 +82,25 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                         }
                         return CourseTeacher(
                           onTap: (isLiked) async {
-                            // state.teacher.voted = !isLiked;
-                            // widget.voted += widget.isLiked ? 1 : -1;
+                            context.read<LikeCubit>().changeStatusTeacherByUser(
+                                  userID: context
+                                      .read<ProfileCubit>()
+                                      .state
+                                      .user
+                                      .id,
+                                  teacherID: state.teacher.id,
+                                  isLike: !isLiked,
+                                );
+                            context.read<ProfileCubit>().getProfile(
+                                uid:
+                                    context.read<ProfileCubit>().state.user.id);
 
-                            return isLiked;
+                            return !isLiked;
                           },
-                          voted: state.teacher.voted,
                           assetName: state.teacher.imgUrl,
                           fullName: state.teacher.name,
                           specialize: state.teacher.specialize,
+                          voted: state.teacher.voted,
                           isLiked: getLikeCount(state.teacher.id),
                         );
                       },

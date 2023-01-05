@@ -19,4 +19,8 @@ abstract class AppBase {
     required String id,
     required int limit,
   });
+  Future<void> updateFavoriteInTeacher({
+    required Teacher teacher,
+    required bool idLike,
+  });
 }
