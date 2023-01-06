@@ -21,6 +21,6 @@ abstract class AppBase {
   });
   Future<void> updateFavoriteInTeacher({
     required Teacher teacher,
-    required bool idLike,
+    required int voted,
   });
 }

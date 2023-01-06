@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_app_bloc/blocs/blocs.dart';
-import 'package:firebase_app_bloc/modules/details/blocs/like/like_cubit.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'package:firebase_app_bloc/modules/details/blocs/like/like_cubit.dart';
 
 import '../../../../models/models.dart';
 import '../../../../repositories/app_repository/app_base.dart';
@@ -36,18 +36,39 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     });
   }
 
+  late int votedCurrent = 0;
   Future<void> updateVotedTeacher() async {
     try {
       if (likeCubit.state.status == Status.like) {
+        votedCurrent = state.teacher.voted + 1;
         await appBase.updateFavoriteInTeacher(
           teacher: state.teacher,
-          idLike: true,
+          voted: votedCurrent,
         );
+
+        final Teacher teacher = Teacher(
+          id: state.teacher.id,
+          name: state.teacher.name,
+          imgUrl: state.teacher.imgUrl,
+          voted: votedCurrent,
+          specialize: state.teacher.specialize,
+        );
+        emit(state.copyWith(teacher: teacher));
       } else if (likeCubit.state.status == Status.unlike) {
+        votedCurrent = state.teacher.voted - 1;
         await appBase.updateFavoriteInTeacher(
           teacher: state.teacher,
-          idLike: false,
+          voted: votedCurrent,
         );
+
+        final Teacher teacher = Teacher(
+          id: state.teacher.id,
+          name: state.teacher.name,
+          imgUrl: state.teacher.imgUrl,
+          voted: votedCurrent,
+          specialize: state.teacher.specialize,
+        );
+        emit(state.copyWith(teacher: teacher));
       }
     } on CustomError catch (e) {
       emit(state.copyWith(error: CustomError(message: e.message)));

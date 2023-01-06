@@ -26,7 +26,7 @@ class Routes {
       case RouteName.detailCoursePage:
         final product = settings.arguments;
         if (product is Product) {
-          return _buildRoute(settings, DeTailCoursePage(product: product));
+          return _buildRoute(settings, DetailCoursePage(product: product));
         }
         return _errorRoute(settings);
       // case RouteName.verifyYourPage:

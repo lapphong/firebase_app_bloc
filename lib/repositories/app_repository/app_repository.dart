@@ -239,10 +239,9 @@ class AppRepository implements AppBase {
   @override
   Future<void> updateFavoriteInTeacher({
     required Teacher teacher,
-    required bool idLike,
+    required int voted,
   }) async {
     try {
-      final voted = idLike ? teacher.voted + 1 : teacher.voted - 1;
       await firebaseFirestore
           .collection(ApiPath.teacher())
           .doc(teacher.id)

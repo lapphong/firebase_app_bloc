@@ -6,20 +6,40 @@ import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../repositories/repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 import '../widgets/home_widgets.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ClassBloc>(
+          create: (context) => ClassBloc(appBase: context.read<AppBase>()),
+        ),
+        BlocProvider<MentorBloc>(
+          create: (context) => MentorBloc(appBase: context.read<AppBase>()),
+        ),
+      ],
+      child: const HomeView(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   final _scrollListBestMentorController = ScrollController();
   final _scrollListProductController = ScrollController();
 
@@ -283,7 +303,6 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(textTitle, style: TxtStyle.headline3),
-        
         TextButton(
           onPressed: () async {
             //await TestRepo().getCategory();

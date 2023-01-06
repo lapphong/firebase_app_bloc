@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_app_bloc/repositories/app_repository/app_base.dart';
-import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_repository.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../blocs/blocs.dart';
 import '../../../repositories/app_repository/app_repository.dart';
+import '../../../repositories/repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
 import '../../category/pages/category_page.dart';
@@ -48,22 +47,6 @@ class RootPage extends StatelessWidget {
             create: (context) => ProfileCubit(
               userBase: context.read<UserBase>(),
             )..getProfile(uid: context.read<AppBloc>().state.user!.uid),
-          ),
-          BlocProvider<ClassBloc>(
-            create: (context) => ClassBloc(appBase: context.read<AppBase>()),
-          ),
-          BlocProvider<MentorBloc>(
-            create: (context) => MentorBloc(appBase: context.read<AppBase>()),
-          ),
-          BlocProvider<LikeCubit>(
-            create: (context) => LikeCubit(userBase: context.read<UserBase>()),
-          ),
-          BlocProvider<DetailBloc>(
-            create: (context) => DetailBloc(
-              appBase: context.read<AppBase>(),
-              likeCubit: BlocProvider.of<LikeCubit>(context),
-            ),
-            lazy: false,
           ),
         ],
         child: const RootView(),

@@ -6,19 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../models/models.dart';
+import '../../../repositories/repository.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 
-class DeTailCoursePage extends StatefulWidget {
-  const DeTailCoursePage({super.key, required this.product});
+class DetailCoursePage extends StatelessWidget {
+  const DetailCoursePage({super.key, required this.product});
   final Product product;
 
   @override
-  State<DeTailCoursePage> createState() => _DeTailCoursePageState();
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LikeCubit>(
+          create: (context) => LikeCubit(userBase: context.read<UserBase>()),
+        ),
+        BlocProvider<DetailBloc>(
+          create: (context) => DetailBloc(
+            appBase: context.read<AppBase>(),
+            likeCubit: BlocProvider.of<LikeCubit>(context),
+          ),
+          lazy: false,
+        ),
+      ],
+      child: DetailCourseView(product: product),
+    );
+  }
 }
 
-class _DeTailCoursePageState extends State<DeTailCoursePage> {
+class DetailCourseView extends StatefulWidget {
+  const DetailCourseView({super.key, required this.product});
+  final Product product;
+
+  @override
+  State<DetailCourseView> createState() => _DetailCourseViewState();
+}
+
+class _DetailCourseViewState extends State<DetailCourseView> {
   final List<Tab> myTabs = <Tab>[
     const Tab(text: 'Overview'),
     const Tab(text: 'Course'),

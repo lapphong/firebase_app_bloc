@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../assets/assets_path.dart';
 import '../../../blocs/blocs.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 import '../widgets/course_teacher.dart';
@@ -26,6 +27,8 @@ class TabOverviewPage extends StatefulWidget {
 
 class _TabOverviewPageState extends State<TabOverviewPage>
     with AutomaticKeepAliveClientMixin {
+  static final debounce = Debounce(milliseconds: 1000);
+
   bool? getLikeCount(String idTeacher) {
     final listFavoriteFromUser =
         context.read<ProfileCubit>().state.user.favorites;
@@ -82,18 +85,18 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                         }
                         return CourseTeacher(
                           onTap: (isLiked) async {
-                            context.read<LikeCubit>().changeStatusTeacherByUser(
-                                  userID: context
-                                      .read<ProfileCubit>()
-                                      .state
-                                      .user
-                                      .id,
-                                  teacherID: state.teacher.id,
-                                  isLike: !isLiked,
-                                );
-                            context.read<ProfileCubit>().getProfile(
-                                uid:
-                                    context.read<ProfileCubit>().state.user.id);
+                            debounce.run(() {
+                              context
+                                  .read<LikeCubit>()
+                                  .changeStatusTeacherByUser(
+                                      userID: context
+                                          .read<ProfileCubit>()
+                                          .state
+                                          .user
+                                          .id,
+                                      teacherID: state.teacher.id,
+                                      isLike: !isLiked);
+                            });
 
                             return !isLiked;
                           },
