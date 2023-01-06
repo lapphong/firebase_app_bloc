@@ -11,15 +11,40 @@ part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final UserBase userBase;
-  //final LikeCubit likeCubit;
-
-  //late final StreamSubscription likeSubscription;
 
   ProfileCubit({
     required this.userBase,
-    //required this.likeCubit,
-  }) : super(ProfileState.initial()) {
-    //likeSubscription = likeCubit.stream.listen((likeState) {});
+  }) : super(ProfileState.initial());
+
+  late List<String> listFavoritesNews;
+  late User userNew;
+  void updateUserFavoriteList({
+    required String idTeacher,
+    required bool isLike,
+  }) {
+    if (isLike) {
+      userNew = User(
+        id: state.user.id,
+        name: state.user.name,
+        email: state.user.email,
+        profileImage: state.user.profileImage,
+        favorites: [...state.user.favorites, idTeacher],
+      );
+    } else {
+      listFavoritesNews = state.user.favorites
+          .where((String listFavoriteChild) => listFavoriteChild != idTeacher)
+          .toList();
+
+      userNew = User(
+        id: state.user.id,
+        name: state.user.name,
+        email: state.user.email,
+        profileImage: state.user.profileImage,
+        favorites: listFavoritesNews,
+      );
+    }
+    print('⚡⚡ $userNew');
+    emit(state.copyWith(user: userNew));
   }
 
   Future<void> getProfile({required String uid}) async {

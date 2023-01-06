@@ -41,35 +41,24 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     try {
       if (likeCubit.state.status == Status.like) {
         votedCurrent = state.teacher.voted + 1;
-        await appBase.updateFavoriteInTeacher(
-          teacher: state.teacher,
-          voted: votedCurrent,
-        );
-
-        final Teacher teacher = Teacher(
-          id: state.teacher.id,
-          name: state.teacher.name,
-          imgUrl: state.teacher.imgUrl,
-          voted: votedCurrent,
-          specialize: state.teacher.specialize,
-        );
-        emit(state.copyWith(teacher: teacher));
       } else if (likeCubit.state.status == Status.unlike) {
         votedCurrent = state.teacher.voted - 1;
-        await appBase.updateFavoriteInTeacher(
-          teacher: state.teacher,
-          voted: votedCurrent,
-        );
-
-        final Teacher teacher = Teacher(
-          id: state.teacher.id,
-          name: state.teacher.name,
-          imgUrl: state.teacher.imgUrl,
-          voted: votedCurrent,
-          specialize: state.teacher.specialize,
-        );
-        emit(state.copyWith(teacher: teacher));
       }
+
+      await appBase.updateFavoriteInTeacher(
+        teacher: state.teacher,
+        voted: votedCurrent,
+      );
+
+      final Teacher teacher = Teacher(
+        id: state.teacher.id,
+        name: state.teacher.name,
+        imgUrl: state.teacher.imgUrl,
+        voted: votedCurrent,
+        specialize: state.teacher.specialize,
+      );
+      print('⚡⚡ $teacher');
+      emit(state.copyWith(teacher: teacher));
     } on CustomError catch (e) {
       emit(state.copyWith(error: CustomError(message: e.message)));
     }

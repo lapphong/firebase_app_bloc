@@ -89,13 +89,20 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                               context
                                   .read<LikeCubit>()
                                   .changeStatusTeacherByUser(
-                                      userID: context
-                                          .read<ProfileCubit>()
-                                          .state
-                                          .user
-                                          .id,
-                                      teacherID: state.teacher.id,
-                                      isLike: !isLiked);
+                                    userID: context
+                                        .read<ProfileCubit>()
+                                        .state
+                                        .user
+                                        .id,
+                                    teacherID: state.teacher.id,
+                                    isLike: !isLiked,
+                                  );
+                              context
+                                  .read<ProfileCubit>()
+                                  .updateUserFavoriteList(
+                                    idTeacher: state.teacher.id,
+                                    isLike: !isLiked,
+                                  );
                             });
 
                             return !isLiked;
