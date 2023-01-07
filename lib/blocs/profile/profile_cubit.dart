@@ -5,8 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_app_bloc/models/models.dart';
 import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 
-import '../../modules/details/blocs/blocs.dart';
-
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -16,34 +14,21 @@ class ProfileCubit extends Cubit<ProfileState> {
     required this.userBase,
   }) : super(ProfileState.initial());
 
-  late List<String> listFavoritesNews;
   late User userNew;
   void updateUserFavoriteList({
     required String idTeacher,
     required bool isLike,
   }) {
     if (isLike) {
-      userNew = User(
-        id: state.user.id,
-        name: state.user.name,
-        email: state.user.email,
-        profileImage: state.user.profileImage,
-        favorites: [...state.user.favorites, idTeacher],
-      );
+      userNew =
+          state.user.copyWith(favorites: [...state.user.favorites, idTeacher]);
     } else {
-      listFavoritesNews = state.user.favorites
+      final listFavoritesNews = state.user.favorites
           .where((String listFavoriteChild) => listFavoriteChild != idTeacher)
           .toList();
 
-      userNew = User(
-        id: state.user.id,
-        name: state.user.name,
-        email: state.user.email,
-        profileImage: state.user.profileImage,
-        favorites: listFavoritesNews,
-      );
+      userNew = state.user.copyWith(favorites: listFavoritesNews);
     }
-    print('⚡⚡ $userNew');
     emit(state.copyWith(user: userNew));
   }
 

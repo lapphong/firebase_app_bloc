@@ -28,12 +28,19 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
       _getTeacherByID,
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
-    on<GetListVideoByIDEvent>(_getListVideoByID,
-        transformer: debounce(const Duration(milliseconds: _duration)));
+    on<GetListVideoByIDEvent>(
+      _getListVideoByID,
+      transformer: debounce(const Duration(milliseconds: _duration)),
+    );
 
     likeSubscription = likeCubit.stream.listen((likeState) {
       updateVotedTeacher();
     });
+  }
+
+  EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
+      Duration duration) {
+    return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
   }
 
   late int votedCurrent = 0;
@@ -50,23 +57,11 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
         voted: votedCurrent,
       );
 
-      final Teacher teacher = Teacher(
-        id: state.teacher.id,
-        name: state.teacher.name,
-        imgUrl: state.teacher.imgUrl,
-        voted: votedCurrent,
-        specialize: state.teacher.specialize,
-      );
-      print('⚡⚡ $teacher');
-      emit(state.copyWith(teacher: teacher));
+      emit(
+          state.copyWith(teacher: state.teacher.copyWith(voted: votedCurrent)));
     } on CustomError catch (e) {
       emit(state.copyWith(error: CustomError(message: e.message)));
     }
-  }
-
-  EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
-      Duration duration) {
-    return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
   }
 
   Future<void> _getTeacherByID(
