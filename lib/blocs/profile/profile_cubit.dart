@@ -8,28 +8,45 @@ import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
+  late User userUpdated;
   final UserBase userBase;
 
   ProfileCubit({
     required this.userBase,
   }) : super(ProfileState.initial());
 
-  late User userNew;
-  void updateUserFavoriteList({
+  void updateUserFavoriteListTeacher({
     required String idTeacher,
     required bool isLike,
   }) {
     if (isLike) {
-      userNew =
-          state.user.copyWith(favorites: [...state.user.favorites, idTeacher]);
+      userUpdated = state.user.copyWith(
+          favoritesTeacher: [...state.user.favoritesTeacher, idTeacher]);
     } else {
-      final listFavoritesNews = state.user.favorites
+      final listFavoritesNews = state.user.favoritesTeacher
           .where((String listFavoriteChild) => listFavoriteChild != idTeacher)
           .toList();
 
-      userNew = state.user.copyWith(favorites: listFavoritesNews);
+      userUpdated = state.user.copyWith(favoritesTeacher: listFavoritesNews);
     }
-    emit(state.copyWith(user: userNew));
+    emit(state.copyWith(user: userUpdated));
+  }
+
+  void updateUserFavoriteListProduct({
+    required String idProduct,
+    required bool isLike,
+  }) {
+    if (isLike) {
+      userUpdated = state.user.copyWith(
+          favoritesCourse: [...state.user.favoritesCourse, idProduct]);
+    } else {
+      final listFavoritesNews = state.user.favoritesCourse
+          .where((String listFavoriteChild) => listFavoriteChild != idProduct)
+          .toList();
+
+      userUpdated = state.user.copyWith(favoritesCourse: listFavoritesNews);
+    }
+    emit(state.copyWith(user: userUpdated));
   }
 
   Future<void> getProfile({required String uid}) async {

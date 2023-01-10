@@ -4,10 +4,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:firebase_app_bloc/modules/details/blocs/like/like_cubit.dart';
-
 import '../../../../models/models.dart';
 import '../../../../repositories/app_repository/app_base.dart';
+import '../blocs.dart';
 
 part 'detail_event.dart';
 part 'detail_state.dart';
@@ -16,7 +15,7 @@ const _duration = 300;
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final AppBase appBase;
-  final LikeCubit likeCubit;
+  final LikeTeacherCubit likeCubit;
 
   late final StreamSubscription likeSubscription;
 
@@ -46,9 +45,9 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   late int votedCurrent = 0;
   Future<void> updateVotedTeacher() async {
     try {
-      if (likeCubit.state.status == Status.like) {
+      if (likeCubit.state.status == LikeTeacherStatus.like) {
         votedCurrent = state.teacher.voted + 1;
-      } else if (likeCubit.state.status == Status.unlike) {
+      } else if (likeCubit.state.status == LikeTeacherStatus.unlike) {
         votedCurrent = state.teacher.voted - 1;
       }
 
@@ -93,12 +92,8 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
         listVideoFromDoc.add(videoCourse);
       }
 
-      if (listVideoFromDoc.isNotEmpty) {
-        emit(
-          state.copyWith(
-              statusCourse: CourseStatus.loaded, videoCourse: listVideoFromDoc),
-        );
-      }
+      emit(state.copyWith(
+          statusCourse: CourseStatus.loaded, videoCourse: listVideoFromDoc));
     } on CustomError catch (e) {
       emit(state.copyWith(statusCourse: CourseStatus.error, error: e));
     }

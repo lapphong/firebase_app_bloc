@@ -7,14 +7,16 @@ class User extends Equatable {
     required this.name,
     required this.email,
     required this.profileImage,
-    required this.favorites,
+    required this.favoritesTeacher,
+    required this.favoritesCourse,
   });
 
   final String id;
   final String name;
   final String email;
   final String profileImage;
-  final List<String> favorites;
+  final List<String> favoritesTeacher;
+  final List<String> favoritesCourse;
 
   factory User.fromDoc(DocumentSnapshot userDoc) {
     final userData = userDoc.data() as Map<String, dynamic>?;
@@ -24,7 +26,8 @@ class User extends Equatable {
       name: userData!['name'],
       email: userData['email'],
       profileImage: userData['profileImage'],
-      favorites: List.from(userData['favorites']),
+      favoritesTeacher: List.from(userData['favorites_teacher']),
+      favoritesCourse: List.from(userData['favorites_course']),
     );
   }
 
@@ -34,31 +37,40 @@ class User extends Equatable {
       name: '',
       email: '',
       profileImage: '',
-      favorites: [],
+      favoritesTeacher: [],
+      favoritesCourse: [],
     );
   }
 
   @override
-  List<Object> get props => [id, name, email, profileImage, favorites];
+  List<Object> get props => [
+        id,
+        name,
+        email,
+        profileImage,
+        favoritesTeacher,
+        favoritesCourse,
+      ];
 
   @override
-  String toString() {
-    return 'User(id:$id,name:$name,email:$email,profileImage:$profileImage,favorites:$favorites)';
-  }
+  String toString() =>
+      'User(id:$id,name:$name,email:$email,profileImage:$profileImage,favoritesTeacher:$favoritesTeacher,favoritesCourse:$favoritesCourse)';
 
   User copyWith({
     String? id,
     String? name,
     String? email,
     String? profileImage,
-    List<String>? favorites,
+    List<String>? favoritesTeacher,
+    List<String>? favoritesCourse,
   }) {
     return User(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
       profileImage: profileImage ?? this.profileImage,
-      favorites: favorites ?? this.favorites,
+      favoritesTeacher: favoritesTeacher ?? this.favoritesTeacher,
+      favoritesCourse: favoritesCourse ?? this.favoritesCourse,
     );
   }
 }

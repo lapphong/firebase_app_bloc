@@ -30,6 +30,23 @@ class Product extends Equatable {
     required this.teacherID,
   });
 
+  factory Product.initial() {
+    return const Product(
+      id: '',
+      title: '',
+      image: '',
+      description: '',
+      field: '',
+      duration: '',
+      category: '',
+      requirements: [],
+      listVideoID: [],
+      assessmentScore: 0,
+      reviewer: 0,
+      teacherID: '',
+    );
+  }
+
   factory Product.fromDoc(DocumentSnapshot productDoc) {
     final productData = productDoc.data() as Map<String, dynamic>;
 

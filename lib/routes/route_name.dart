@@ -19,7 +19,7 @@ class RouteName {
   static const String detailCoursePage = 'DetailCoursePage';
   static const String playingCoursePage = 'PlayingCoursePage';
 
-  static const String fullscreenVideoPage = 'FullscreenVideoPage';
+  static const String fullScreenVideoPage = 'FullScreenVideoPage';
   static const String settingPage = 'SettingPage';
   static const String editProfilePage = 'EditProfilePage';
   static const String downloadVideoPage = 'DownloadVideoPage';

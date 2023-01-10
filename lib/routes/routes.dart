@@ -17,6 +17,8 @@ class Routes {
         return _buildRoute(settings, const SignUpPage());
       case RouteName.languagePage:
         return _buildRoute(settings, const ChangeLanguagePage());
+      case RouteName.favoritePage:
+        return _buildRoute(settings, const MyFavoritePage());
       case RouteName.editProfilePage:
         final user = settings.arguments;
         if (user is User) {

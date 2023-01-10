@@ -1,13 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_app_bloc/assets/assets_path.dart';
+import 'package:firebase_app_bloc/blocs/blocs.dart';
 import 'package:firebase_app_bloc/modules/details/pages/tab_course_page.dart';
 import 'package:firebase_app_bloc/modules/details/pages/tab_overview_page.dart';
+import 'package:firebase_app_bloc/widgets/stateless/button_back.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 
 import '../../../models/models.dart';
 import '../../../repositories/repository.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 
@@ -19,13 +23,20 @@ class DetailCoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LikeCubit>(
-          create: (context) => LikeCubit(userBase: context.read<UserBase>()),
+        BlocProvider<LikeTeacherCubit>(
+          create: (context) => LikeTeacherCubit(
+            userBase: context.read<UserBase>(),
+          ),
+        ),
+        BlocProvider<LikeCourseCubit>(
+          create: (context) => LikeCourseCubit(
+            userBase: context.read<UserBase>(),
+          ),
         ),
         BlocProvider<DetailBloc>(
           create: (context) => DetailBloc(
             appBase: context.read<AppBase>(),
-            likeCubit: BlocProvider.of<LikeCubit>(context),
+            likeCubit: BlocProvider.of<LikeTeacherCubit>(context),
           ),
           lazy: false,
         ),
@@ -44,6 +55,8 @@ class DetailCourseView extends StatefulWidget {
 }
 
 class _DetailCourseViewState extends State<DetailCourseView> {
+  static final debounce = Debounce(milliseconds: 1000);
+
   final List<Tab> myTabs = <Tab>[
     const Tab(text: 'Overview'),
     const Tab(text: 'Course'),
@@ -165,29 +178,48 @@ class _DetailCourseViewState extends State<DetailCourseView> {
     );
   }
 
+  bool? getLikeCourse(String idProduct) {
+    final listFavoriteFromUser =
+        context.read<ProfileCubit>().state.user.favoritesCourse;
+    for (var i = 0; i < listFavoriteFromUser.length; i++) {
+      if (listFavoriteFromUser[i] == idProduct) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   Widget buildWidgetInImageTop(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: DarkTheme.white),
-            ),
-            child: Image.asset(AssetPath.iconArrowLeft, color: DarkTheme.white),
-          ),
-        ),
-        Image.asset(
-          AssetPath.iconMyFavorite,
-          width: 30,
-          height: 30,
-          fit: BoxFit.cover,
-          color: DarkTheme.greyScale500,
-        ),
+        const ButtonBack(),
+        LikeButton(
+          animationDuration: const Duration(milliseconds: 1000),
+          isLiked: getLikeCourse(widget.product.id),
+          likeBuilder: (bool isLiked) {
+            return Icon(
+              size: 35,
+              Icons.favorite_sharp,
+              color: isLiked ? Colors.pink : DarkTheme.greyScale500,
+            );
+          },
+          onTap: (isLiked) async {
+            debounce.run(() {
+              context.read<LikeCourseCubit>().changeLikeCourseStatusByUser(
+                    userID: context.read<ProfileCubit>().state.user.id,
+                    productID: widget.product.id,
+                    isLike: !isLiked,
+                  );
+              context.read<ProfileCubit>().updateUserFavoriteListProduct(
+                    idProduct: widget.product.id,
+                    isLike: !isLiked,
+                  );
+            });
+
+            return !isLiked;
+          },
+        )
       ],
     );
   }

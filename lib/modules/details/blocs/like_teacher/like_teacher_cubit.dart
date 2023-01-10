@@ -4,14 +4,16 @@ import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 
 import '../../../../models/models.dart';
 
-part 'like_state.dart';
+part 'like_teacher_state.dart';
 
-class LikeCubit extends Cubit<LikeState> {
+class LikeTeacherCubit extends Cubit<LikeTeacherState> {
   final UserBase userBase;
 
-  LikeCubit({required this.userBase}) : super(LikeState.initial());
+  LikeTeacherCubit({
+    required this.userBase,
+  }) : super(LikeTeacherState.initial());
 
-  void changeStatusTeacherByUser({
+  void changeLikeTeacherStatusByUser({
     required String userID,
     required String teacherID,
     required bool isLike,
@@ -21,11 +23,11 @@ class LikeCubit extends Cubit<LikeState> {
 
   Future<void> likeTeacher(String userID, String teacherID) async {
     try {
-      await userBase.updateFavoriteByUser(
+      await userBase.updateFavoriteTeacherByUser(
         userID: userID,
         teacherID: teacherID,
       );
-      emit(state.copyWith(status: Status.like));
+      emit(state.copyWith(status: LikeTeacherStatus.like));
     } on CustomError catch (e) {
       emit(state.copyWith(error: CustomError(message: e.message)));
     }
@@ -33,11 +35,11 @@ class LikeCubit extends Cubit<LikeState> {
 
   Future<void> unLikeTeacher(String userID, String teacherID) async {
     try {
-      await userBase.deleteFavoriteByUser(
+      await userBase.deleteFavoriteTeacherByUser(
         userID: userID,
         teacherID: teacherID,
       );
-      emit(state.copyWith(status: Status.unlike));
+      emit(state.copyWith(status: LikeTeacherStatus.unlike));
     } on CustomError catch (e) {
       emit(state.copyWith(error: CustomError(message: e.message)));
     }

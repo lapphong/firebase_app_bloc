@@ -74,13 +74,13 @@ class UserRepository implements UserBase {
   }
 
   @override
-  Future<void> updateFavoriteByUser({
+  Future<void> updateFavoriteTeacherByUser({
     required String userID,
     required String teacherID,
   }) async {
     try {
       await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
-        'favorites': FieldValue.arrayUnion([teacherID]),
+        'favorites_teacher': FieldValue.arrayUnion([teacherID]),
       });
     } catch (e) {
       throw CustomError(
@@ -92,14 +92,75 @@ class UserRepository implements UserBase {
   }
 
   @override
-  Future<void> deleteFavoriteByUser({
+  Future<void> deleteFavoriteTeacherByUser({
     required String userID,
     required String teacherID,
   }) async {
     try {
       await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
-        'favorites': FieldValue.arrayRemove([teacherID]),
+        'favorites_teacher': FieldValue.arrayRemove([teacherID]),
       });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> updateFavoriteCourseByUser({
+    required String userID,
+    required String productID,
+  }) async {
+    try {
+      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
+        'favorites_course': FieldValue.arrayUnion([productID]),
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> deleteFavoriteCourseByUser({
+    required String userID,
+    required String productID,
+  }) async {
+    try {
+      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
+        'favorites_course': FieldValue.arrayRemove([productID]),
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<Product> getProductByIdInListFavoriteCourse({
+    required String id,
+  }) async {
+    try {
+      final productDoc =
+          await firebaseFirestore.collection(ApiPath.product()).doc(id).get();
+
+      if (productDoc.exists) {
+        final currentProduct = Product.fromDoc(productDoc);
+        return currentProduct;
+      }
+
+      throw 'Product not found';
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {
       throw CustomError(
         code: 'Exception',

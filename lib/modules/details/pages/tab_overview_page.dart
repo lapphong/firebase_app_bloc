@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
@@ -29,9 +29,9 @@ class _TabOverviewPageState extends State<TabOverviewPage>
     with AutomaticKeepAliveClientMixin {
   static final debounce = Debounce(milliseconds: 1000);
 
-  bool? getLikeCount(String idTeacher) {
+  bool? getLikedTeacher(String idTeacher) {
     final listFavoriteFromUser =
-        context.read<ProfileCubit>().state.user.favorites;
+        context.read<ProfileCubit>().state.user.favoritesTeacher;
     for (var i = 0; i < listFavoriteFromUser.length; i++) {
       if (listFavoriteFromUser[i] == idTeacher) {
         return true;
@@ -76,9 +76,7 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                         } else if (state.statusOverview ==
                             OverviewStatus.loading) {
                           return const Center(
-                              child: CupertinoActivityIndicator(
-                            color: DarkTheme.white,
-                          ));
+                              child: CircularProgressIndicator());
                         } else if (state.statusOverview ==
                             OverviewStatus.error) {
                           return const StatusError();
@@ -87,8 +85,8 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                           onTap: (isLiked) async {
                             debounce.run(() {
                               context
-                                  .read<LikeCubit>()
-                                  .changeStatusTeacherByUser(
+                                  .read<LikeTeacherCubit>()
+                                  .changeLikeTeacherStatusByUser(
                                     userID: context
                                         .read<ProfileCubit>()
                                         .state
@@ -99,7 +97,7 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                                   );
                               context
                                   .read<ProfileCubit>()
-                                  .updateUserFavoriteList(
+                                  .updateUserFavoriteListTeacher(
                                     idTeacher: state.teacher.id,
                                     isLike: !isLiked,
                                   );
@@ -111,7 +109,7 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                           fullName: state.teacher.name,
                           specialize: state.teacher.specialize,
                           voted: state.teacher.voted,
-                          isLiked: getLikeCount(state.teacher.id),
+                          isLiked: getLikedTeacher(state.teacher.id),
                         );
                       },
                     ),

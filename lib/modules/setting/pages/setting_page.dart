@@ -67,9 +67,7 @@ class SettingPage extends StatelessWidget {
             buildSettingItemsArrow(
               title: S.of(context).myFavorite,
               urlIcon: AssetPath.iconMyFavorite,
-              onTap: () {
-                //Navigator.pushNamed(context, RouteName.favoritePage)
-              },
+              onTap: () => Navigator.pushNamed(context, RouteName.favoritePage),
             ),
             const SizedBox(height: 16),
             buildSettingItemsArrow(
