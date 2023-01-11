@@ -11,11 +11,13 @@ class ClassPreview extends StatelessWidget {
   const ClassPreview({
     Key? key,
     required this.field,
-    required this.assetName,
+    required this.imgUrl,
+    required this.tagHeroImg,
     required this.onTap,
   }) : super(key: key);
 
-  final String field, assetName;
+  final String field, imgUrl;
+  final String tagHeroImg;
   final VoidCallback? onTap;
 
   @override
@@ -27,15 +29,19 @@ class ClassPreview extends StatelessWidget {
           SizedBox(
             width: 152,
             height: 182,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: assetName,
-                fit: BoxFit.fill,
-                placeholder: (_, __) =>
-                    const Image(image: AssetImage(AssetPath.imgLoading)),
-                errorWidget: (context, url, error) =>
-                    const Image(image: AssetImage(AssetPath.imgError)),
+            child: Hero(
+              tag: tagHeroImg,
+              transitionOnUserGestures: true,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: imgUrl,
+                  fit: BoxFit.fill,
+                  placeholder: (_, __) =>
+                      const Image(image: AssetImage(AssetPath.imgLoading)),
+                  errorWidget: (context, url, error) =>
+                      const Image(image: AssetImage(AssetPath.imgError)),
+                ),
               ),
             ),
           ),

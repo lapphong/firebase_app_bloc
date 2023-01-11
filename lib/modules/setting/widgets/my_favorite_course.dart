@@ -12,10 +12,12 @@ class MyFavoriteCourse extends StatelessWidget {
     required this.title,
     required this.imgUrl,
     required this.onTap,
+    required this.tagHeroImg,
   }) : super(key: key);
 
   final String imgUrl, title;
   final VoidCallback? onTap;
+  final String tagHeroImg;
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +25,22 @@ class MyFavoriteCourse extends StatelessWidget {
       onTap: onTap,
       child: Stack(
         children: [
-          SizedBox(
-            width: 152,
-            height: 172,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: imgUrl,
-                fit: BoxFit.fill,
-                placeholder: (_, __) =>
-                    const Image(image: AssetImage(AssetPath.imgLoading)),
-                errorWidget: (context, url, error) =>
-                    const Image(image: AssetImage(AssetPath.imgError)),
+          Hero(
+            tag: tagHeroImg,
+            transitionOnUserGestures: true,
+            child: SizedBox(
+              width: 152,
+              height: 172,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: imgUrl,
+                  fit: BoxFit.fill,
+                  placeholder: (_, __) =>
+                      const Image(image: AssetImage(AssetPath.imgLoading)),
+                  errorWidget: (context, url, error) =>
+                      const Image(image: AssetImage(AssetPath.imgError)),
+                ),
               ),
             ),
           ),

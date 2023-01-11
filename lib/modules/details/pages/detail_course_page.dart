@@ -95,15 +95,19 @@ class _DetailCourseViewState extends State<DetailCourseView> {
                         Positioned(
                           left: 0,
                           top: 0,
-                          child: CachedNetworkImage(
-                            imageUrl: widget.product.image,
-                            width: MediaQuery.of(context).size.width,
-                            height: 340,
-                            fit: BoxFit.fill,
-                            placeholder: (_, __) => const Image(
-                                image: AssetImage(AssetPath.imgLoading)),
-                            errorWidget: (context, url, error) => const Image(
-                                image: AssetImage(AssetPath.imgError)),
+                          child: Hero(
+                            tag: widget.product.image,
+                            transitionOnUserGestures: true,
+                            child: CachedNetworkImage(
+                              imageUrl: widget.product.image,
+                              width: MediaQuery.of(context).size.width,
+                              height: 340,
+                              fit: BoxFit.fill,
+                              placeholder: (_, __) => const Image(
+                                  image: AssetImage(AssetPath.imgLoading)),
+                              errorWidget: (context, url, error) => const Image(
+                                  image: AssetImage(AssetPath.imgError)),
+                            ),
                           ),
                         ),
                         Padding(

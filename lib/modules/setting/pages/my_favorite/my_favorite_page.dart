@@ -72,6 +72,7 @@ class _MyFavoriteViewState extends State<MyFavoriteView> {
                       return MyFavoriteCourse(
                         title: state.listMyFavorite[index].title,
                         imgUrl: state.listMyFavorite[index].image,
+                        tagHeroImg: state.listMyFavorite[index].image,
                         onTap: () {
                           Navigator.pushNamed(
                             context,

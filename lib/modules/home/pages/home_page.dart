@@ -253,7 +253,8 @@ class _HomeViewState extends State<HomeView> {
                 (context, index) {
                   return ClassPreview(
                     field: state.list[index].field,
-                    assetName: state.list[index].image,
+                    imgUrl: state.list[index].image,
+                    tagHeroImg: state.list[index].image,
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         RouteName.detailCoursePage,
