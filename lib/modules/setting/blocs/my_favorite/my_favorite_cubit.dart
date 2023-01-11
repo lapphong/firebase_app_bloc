@@ -13,7 +13,7 @@ class MyFavoriteCubit extends Cubit<MyFavoriteState> {
   Future<void> getListMyFavoriteCourse({required List<String> listID}) async {
     final List<Product> listProductMyFavorite = [];
     late Product productMyFavorite = Product.initial();
-    emit(state.copyWith(status: MyFavoriteStatus.init));
+    emit(state.copyWith(status: MyFavoriteStatus.initial));
 
     try {
       for (var i = 0; i < listID.length; i++) {

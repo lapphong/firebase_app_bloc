@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../modules/authentication/authentication.dart';
+import '../modules/details/pages/detail_mentor_page.dart';
 import '../modules/setting/pages/setting_pages.dart';
 
 class Routes {
@@ -29,6 +30,12 @@ class Routes {
         final product = settings.arguments;
         if (product is Product) {
           return _buildRoute(settings, DetailCoursePage(product: product));
+        }
+        break;
+      case RouteName.detailMentorPage:
+        final teacher = settings.arguments;
+        if (teacher is Teacher) {
+          return _buildRoute(settings, DetailMentorPage(teacher: teacher));
         }
         return _errorRoute(settings);
       // case RouteName.verifyYourPage:

@@ -1,6 +1,6 @@
 part of 'my_favorite_cubit.dart';
 
-enum MyFavoriteStatus { init, loaded, error }
+enum MyFavoriteStatus { initial, loaded, error }
 
 class MyFavoriteState extends Equatable {
   final MyFavoriteStatus status;
@@ -14,7 +14,7 @@ class MyFavoriteState extends Equatable {
 
   factory MyFavoriteState.initial() {
     return const MyFavoriteState(
-      status: MyFavoriteStatus.init,
+      status: MyFavoriteStatus.initial,
       listMyFavorite: [],
       error: CustomError(),
     );

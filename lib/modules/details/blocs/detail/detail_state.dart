@@ -1,8 +1,8 @@
 part of 'detail_bloc.dart';
 
-enum OverviewStatus { initial, loading, loaded, error }
+enum OverviewStatus { initial, loaded, error }
 
-enum CourseStatus { initial, loading, loaded, error }
+enum CourseStatus { initial, loaded, error }
 
 class DetailState extends Equatable {
   final OverviewStatus statusOverview;
@@ -39,8 +39,9 @@ class DetailState extends Equatable {
       ];
 
   @override
-  String toString() =>
-      'DetailState(statusOverview: $statusOverview,statusCourse: $statusCourse, teacher: $teacher,videoCourse: $videoCourse, error: $error)';
+  String toString() {
+    return 'DetailState(statusOverview: $statusOverview,statusCourse: $statusCourse,teacher: $teacher,videoCourse: $videoCourse, error: $error)';
+  }
 
   DetailState copyWith({
     OverviewStatus? statusOverview,

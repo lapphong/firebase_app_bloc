@@ -53,7 +53,7 @@ class _MyFavoriteViewState extends State<MyFavoriteView> {
               const Text('My Favorite Course :', style: TxtStyle.headline3),
               BlocBuilder<MyFavoriteCubit, MyFavoriteState>(
                 builder: (context, state) {
-                  if (state.status == MyFavoriteStatus.init) {
+                  if (state.status == MyFavoriteStatus.initial) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state.status == MyFavoriteStatus.error) {
                     return const StatusError();

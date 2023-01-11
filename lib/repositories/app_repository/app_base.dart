@@ -15,8 +15,9 @@ abstract class AppBase {
 
   Future<VideoCourse> getVideoCourseByID({required String id});
   Future<Teacher> getTeacherByID({required String id});
-  Future<List<Product>> getListProductInCategoryByID({
+  Future<List<Product>> getListProductByID({
     required String id,
+    required String field,
     required int limit,
   });
   Future<void> updateFavoriteInTeacher({

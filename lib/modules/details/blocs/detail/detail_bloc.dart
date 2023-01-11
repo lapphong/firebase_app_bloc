@@ -67,7 +67,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     GetTeacherByIDEvent event,
     Emitter<DetailState> emit,
   ) async {
-    emit(state.copyWith(statusOverview: OverviewStatus.loading));
+    emit(state.copyWith(statusOverview: OverviewStatus.initial));
 
     try {
       final Teacher teacher = await appBase.getTeacherByID(id: event.id!);
@@ -84,7 +84,7 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   ) async {
     final List<VideoCourse> listVideoFromDoc = [];
     late VideoCourse videoCourse = VideoCourse.initialVideo();
-    emit(state.copyWith(statusCourse: CourseStatus.loading));
+    emit(state.copyWith(statusCourse: CourseStatus.initial));
     try {
       for (var i = 0; i < event.courseVideoId.length; i++) {
         videoCourse =

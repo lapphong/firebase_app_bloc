@@ -10,10 +10,12 @@ class BestMentor extends StatelessWidget {
     required this.imgUrl,
     required this.voted,
     required this.name,
-    this.onTap,
+    required this.tagHeroImg,
+    required this.onTap,
   }) : super(key: key);
 
   final String? imgUrl, voted, name;
+  final String tagHeroImg;
   final VoidCallback? onTap;
 
   @override
@@ -31,18 +33,22 @@ class BestMentor extends StatelessWidget {
             SizedBox(
               width: 130,
               height: 128,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                ),
-                child: CachedNetworkImage(
-                  imageUrl: imgUrl!,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) =>
-                      const Image(image: AssetImage(AssetPath.imgLoading)),
-                  errorWidget: (context, url, error) =>
-                      const Image(image: AssetImage(AssetPath.imgError)),
+              child: Hero(
+                tag: tagHeroImg,
+                transitionOnUserGestures: true,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: imgUrl!,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const Image(image: AssetImage(AssetPath.imgLoading)),
+                    errorWidget: (context, url, error) =>
+                        const Image(image: AssetImage(AssetPath.imgError)),
+                  ),
                 ),
               ),
             ),

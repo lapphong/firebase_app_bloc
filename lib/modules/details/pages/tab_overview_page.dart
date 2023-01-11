@@ -72,9 +72,6 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                       },
                       builder: (context, state) {
                         if (state.statusOverview == OverviewStatus.initial) {
-                          return Container();
-                        } else if (state.statusOverview ==
-                            OverviewStatus.loading) {
                           return const Center(
                               child: CircularProgressIndicator());
                         } else if (state.statusOverview ==

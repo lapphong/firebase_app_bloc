@@ -50,8 +50,6 @@ class _TabCoursePageState extends State<TabCoursePage>
     return BlocBuilder<DetailBloc, DetailState>(
       builder: (context, state) {
         if (state.statusCourse == CourseStatus.initial) {
-          return Container();
-        } else if (state.statusCourse == CourseStatus.loading) {
           return const Padding(
             padding: EdgeInsets.only(top: 30.0),
             child: CupertinoActivityIndicator(color: DarkTheme.white),

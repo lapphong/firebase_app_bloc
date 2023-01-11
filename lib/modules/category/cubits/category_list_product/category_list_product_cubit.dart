@@ -64,8 +64,9 @@ class CategoryListProductCubit extends Cubit<CategoryListProductState> {
 
   Future<List<Product>> getListProductInCategoryByID() async {
     try {
-      final listProduct = await appBase.getListProductInCategoryByID(
+      final listProduct = await appBase.getListProductByID(
         id: categoryFilterCubit.state.filterCategory.id,
+        field: 'course_category',
         limit: _limit,
       );
       return listProduct;

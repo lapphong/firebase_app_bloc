@@ -204,17 +204,22 @@ class _HomeViewState extends State<HomeView> {
               return index >= state.list.length
                   ? const SizedBox(
                       height: 50,
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                      child: Center(child: CircularProgressIndicator()),
                     )
                   : Padding(
                       padding: const EdgeInsets.only(right: 10.0),
                       child: BestMentor(
-                        imgUrl: state.list[index].imgUrl,
                         name: state.list[index].name,
+                        imgUrl: state.list[index].imgUrl,
+                        tagHeroImg: state.list[index].imgUrl,
                         voted: state.list[index].voted.toString(),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            RouteName.detailMentorPage,
+                            arguments: state.list[index],
+                          );
+                        },
                       ),
                     );
             },
@@ -306,6 +311,12 @@ class _HomeViewState extends State<HomeView> {
         Text(textTitle, style: TxtStyle.headline3),
         TextButton(
           onPressed: () async {
+            // final list = await TestRepo().getListProductByID(
+            //   id: 'TH3gRtwTL1I9Pae8R3aF',
+            //   field: 'course_teacher_id',
+            //   limit: 20,
+            // );
+            // print(list);
             //await TestRepo().getCategory();
             // await TestRepo()
             //     .deleteFavoriteByUser('qoEIEgYoeTWrHvQ0sybDgZUcoXd2', '123');

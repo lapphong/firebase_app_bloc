@@ -208,8 +208,9 @@ class AppRepository implements AppBase {
   }
 
   @override
-  Future<List<Product>> getListProductInCategoryByID({
+  Future<List<Product>> getListProductByID({
     required String id,
+    required String field,
     required int limit,
   }) async {
     try {
@@ -217,7 +218,7 @@ class AppRepository implements AppBase {
 
       await firebaseFirestore
           .collection(ApiPath.product())
-          .where('course_category', isEqualTo: id)
+          .where(field, isEqualTo: id)
           .limit(limit)
           .get()
           .then((value) {
