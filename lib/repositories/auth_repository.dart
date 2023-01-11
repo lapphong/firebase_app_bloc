@@ -35,6 +35,9 @@ class AuthRepository {
         'name': name,
         'email': email,
         'profileImage': 'https://picsum.photos/300',
+        'favorites_course': [],
+        'favorites_teacher': [],
+        'diamond': 1000,
       });
     } on auth.FirebaseAuthException catch (e) {
       throw CustomError(

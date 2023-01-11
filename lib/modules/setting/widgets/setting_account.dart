@@ -20,7 +20,7 @@ class SettingAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BodyItemNetwork(
+    return BodyItemNetwork2(
       onTap: onTap,
       height: 64,
       widthImg: 64,

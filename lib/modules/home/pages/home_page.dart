@@ -162,7 +162,19 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AvatarHome(url: state.user.profileImage),
-                const BellButton(),
+                TextButton.icon(
+                  icon: const Icon(
+                    Icons.diamond_outlined,
+                    size: 25,
+                    color: DarkTheme.primaryBlue700,
+                  ),
+                  label: Text(
+                    state.user.diamond.toString(),
+                    style: TxtStyle.headline4
+                        .copyWith(color: DarkTheme.primaryBlue700),
+                  ),
+                  onPressed: () {},
+                ),
               ],
             ),
             const SizedBox(height: 10),

@@ -7,6 +7,7 @@ class User extends Equatable {
     required this.name,
     required this.email,
     required this.profileImage,
+    required this.diamond,
     required this.favoritesTeacher,
     required this.favoritesCourse,
   });
@@ -15,6 +16,7 @@ class User extends Equatable {
   final String name;
   final String email;
   final String profileImage;
+  final int diamond;
   final List<String> favoritesTeacher;
   final List<String> favoritesCourse;
 
@@ -26,6 +28,7 @@ class User extends Equatable {
       name: userData!['name'],
       email: userData['email'],
       profileImage: userData['profileImage'],
+      diamond: userData['diamond'],
       favoritesTeacher: List.from(userData['favorites_teacher']),
       favoritesCourse: List.from(userData['favorites_course']),
     );
@@ -37,6 +40,7 @@ class User extends Equatable {
       name: '',
       email: '',
       profileImage: '',
+      diamond: 0,
       favoritesTeacher: [],
       favoritesCourse: [],
     );
@@ -48,19 +52,21 @@ class User extends Equatable {
         name,
         email,
         profileImage,
+        diamond,
         favoritesTeacher,
         favoritesCourse,
       ];
 
   @override
   String toString() =>
-      'User(id:$id,name:$name,email:$email,profileImage:$profileImage,favoritesTeacher:$favoritesTeacher,favoritesCourse:$favoritesCourse)';
+      'User(id:$id,name:$name,email:$email,profileImage:$profileImage,diamond:$diamond,favoritesTeacher:$favoritesTeacher,favoritesCourse:$favoritesCourse)';
 
   User copyWith({
     String? id,
     String? name,
     String? email,
     String? profileImage,
+    int? diamond,
     List<String>? favoritesTeacher,
     List<String>? favoritesCourse,
   }) {
@@ -69,6 +75,7 @@ class User extends Equatable {
       name: name ?? this.name,
       email: email ?? this.email,
       profileImage: profileImage ?? this.profileImage,
+      diamond: diamond ?? this.diamond,
       favoritesTeacher: favoritesTeacher ?? this.favoritesTeacher,
       favoritesCourse: favoritesCourse ?? this.favoritesCourse,
     );
