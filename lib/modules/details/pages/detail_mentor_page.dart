@@ -110,7 +110,9 @@ class _DetailMentorViewState extends State<DetailMentorView> {
       child: Column(
         children: [
           AvatarTeacher(
-              urlImg: widget.teacher.imgUrl, tagImgHero: widget.teacher.imgUrl),
+            urlImg: widget.teacher.imgUrl,
+            tagImgHero: widget.teacher.imgUrl,
+          ),
           const SizedBox(height: 10),
           Text(widget.teacher.name, style: TxtStyle.headline2),
           Text(

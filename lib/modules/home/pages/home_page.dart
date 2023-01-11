@@ -86,7 +86,7 @@ class _HomeViewState extends State<HomeView> {
     if (!_scrollListBestMentorController.hasClients) return false;
     final maxScroll = _scrollListBestMentorController.position.maxScrollExtent;
     final currentScroll = _scrollListBestMentorController.offset;
-    return currentScroll >= (maxScroll * 0.5);
+    return currentScroll >= (maxScroll * 0.9);
   }
 
   @override
