@@ -13,6 +13,8 @@ class Product extends Equatable {
   final List<String> listVideoID;
   final int assessmentScore;
   final int reviewer;
+  final int price;
+  final int discount;
   final String teacherID;
 
   const Product({
@@ -27,6 +29,8 @@ class Product extends Equatable {
     required this.listVideoID,
     required this.assessmentScore,
     required this.reviewer,
+    required this.price,
+    required this.discount,
     required this.teacherID,
   });
 
@@ -43,6 +47,8 @@ class Product extends Equatable {
       listVideoID: [],
       assessmentScore: 0,
       reviewer: 0,
+      price: 0,
+      discount: 0,
       teacherID: '',
     );
   }
@@ -62,6 +68,8 @@ class Product extends Equatable {
       listVideoID: List.from(productData['course_video_id']),
       assessmentScore: productData['course_assessment_score'],
       reviewer: productData['course_reviewer'],
+      price: productData['course_price'],
+      discount: productData['course_discount'],
       teacherID: productData['course_teacher_id'],
     );
   }
@@ -80,6 +88,8 @@ class Product extends Equatable {
       listVideoID,
       assessmentScore,
       reviewer,
+      price,
+      discount,
       teacherID,
     ];
   }
@@ -96,6 +106,8 @@ class Product extends Equatable {
     List<String>? listVideoID,
     int? assessmentScore,
     int? reviewer,
+    int? price,
+    int? discount,
     String? teacherID,
   }) {
     return Product(
@@ -110,6 +122,8 @@ class Product extends Equatable {
       listVideoID: listVideoID ?? this.listVideoID,
       assessmentScore: assessmentScore ?? this.assessmentScore,
       reviewer: reviewer ?? this.reviewer,
+      price: price ?? this.price,
+      discount: discount ?? this.discount,
       teacherID: teacherID ?? this.teacherID,
     );
   }

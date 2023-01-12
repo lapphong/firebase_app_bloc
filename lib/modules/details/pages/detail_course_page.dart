@@ -162,35 +162,64 @@ class _DetailCourseViewState extends State<DetailCourseView> {
     );
   }
 
+  bool? getBool(List<String> list) {
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] == widget.product.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   Widget buildWidgetInImageBottom(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(''),
-        SizedBox(
-          width: 52,
-          height: 52,
-          child: CircleButton(
-            onTap: () {},
-            widthIcon: 24,
-            heightIcon: 24,
-            bgColor: DarkTheme.primaryBlue600,
-            assetPath: AssetPath.iconPlay,
-          ),
-        ),
+        getBool(context.read<ProfileCubit>().state.user.myLearning) == true
+            ? SizedBox(
+                width: 52,
+                height: 52,
+                child: CircleButton(
+                  onTap: () {},
+                  widthIcon: 24,
+                  heightIcon: 24,
+                  bgColor: DarkTheme.primaryBlue600,
+                  assetPath: AssetPath.iconPlay,
+                ),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  color: DarkTheme.primaryBlue600,
+                  border: Border.all(color: DarkTheme.primaryBlue600),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextButton.icon(
+                  icon: const Icon(
+                    Icons.diamond_outlined,
+                    color: DarkTheme.white,
+                  ),
+                  onPressed: () {},
+                  label: Row(
+                    children: [
+                      Text('${widget.product.price.toString()} ',
+                          style: TxtStyle.buttonLarge.copyWith(
+                            color: DarkTheme.white,
+                            decoration: TextDecoration.underline,
+                          )),
+                      Text(widget.product.discount.toString(),
+                          textScaleFactor: 0.75,
+                          style: TxtStyle.buttonSmall.copyWith(
+                            fontSize: 14,
+                            color: DarkTheme.white,
+                            decoration: TextDecoration.lineThrough,
+                          )),
+                    ],
+                  ),
+                ),
+              ),
       ],
     );
-  }
-
-  bool? getLikeCourse(String idProduct) {
-    final listFavoriteFromUser =
-        context.read<ProfileCubit>().state.user.favoritesCourse;
-    for (var i = 0; i < listFavoriteFromUser.length; i++) {
-      if (listFavoriteFromUser[i] == idProduct) {
-        return true;
-      }
-    }
-    return false;
   }
 
   Widget buildWidgetInImageTop(BuildContext context) {
@@ -200,7 +229,8 @@ class _DetailCourseViewState extends State<DetailCourseView> {
         const ButtonBack(),
         LikeButton(
           animationDuration: const Duration(milliseconds: 1000),
-          isLiked: getLikeCourse(widget.product.id),
+          isLiked:
+              getBool(context.read<ProfileCubit>().state.user.favoritesCourse),
           likeBuilder: (bool isLiked) {
             return Icon(
               size: 35,

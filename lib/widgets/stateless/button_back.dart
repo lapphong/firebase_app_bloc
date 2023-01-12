@@ -15,9 +15,10 @@ class ButtonBack extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 2, color: DarkTheme.white),
+          border: Border.all(width: 2, color: DarkTheme.greyScale500),
         ),
-        child: Image.asset(AssetPath.iconArrowLeft, color: DarkTheme.white),
+        child:
+            Image.asset(AssetPath.iconArrowLeft, color: DarkTheme.greyScale500),
       ),
     );
   }
