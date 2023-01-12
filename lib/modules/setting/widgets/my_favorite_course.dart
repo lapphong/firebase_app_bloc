@@ -23,30 +23,29 @@ class MyFavoriteCourse extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Stack(
+      child: Column(
         children: [
-          Hero(
-            tag: tagHeroImg,
-            transitionOnUserGestures: true,
-            child: SizedBox(
-              width: 152,
-              height: 172,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: imgUrl,
-                  fit: BoxFit.fill,
-                  placeholder: (_, __) =>
-                      const Image(image: AssetImage(AssetPath.imgLoading)),
-                  errorWidget: (context, url, error) =>
-                      const Image(image: AssetImage(AssetPath.imgError)),
+          Stack(
+            children: [
+              Hero(
+                tag: tagHeroImg,
+                transitionOnUserGestures: true,
+                child: SizedBox(
+                  width: 152,
+                  height: 172,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: CachedNetworkImage(
+                      imageUrl: imgUrl,
+                      fit: BoxFit.fill,
+                      placeholder: (_, __) =>
+                          const Image(image: AssetImage(AssetPath.imgLoading)),
+                      errorWidget: (context, url, error) =>
+                          const Image(image: AssetImage(AssetPath.imgError)),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
               Container(
                 width: 72,
                 height: 28,
@@ -69,11 +68,10 @@ class MyFavoriteCourse extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 160),
-              Text(title,
-                  style: TxtStyle.headline5, textAlign: TextAlign.center),
             ],
           ),
+          const SizedBox(height: 10),
+          Text(title, style: TxtStyle.headline5, textAlign: TextAlign.center),
         ],
       ),
     );

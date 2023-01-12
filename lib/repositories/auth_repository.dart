@@ -37,6 +37,7 @@ class AuthRepository {
         'profileImage': 'https://picsum.photos/300',
         'favorites_course': [],
         'favorites_teacher': [],
+        'my_learning': [],
         'diamond': 1000,
       });
     } on auth.FirebaseAuthException catch (e) {

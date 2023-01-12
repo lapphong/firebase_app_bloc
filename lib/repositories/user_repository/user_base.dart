@@ -22,5 +22,5 @@ abstract class UserBase {
     required String userID,
     required String productID,
   });
-  Future<Product> getProductByIdInListFavoriteCourse({required String id});
+  Future<Product> getProductByID({required String id});
 }

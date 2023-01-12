@@ -146,19 +146,15 @@ class UserRepository implements UserBase {
   }
 
   @override
-  Future<Product> getProductByIdInListFavoriteCourse({
+  Future<Product> getProductByID({
     required String id,
   }) async {
     try {
       final productDoc =
           await firebaseFirestore.collection(ApiPath.product()).doc(id).get();
 
-      if (productDoc.exists) {
-        final currentProduct = Product.fromDoc(productDoc);
-        return currentProduct;
-      }
-
-      throw 'Product not found';
+      final currentProduct = Product.fromDoc(productDoc);
+      return currentProduct;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {
