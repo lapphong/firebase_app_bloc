@@ -146,9 +146,7 @@ class UserRepository implements UserBase {
   }
 
   @override
-  Future<Product> getProductByID({
-    required String id,
-  }) async {
+  Future<Product> getProductByID({required String id}) async {
     try {
       final productDoc =
           await firebaseFirestore.collection(ApiPath.product()).doc(id).get();
@@ -157,6 +155,24 @@ class UserRepository implements UserBase {
       return currentProduct;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> updateMyLearningByUser({
+    required String userID,
+    required String productID,
+  }) async {
+    try {
+      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
+        'my_learning': FieldValue.arrayUnion([productID]),
+      });
     } catch (e) {
       throw CustomError(
         code: 'Exception',

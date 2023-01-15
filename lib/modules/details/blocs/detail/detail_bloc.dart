@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../blocs/blocs.dart';
 import '../../../../models/models.dart';
 import '../../../../repositories/app_repository/app_base.dart';
 import '../blocs.dart';
@@ -13,15 +14,20 @@ part 'detail_state.dart';
 
 const _duration = 300;
 
+EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
+    Duration duration) {
+  return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
+}
+
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final AppBase appBase;
-  final LikeTeacherCubit likeCubit;
+  final LikeTeacherCubit likeTeacherCubit;
 
   late final StreamSubscription likeSubscription;
 
   DetailBloc({
     required this.appBase,
-    required this.likeCubit,
+    required this.likeTeacherCubit,
   }) : super(DetailState.initial()) {
     on<GetTeacherByIDEvent>(
       _getTeacherByID,
@@ -32,22 +38,17 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
 
-    likeSubscription = likeCubit.stream.listen((likeState) {
+    likeSubscription = likeTeacherCubit.stream.listen((likeState) {
       updateVotedTeacher();
     });
-  }
-
-  EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
-      Duration duration) {
-    return (event, mapper) => event.debounceTime(duration).flatMap(mapper);
   }
 
   late int votedCurrent = 0;
   Future<void> updateVotedTeacher() async {
     try {
-      if (likeCubit.state.status == LikeTeacherStatus.like) {
+      if (likeTeacherCubit.state.status == LikeTeacherStatus.like) {
         votedCurrent = state.teacher.voted + 1;
-      } else if (likeCubit.state.status == LikeTeacherStatus.unlike) {
+      } else if (likeTeacherCubit.state.status == LikeTeacherStatus.unlike) {
         votedCurrent = state.teacher.voted - 1;
       }
 
@@ -97,5 +98,11 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     } on CustomError catch (e) {
       emit(state.copyWith(statusCourse: CourseStatus.error, error: e));
     }
+  }
+
+  @override
+  Future<void> close() {
+    likeSubscription.cancel();
+    return super.close();
   }
 }

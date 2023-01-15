@@ -257,4 +257,22 @@ class AppRepository implements AppBase {
       );
     }
   }
+
+  @override
+  Future<void> updateTotalStudentInProduct({required Product product}) async {
+    try {
+      await firebaseFirestore
+          .collection(ApiPath.product())
+          .doc(product.id)
+          .update({
+        'course_student': product.studentTotal + 1,
+      });
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }

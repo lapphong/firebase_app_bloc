@@ -26,19 +26,27 @@ class DetailCoursePage extends StatelessWidget {
         BlocProvider<LikeTeacherCubit>(
           create: (context) => LikeTeacherCubit(
             userBase: context.read<UserBase>(),
+            profileCubit: BlocProvider.of<ProfileCubit>(context),
           ),
         ),
         BlocProvider<LikeCourseCubit>(
           create: (context) => LikeCourseCubit(
             userBase: context.read<UserBase>(),
+            profileCubit: BlocProvider.of<ProfileCubit>(context),
           ),
         ),
         BlocProvider<DetailBloc>(
           create: (context) => DetailBloc(
             appBase: context.read<AppBase>(),
-            likeCubit: BlocProvider.of<LikeTeacherCubit>(context),
+            likeTeacherCubit: BlocProvider.of<LikeTeacherCubit>(context),
           ),
           lazy: false,
+        ),
+        BlocProvider<BuyCourseCubit>(
+          create: (context) => BuyCourseCubit(
+            appBase: context.read<AppBase>(),
+            profileCubit: BlocProvider.of<ProfileCubit>(context),
+          ),
         ),
       ],
       child: DetailCourseView(product: product),
@@ -67,6 +75,9 @@ class _DetailCourseViewState extends State<DetailCourseView> {
     context
         .read<DetailBloc>()
         .add(GetTeacherByIDEvent(id: widget.product.teacherID));
+    context
+        .read<BuyCourseCubit>()
+        .getOwnCourseFromUser(idProduct: widget.product.id);
     super.initState();
   }
 
@@ -152,6 +163,7 @@ class _DetailCourseViewState extends State<DetailCourseView> {
                   description: widget.product.description,
                   duration: widget.product.duration,
                   requirements: widget.product.requirements,
+                  student: widget.product.studentTotal.toString(),
                 ),
                 TabCoursePage(listVideoID: widget.product.listVideoID),
               ],
@@ -162,64 +174,67 @@ class _DetailCourseViewState extends State<DetailCourseView> {
     );
   }
 
-  bool? getBool(List<String> list) {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i] == widget.product.id) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   Widget buildWidgetInImageBottom(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(''),
-        getBool(context.read<ProfileCubit>().state.user.myLearning) == true
-            ? SizedBox(
-                width: 52,
-                height: 52,
-                child: CircleButton(
-                  onTap: () {},
-                  widthIcon: 24,
-                  heightIcon: 24,
-                  bgColor: DarkTheme.primaryBlue600,
-                  assetPath: AssetPath.iconPlay,
-                ),
-              )
-            : Container(
-                decoration: BoxDecoration(
-                  color: DarkTheme.primaryBlue600,
-                  border: Border.all(color: DarkTheme.primaryBlue600),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextButton.icon(
-                  icon: const Icon(
-                    Icons.diamond_outlined,
-                    color: DarkTheme.white,
-                  ),
-                  onPressed: () {},
-                  label: Row(
-                    children: [
-                      Text('${widget.product.price.toString()} ',
-                          style: TxtStyle.buttonLarge.copyWith(
-                            color: DarkTheme.white,
-                            decoration: TextDecoration.underline,
-                          )),
-                      Text(widget.product.discount.toString(),
-                          textScaleFactor: 0.75,
-                          style: TxtStyle.buttonSmall.copyWith(
-                            fontSize: 14,
-                            color: DarkTheme.white,
-                            decoration: TextDecoration.lineThrough,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
+        BlocBuilder<BuyCourseCubit, BuyCourseState>(
+          builder: (context, state) {
+            return state.status == BuyCourseStatus.bought
+                ? CircleButton(assetPath: AssetPath.iconPlay, onTap: () {})
+                : buildButtonBuyCourse(context);
+          },
+        )
       ],
     );
+  }
+
+  Widget buildButtonBuyCourse(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: DarkTheme.primaryBlue600,
+        border: Border.all(color: DarkTheme.primaryBlue600),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: TextButton.icon(
+        icon: const Icon(Icons.diamond_outlined, color: DarkTheme.white),
+        onPressed: () {
+          context.read<BuyCourseCubit>().buyCourse(product: widget.product);
+        },
+        label: Row(
+          children: [
+            Text(
+              '${widget.product.discount.toString()} ',
+              style: TxtStyle.buttonLarge.copyWith(
+                color: DarkTheme.white,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            Text(
+              widget.product.price.toString(),
+              textScaleFactor: 0.75,
+              style: TxtStyle.buttonSmall.copyWith(
+                fontSize: 14,
+                color: DarkTheme.white,
+                decoration: TextDecoration.lineThrough,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  bool? getLikeCourse() {
+    final listMyFavoriteCourse =
+        context.read<ProfileCubit>().state.user.favoritesCourse;
+    for (var i = 0; i < listMyFavoriteCourse.length; i++) {
+      if (listMyFavoriteCourse[i] == widget.product.id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Widget buildWidgetInImageTop(BuildContext context) {
@@ -229,8 +244,7 @@ class _DetailCourseViewState extends State<DetailCourseView> {
         const ButtonBack(),
         LikeButton(
           animationDuration: const Duration(milliseconds: 1000),
-          isLiked:
-              getBool(context.read<ProfileCubit>().state.user.favoritesCourse),
+          isLiked: getLikeCourse(),
           likeBuilder: (bool isLiked) {
             return Icon(
               size: 35,
@@ -243,10 +257,6 @@ class _DetailCourseViewState extends State<DetailCourseView> {
               context.read<LikeCourseCubit>().changeLikeCourseStatusByUser(
                     userID: context.read<ProfileCubit>().state.user.id,
                     productID: widget.product.id,
-                    isLike: !isLiked,
-                  );
-              context.read<ProfileCubit>().updateUserFavoriteListProduct(
-                    idProduct: widget.product.id,
                     isLike: !isLiked,
                   );
             });

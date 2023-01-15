@@ -16,9 +16,10 @@ class TabOverviewPage extends StatefulWidget {
     required this.description,
     required this.duration,
     required this.requirements,
+    required this.student,
   });
 
-  final String title, description, duration;
+  final String title, description, duration, student;
   final List<String> requirements;
 
   @override
@@ -84,18 +85,7 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                               context
                                   .read<LikeTeacherCubit>()
                                   .changeLikeTeacherStatusByUser(
-                                    userID: context
-                                        .read<ProfileCubit>()
-                                        .state
-                                        .user
-                                        .id,
                                     teacherID: state.teacher.id,
-                                    isLike: !isLiked,
-                                  );
-                              context
-                                  .read<ProfileCubit>()
-                                  .updateUserFavoriteListTeacher(
-                                    idTeacher: state.teacher.id,
                                     isLike: !isLiked,
                                   );
                             });
@@ -118,10 +108,11 @@ class _TabOverviewPageState extends State<TabOverviewPage>
                       softWrap: false,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TxtStyle.headline4.copyWith(
-                        color: DarkTheme.greyScale500,
-                      ),
+                      style: TxtStyle.headline4
+                          .copyWith(color: DarkTheme.greyScale500),
                     ),
+                    const SizedBox(height: 24),
+                    buildTitle('Total student: ${widget.student}'),
                     const SizedBox(height: 24),
                     buildTitle('What you\'ll get'),
                     const SizedBox(height: 14),

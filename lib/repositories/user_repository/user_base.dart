@@ -28,6 +28,12 @@ abstract class UserBase {
     required String productID,
   });
 
+  /*---------------------------- My Learning Course --------------------------*/
+  Future<void> updateMyLearningByUser({
+    required String userID,
+    required String productID,
+  });
+
   /*get MyFavorite MyLearning From User*/
   Future<Product> getProductByID({required String id});
 }

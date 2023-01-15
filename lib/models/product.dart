@@ -15,6 +15,7 @@ class Product extends Equatable {
   final int reviewer;
   final int price;
   final int discount;
+  final int studentTotal;
   final String teacherID;
 
   const Product({
@@ -31,6 +32,7 @@ class Product extends Equatable {
     required this.reviewer,
     required this.price,
     required this.discount,
+    required this.studentTotal,
     required this.teacherID,
   });
 
@@ -49,6 +51,7 @@ class Product extends Equatable {
       reviewer: 0,
       price: 0,
       discount: 0,
+      studentTotal: 0,
       teacherID: '',
     );
   }
@@ -70,6 +73,7 @@ class Product extends Equatable {
       reviewer: productData['course_reviewer'],
       price: productData['course_price'],
       discount: productData['course_discount'],
+      studentTotal: productData['course_student'],
       teacherID: productData['course_teacher_id'],
     );
   }
@@ -90,6 +94,7 @@ class Product extends Equatable {
       reviewer,
       price,
       discount,
+      studentTotal,
       teacherID,
     ];
   }
@@ -108,6 +113,7 @@ class Product extends Equatable {
     int? reviewer,
     int? price,
     int? discount,
+    int? studentTotal,
     String? teacherID,
   }) {
     return Product(
@@ -124,6 +130,7 @@ class Product extends Equatable {
       reviewer: reviewer ?? this.reviewer,
       price: price ?? this.price,
       discount: discount ?? this.discount,
+      studentTotal: studentTotal ?? this.studentTotal,
       teacherID: teacherID ?? this.teacherID,
     );
   }

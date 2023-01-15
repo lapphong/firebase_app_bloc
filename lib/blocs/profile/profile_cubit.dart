@@ -8,12 +8,37 @@ import 'package:firebase_app_bloc/repositories/user_repository/user_base.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  late User userUpdated;
   final UserBase userBase;
+  late User userUpdated;
 
   ProfileCubit({
     required this.userBase,
   }) : super(ProfileState.initial());
+
+  late List<String> listFavoriteUpdated;
+  Future<void> updateUserMyLearning({
+    required String userID,
+    required String productID,
+  }) async {
+    try {
+      await userBase.updateMyLearningByUser(
+        userID: userID,
+        productID: productID,
+      );
+
+      listFavoriteUpdated = state.user.favoritesCourse
+          .where((element) => element != productID)
+          .toList();
+
+      userUpdated = state.user.copyWith(
+        myLearning: [...state.user.myLearning, productID],
+        favoritesCourse: listFavoriteUpdated,
+      );
+      emit(state.copyWith(user: userUpdated));
+    } on CustomError catch (e) {
+      emit(state.copyWith(error: e));
+    }
+  }
 
   void updateUserFavoriteListTeacher({
     required String idTeacher,

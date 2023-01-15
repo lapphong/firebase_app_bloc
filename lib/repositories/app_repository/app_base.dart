@@ -12,6 +12,7 @@ abstract class AppBase {
     required String field,
     required int limit,
   });
+  Future<void> updateTotalStudentInProduct({required Product product});
 
   /*--------------------------------- Mentor ---------------------------------*/
   Future<List<Teacher>> getBestMentorByLimit(int limit);
@@ -20,8 +21,10 @@ abstract class AppBase {
     required int nextVoted,
   });
   Future<Teacher> getTeacherByID({required String id});
-  Future<void> updateFavoriteInTeacher(
-      {required Teacher teacher, required int voted});
+  Future<void> updateFavoriteInTeacher({
+    required Teacher teacher,
+    required int voted,
+  });
 
   /*--------------------------------- Category -------------------------------*/
   Future<List<Category>> getNameCategory();

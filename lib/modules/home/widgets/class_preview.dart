@@ -72,25 +72,17 @@ class ClassPreview extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 56.0),
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: SizedBox(
                   height: 115,
-                  child: Container(
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: const SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: CircleButton(
-                        widthIcon: 15,
-                        heightIcon: 15,
-                        assetPath: AssetPath.iconPlay,
-                        bgColor: DarkTheme.primaryBlue700,
-                      ),
-                    ),
+                  child: CircleButton(
+                    assetPath: AssetPath.iconPlay,
+                    widthIcon: 15,
+                    heightIcon: 15,
+                    onTap: onTap,
                   ),
                 ),
               ),
-              //const SizedBox(height: 23.4),
               Container(
                 height: 39,
                 decoration: BoxDecoration(

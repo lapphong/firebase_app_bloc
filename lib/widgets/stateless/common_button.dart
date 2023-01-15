@@ -49,32 +49,38 @@ class ClassicButton extends StatelessWidget {
 
 class CircleButton extends StatelessWidget {
   final String? assetPath;
-  final Color? bgColor;
   final VoidCallback? onTap;
   final double? widthIcon, heightIcon;
 
   const CircleButton({
     Key? key,
-    this.assetPath,
-    this.bgColor,
-    this.onTap,
-    this.widthIcon = 10,
-    this.heightIcon = 10,
+    required this.assetPath,
+    required this.onTap,
+    this.widthIcon = 20,
+    this.heightIcon = 20,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
-        child: Align(
-          child: Image.asset(
-            assetPath!,
-            width: widthIcon,
-            height: heightIcon,
-            color: DarkTheme.white,
-          ),
+    return SizedBox(
+      width: 52,
+      height: 52,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(const CircleBorder()),
+          backgroundColor: MaterialStateProperty.all(DarkTheme.primaryBlue600),
+          overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+            if (states.contains(MaterialState.pressed)) {
+              return DarkTheme.greyScale500;
+            }
+          }),
+        ),
+        child: Image.asset(
+          assetPath!,
+          width: widthIcon,
+          height: heightIcon,
+          color: DarkTheme.white,
         ),
       ),
     );
