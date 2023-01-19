@@ -1,5 +1,6 @@
 import 'package:firebase_app_bloc/modules/dashboardPage.dart';
 import 'package:firebase_app_bloc/modules/details/pages/detail_course_page.dart';
+import 'package:firebase_app_bloc/modules/playing/pages/playing_course_page.dart';
 import 'package:firebase_app_bloc/routes/route_name.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,17 @@ class Routes {
         if (teacher is Teacher) {
           return _buildRoute(settings, DetailMentorPage(teacher: teacher));
         }
+        break;
+      case RouteName.playingCoursePage:
+        final arguments = settings.arguments as Map;
+        if (arguments['videoCourse'] is VideoCourse &&
+            arguments['context'] is BuildContext) {
+          return _buildRoute(
+            settings,
+            PlayingCoursePage(
+                video: arguments['videoCourse'], context: arguments['context']),
+          );
+        }
         return _errorRoute(settings);
       // case RouteName.verifyYourPage:
       //   return _buildRoute(settings, const VerifyYourPage());
@@ -68,11 +80,11 @@ class Routes {
   }
 
   static CupertinoPageRoute _buildRoute(
-      RouteSettings settings, Widget builder) {
+    RouteSettings settings,
+    Widget builder,
+  ) {
     return CupertinoPageRoute(
-      settings: settings,
-      builder: (BuildContext context) => builder,
-    );
+        settings: settings, builder: (BuildContext context) => builder);
   }
 
   static Route _errorRoute(RouteSettings settings) {

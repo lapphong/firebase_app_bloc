@@ -7,12 +7,15 @@ class VideoCourse extends Equatable {
   final String description;
   final String imgVideo;
   final String video;
+  final String part;
+
   const VideoCourse({
     required this.id,
     required this.title,
     required this.description,
     required this.imgVideo,
     required this.video,
+    required this.part,
   });
 
   factory VideoCourse.initialVideo() {
@@ -22,6 +25,7 @@ class VideoCourse extends Equatable {
       description: '',
       imgVideo: '',
       video: '',
+      part: '',
     );
   }
 
@@ -34,11 +38,12 @@ class VideoCourse extends Equatable {
       description: videoData['description'],
       imgVideo: videoData['imgVideo'],
       video: videoData['video'],
+      part: videoData['part'],
     );
   }
 
   @override
-  List<Object> get props => [id, title, description, imgVideo, video];
+  List<Object> get props => [id, title, description, imgVideo, video, part];
 
   VideoCourse copyWith({
     String? id,
@@ -46,6 +51,7 @@ class VideoCourse extends Equatable {
     String? description,
     String? imgVideo,
     String? video,
+    String? part,
   }) {
     return VideoCourse(
       id: id ?? this.id,
@@ -53,6 +59,7 @@ class VideoCourse extends Equatable {
       description: description ?? this.description,
       imgVideo: imgVideo ?? this.imgVideo,
       video: video ?? this.video,
+      part: part ?? this.part,
     );
   }
 }

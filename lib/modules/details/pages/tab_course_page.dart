@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
+import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../blocs/blocs.dart';
 import '../widgets/item_video_course.dart';
@@ -28,7 +30,7 @@ class _TabCoursePageState extends State<TabCoursePage>
   Widget build(BuildContext context) {
     super.build(context);
     return Builder(
-      builder: (BuildContext context) {
+      builder: (context) {
         return CustomScrollView(
           slivers: <Widget>[
             SliverOverlapInjector(
@@ -66,16 +68,35 @@ class _TabCoursePageState extends State<TabCoursePage>
             return Padding(
               padding: const EdgeInsets.only(top: 20),
               child: ItemsVideoCourse(
-                onTap: () {},
+                onTap: () {
+                  context.read<BuyCourseCubit>().state.status ==
+                          BuyCourseStatus.buy
+                      ? snackBar(context)
+                      : Navigator.of(context).pushNamed(
+                          RouteName.playingCoursePage,
+                          arguments: {
+                            'videoCourse': state.videoCourse[index],
+                            'context': context,
+                          },
+                        );
+                },
                 title: item.title,
-                assetName: item.imgVideo,
+                imgUrl: item.imgVideo,
                 time: '10:09',
-                part: 'Course Part ${index + 1}',
+                part: 'Course Part ${item.part}',
               ),
             );
           },
         );
       },
+    );
+  }
+
+  void snackBar(BuildContext context) {
+    return showSnackBar(
+      context,
+      'Buy course to watch',
+      const Text(''),
     );
   }
 

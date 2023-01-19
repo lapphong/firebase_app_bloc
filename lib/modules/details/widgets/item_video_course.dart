@@ -8,15 +8,15 @@ import '../../../widgets/stateless/stateless.dart';
 class ItemsVideoCourse extends StatelessWidget {
   const ItemsVideoCourse({
     Key? key,
-    required this.assetName,
+    required this.imgUrl,
     required this.title,
     required this.part,
     required this.time,
     required this.onTap,
   }) : super(key: key);
 
-  final String? assetName, title, part, time;
-  final VoidCallback? onTap;
+  final String imgUrl, title, part, time;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +33,15 @@ class ItemsVideoCourse extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title!,
+                  title,
                   style: TxtStyle.courseText,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  part!,
-                  style: TxtStyle.headline5.copyWith(
-                    color: DarkTheme.greyScale500,
-                  ),
+                  part,
+                  style: TxtStyle.headline5
+                      .copyWith(color: DarkTheme.greyScale500),
                 ),
               ],
             ),
@@ -64,14 +63,26 @@ class ItemsVideoCourse extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              CachedNetworkImage(
-                height: 80,
-                imageUrl: assetName!,
-                fit: BoxFit.fill,
-                placeholder: (_, __) =>
-                    const Image(image: AssetImage(AssetPath.imgLoading)),
-                errorWidget: (context, url, error) =>
-                    const Image(image: AssetImage(AssetPath.imgError)),
+              Hero(
+                tag: imgUrl,
+                flightShuttleBuilder: (flightContext, animation, direction,
+                    fromContext, toContext) {
+                  return RotationTransition(
+                    turns: Tween(begin: 0.0, end: 1.0)
+                        .chain(CurveTween(curve: Curves.ease))
+                        .animate(animation),
+                    child: toContext.widget as Hero..child,
+                  );
+                },
+                child: CachedNetworkImage(
+                  height: 80,
+                  imageUrl: imgUrl,
+                  fit: BoxFit.fill,
+                  placeholder: (_, __) =>
+                      const Image(image: AssetImage(AssetPath.imgLoading)),
+                  errorWidget: (context, url, error) =>
+                      const Image(image: AssetImage(AssetPath.imgError)),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomRight,
@@ -86,7 +97,7 @@ class ItemsVideoCourse extends StatelessWidget {
                         color: DarkTheme.greyScale700,
                       ),
                       alignment: Alignment.center,
-                      child: Text(time!, style: TxtStyle.timeText),
+                      child: Text(time, style: TxtStyle.timeText),
                     ),
                   ),
                 ),
