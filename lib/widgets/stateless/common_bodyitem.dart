@@ -1,3 +1,4 @@
+import 'package:firebase_app_bloc/themes/app_color.dart';
 import 'package:flutter/material.dart';
 
 class BodyItemNetwork extends StatelessWidget {
@@ -69,6 +70,8 @@ class BodyItemNetwork2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      splashColor: DarkTheme.primaryBlue600.withOpacity(0.6),
+      highlightColor: DarkTheme.primaryBlue600.withOpacity(0.6),
       child: Column(
         children: [
           SizedBox(

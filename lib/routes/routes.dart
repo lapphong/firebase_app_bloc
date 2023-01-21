@@ -46,7 +46,7 @@ class Routes {
           return _buildRoute(
             settings,
             PlayingCoursePage(
-                video: arguments['videoCourse'], context: arguments['context']),
+                videoCourse: arguments['videoCourse'], context: arguments['context']),
           );
         }
         return _errorRoute(settings);
