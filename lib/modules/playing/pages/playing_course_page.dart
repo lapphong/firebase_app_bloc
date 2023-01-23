@@ -62,7 +62,6 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
   void initState() {
     super.initState();
     _initializeController();
-
     Future.delayed(
       const Duration(milliseconds: 200),
       () {
@@ -93,6 +92,17 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
     if (_videoPlayerController.value.isInitialized) {
       // ignore: use_build_context_synchronously
       context.read<PlayingCubit>().initPlaying();
+    }
+    _chewieController.videoPlayerController
+        .addListener(_listenerEventVideoPlayer);
+  }
+
+  void _listenerEventVideoPlayer() {
+    if (!_chewieController.videoPlayerController.value.isPlaying) {
+      print(
+          '⚡ ${_chewieController.videoPlayerController.value.duration.inMilliseconds}');
+      print(
+          '👀 ${_chewieController.videoPlayerController.value.position.inMilliseconds}');
     }
   }
 
