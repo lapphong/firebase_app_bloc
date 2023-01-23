@@ -19,8 +19,8 @@ class BuyCourseCubit extends Cubit<BuyCourseState> {
   }) : super(BuyCourseState.initial());
 
   void getOwnCourseFromUser({required String idProduct}) {
-    final checkList = profileCubit.state.user.myLearning
-        .where((element) => element == idProduct);
+    final checkList = profileCubit.state.listMyLearning
+        .where((element) => element.id == idProduct);
 
     checkList.isNotEmpty
         ? emit(state.copyWith(status: BuyCourseStatus.bought))
@@ -33,6 +33,7 @@ class BuyCourseCubit extends Cubit<BuyCourseState> {
       await profileCubit.updateUserMyLearning(
         userID: profileCubit.state.user.id,
         productID: product.id,
+        progress: 0,
       );
       getOwnCourseFromUser(idProduct: product.id);
     } on CustomError catch (e) {

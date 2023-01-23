@@ -3,4 +3,5 @@ export 'user.dart';
 export 'teacher.dart';
 export 'product.dart';
 export 'video_course.dart';
+export 'my_learning.dart';
 export 'category.dart';

@@ -10,31 +10,28 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final UserBase userBase;
   late User userUpdated;
+  late List<MyLearning> listMyLearning;
 
   ProfileCubit({
     required this.userBase,
   }) : super(ProfileState.initial());
 
-  late List<String> listFavoriteUpdated;
   Future<void> updateUserMyLearning({
     required String userID,
     required String productID,
+    required int progress,
   }) async {
     try {
       await userBase.updateMyLearningByUser(
         userID: userID,
         productID: productID,
+        progress: progress,
       );
 
-      listFavoriteUpdated = state.user.favoritesCourse
-          .where((element) => element != productID)
-          .toList();
+      listMyLearning = state.listMyLearning;
+      listMyLearning.add(MyLearning(id: productID, progress: progress));
 
-      userUpdated = state.user.copyWith(
-        myLearning: [...state.user.myLearning, productID],
-        favoritesCourse: listFavoriteUpdated,
-      );
-      emit(state.copyWith(user: userUpdated));
+      emit(state.copyWith(listMyLearning: listMyLearning));
     } on CustomError catch (e) {
       emit(state.copyWith(error: e));
     }
@@ -79,7 +76,12 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     try {
       final User user = await userBase.getProfile(uid: uid);
-      emit(state.copyWith(profileStatus: ProfileStatus.loaded, user: user));
+      final myLearning = await userBase.getListMyLearning(uid: uid);
+      emit(state.copyWith(
+        profileStatus: ProfileStatus.loaded,
+        user: user,
+        listMyLearning: myLearning,
+      ));
     } on CustomError catch (e) {
       emit(state.copyWith(profileStatus: ProfileStatus.error, error: e));
     }

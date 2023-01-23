@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_app_bloc/modules/setting/widgets/setting_widgets.dart';
+import 'package:firebase_app_bloc/themes/app_color.dart';
 import 'package:firebase_app_bloc/themes/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,7 @@ class _MyFavoriteViewState extends State<MyFavoriteView> {
   void initState() {
     super.initState();
     final listMyLearningCourse =
-        context.read<ProfileCubit>().state.user.myLearning;
+        context.read<ProfileCubit>().state.listMyLearning;
     context
         .read<MyFavoriteCubit>()
         .getListMyLearningCourse(listID: listMyLearningCourse);
@@ -83,27 +84,33 @@ class _MyFavoriteViewState extends State<MyFavoriteView> {
   Widget buildCarouselSliderMyLearning() {
     return BlocBuilder<MyFavoriteCubit, MyFavoriteState>(
       builder: (context, state) {
+        if (state.myLearningStatus == MyLearningStatus.initial) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state.myLearningStatus == MyLearningStatus.error) {
+          return const StatusError();
+        }
         return CarouselSlider.builder(
           itemCount: state.listMyLearning.length,
           itemBuilder: (context, index, realIndex) {
-            if (state.myLearningStatus == MyLearningStatus.initial) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state.myLearningStatus == MyLearningStatus.error) {
-              return const StatusError();
-            }
-            return SizedBox(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CachedNetworkImage(
-                  imageUrl: state.listMyLearning[index].image,
-                  fit: BoxFit.fill,
-                  placeholder: (_, __) =>
-                      const Image(image: AssetImage(AssetPath.imgLoading)),
-                  errorWidget: (context, url, error) =>
-                      const Image(image: AssetImage(AssetPath.imgError)),
-                ),
-              ),
-            );
+            return state.listMyLearning.isNotEmpty
+                ? SizedBox(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: CachedNetworkImage(
+                        imageUrl: state.listMyLearning[index].image,
+                        fit: BoxFit.fill,
+                        placeholder: (_, __) => const Image(
+                            image: AssetImage(AssetPath.imgLoading)),
+                        errorWidget: (context, url, error) =>
+                            const Image(image: AssetImage(AssetPath.imgError)),
+                      ),
+                    ),
+                  )
+                : Container(
+                    color: DarkTheme.primaryBlue600,
+                    alignment: Alignment.center,
+                    child: const Text('Nothing course'),
+                  );
           },
           options: CarouselOptions(
             viewportFraction: .6,

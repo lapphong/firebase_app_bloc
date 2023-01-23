@@ -29,14 +29,16 @@ class MyFavoriteCubit extends Cubit<MyFavoriteState> {
     }
   }
 
-  Future<void> getListMyLearningCourse({required List<String> listID}) async {
+  Future<void> getListMyLearningCourse({
+    required List<MyLearning> listID,
+  }) async {
     final List<Product> listProductMyLearning = [];
     late Product productMyLearning = Product.initial();
     emit(state.copyWith(myLearningStatus: MyLearningStatus.initial));
 
     try {
       for (var i = 0; i < listID.length; i++) {
-        productMyLearning = await userBase.getProductByID(id: listID[i]);
+        productMyLearning = await userBase.getProductByID(id: listID[i].id);
         listProductMyLearning.add(productMyLearning);
       }
 

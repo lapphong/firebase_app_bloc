@@ -5,6 +5,7 @@ import '../../models/models.dart';
 abstract class UserBase {
   /*--------------------------------- Profile --------------------------------*/
   Future<User> getProfile({required String uid});
+  Future<List<MyLearning>> getListMyLearning({required String uid});
   Future<void> updateProfile({required User user});
   Future<String> uploadImageToStorage({required File file});
 
@@ -32,6 +33,7 @@ abstract class UserBase {
   Future<void> updateMyLearningByUser({
     required String userID,
     required String productID,
+    required int progress,
   });
 
   /*get MyFavorite MyLearning From User*/

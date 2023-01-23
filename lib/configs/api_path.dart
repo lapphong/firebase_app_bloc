@@ -5,6 +5,7 @@ class ApiPath {
   static String product() => 'product';
   static String category() => 'category';
   static String video() => 'video';
+  static String myLearning() => 'my_learning';
 
   /*-------------------------------- Storage ---------------------------------*/
   static String user_images() => 'user_images';

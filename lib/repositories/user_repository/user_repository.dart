@@ -45,6 +45,32 @@ class UserRepository implements UserBase {
   }
 
   @override
+  Future<List<MyLearning>> getListMyLearning({required String uid}) async {
+    try {
+      List<MyLearning> list = [];
+
+      await firebaseFirestore
+          .collection(ApiPath.user())
+          .doc(uid)
+          .collection(ApiPath.myLearning())
+          .get()
+          .then((value) {
+        value.docs.forEach((element) => list.add(MyLearning.fromDoc(element)));
+      });
+
+      return list;
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
   Future<void> updateProfile({required User user}) async {
     try {
       await firebaseFirestore.collection(ApiPath.user()).doc(user.id).update({
@@ -168,11 +194,15 @@ class UserRepository implements UserBase {
   Future<void> updateMyLearningByUser({
     required String userID,
     required String productID,
+    required int progress,
   }) async {
     try {
-      await firebaseFirestore.collection(ApiPath.user()).doc(userID).update({
-        'my_learning': FieldValue.arrayUnion([productID]),
-      });
+      await firebaseFirestore
+          .collection(ApiPath.user())
+          .doc(userID)
+          .collection(ApiPath.myLearning())
+          .doc(productID)
+          .set({'progress': progress});
     } catch (e) {
       throw CustomError(
         code: 'Exception',
