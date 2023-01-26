@@ -11,9 +11,8 @@ import '../../../repositories/app_repository/app_repository.dart';
 import '../../../repositories/repository.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/showSnackBar.dart';
+import '../../activity/pages/activity_page.dart';
 import '../../category/pages/category_page.dart';
-import '../../details/blocs/blocs.dart';
-import '../../home/blocs/blocs.dart';
 import '../../home/pages/home_page.dart';
 import '../../setting/pages/setting_page.dart';
 import '../cubits/cubits.dart';
@@ -124,26 +123,6 @@ class _RootViewState extends State<RootView> {
     } else {
       return !await navigatorKeys[currentTab]!.currentState!.maybePop();
     }
-  }
-}
-
-class ActivityPage extends StatelessWidget {
-  const ActivityPage({super.key, this.payload});
-  final String? payload;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Activity'),
-            Text(payload ?? 'abc', style: TxtStyle.headline1),
-          ],
-        ),
-      ),
-    );
   }
 }
 

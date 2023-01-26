@@ -10,7 +10,6 @@ import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/stateless/stateless.dart';
-import '../../home/blocs/blocs.dart';
 import '../cubits/cubits.dart';
 import '../widgets/widgets.dart';
 
