@@ -42,8 +42,8 @@ class UncompletedProgress extends StatelessWidget {
             progressColor: DarkTheme.white,
             backgroundColor: Colors.black.withOpacity(0.4),
             circularStrokeCap: CircularStrokeCap.round,
-            center:
-                Text('${(percent * 100).toInt()}%', style: TxtStyle.percent),
+            center: Text('${(percent * 100).toStringAsFixed(0)}%',
+                style: TxtStyle.percent),
           ),
           const SizedBox(height: 32),
           Padding(

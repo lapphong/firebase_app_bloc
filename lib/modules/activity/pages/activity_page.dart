@@ -23,7 +23,6 @@ class ActivityPage extends StatelessWidget {
         BlocProvider<ActivityListCubit>(
           create: (context) => ActivityListCubit(
             userBase: context.read<UserBase>(),
-            tabCubit: BlocProvider.of<TabCubit>(context),
             profileCubit: BlocProvider.of<ProfileCubit>(context),
           ),
         ),
@@ -49,12 +48,7 @@ class _ActivityViewState extends State<ActivityView> {
   @override
   void initState() {
     super.initState();
-    final List<MyLearning> listInComplete = context
-        .read<ProfileCubit>()
-        .state
-        .listMyLearning
-        .where((element) => element.progress < 100)
-        .toList();
+    final listInComplete = context.read<ProfileCubit>().state.listMyLearning;
     context.read<ActivityListCubit>().getListActivityByTab(listInComplete);
   }
 
@@ -123,20 +117,8 @@ class _ActivityViewState extends State<ActivityView> {
       builder: (context, state) {
         return UncompletedProgress(
           percent: state.totalProgress,
-          percentCompleted: context
-              .read<ProfileCubit>()
-              .state
-              .listMyLearning
-              .where((element) => element.progress == 100)
-              .toList()
-              .length,
-          percentUnCompleted: context
-              .read<ProfileCubit>()
-              .state
-              .listMyLearning
-              .where((element) => element.progress < 100)
-              .toList()
-              .length,
+          percentUnCompleted: state.listInComplete.length,
+          percentCompleted: state.listComplete.length,
         );
       },
     );

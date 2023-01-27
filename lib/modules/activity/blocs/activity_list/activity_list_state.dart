@@ -4,28 +4,37 @@ enum ActivityStateStatus { initial, loaded, error }
 
 class ActivityListState extends Equatable {
   final ActivityStateStatus activityStateStatus;
-  final List<Product> list;
-  final List<double> progressCourse;
+  final List<Product> listInComplete;
+  final List<Product> listComplete;
+  final List<double> progressCourseInComplete;
+  final List<double> progressCourseComplete;
+  final List<double> timeLearnedInComplete;
+  final List<double> timeLearnedComplete;
   final double totalProgress;
-  final List<double> timeLearned;
   final CustomError error;
 
   const ActivityListState({
     required this.activityStateStatus,
-    required this.list,
-    required this.progressCourse,
+    required this.listInComplete,
+    required this.listComplete,
+    required this.progressCourseInComplete,
+    required this.progressCourseComplete,
+    required this.timeLearnedInComplete,
+    required this.timeLearnedComplete,
     required this.totalProgress,
-    required this.timeLearned,
     required this.error,
   });
 
   factory ActivityListState.initial() {
     return const ActivityListState(
       activityStateStatus: ActivityStateStatus.initial,
-      list: [],
-      progressCourse: [],
+      listInComplete: [],
+      listComplete: [],
+      progressCourseInComplete: [],
+      progressCourseComplete: [],
+      timeLearnedInComplete: [],
+      timeLearnedComplete: [],
       totalProgress: 0.0,
-      timeLearned: [],
       error: CustomError(),
     );
   }
@@ -33,32 +42,44 @@ class ActivityListState extends Equatable {
   @override
   List<Object> get props => [
         activityStateStatus,
-        list,
-        progressCourse,
+        listInComplete,
+        listComplete,
+        progressCourseInComplete,
+        progressCourseComplete,
+        timeLearnedInComplete,
+        timeLearnedComplete,
         totalProgress,
-        timeLearned,
         error
       ];
 
   @override
   String toString() {
-    return 'ActivityListState(activityStateStatus:$activityStateStatus,list:$list,progressCourse:$progressCourse,totalProgress:$totalProgress,timeLearned:$timeLearned,error:$error)';
+    return 'ActivityListState(activityStateStatus:$activityStateStatus,listInComplete:$listInComplete,listComplete:$listComplete,progressCourseInComplete:$progressCourseInComplete,progressCourseComplete:$progressCourseComplete,timeLearnedInComplete:$timeLearnedInComplete,timeLearnedComplete:$timeLearnedComplete,,totalProgress:$totalProgress,error:$error)';
   }
 
   ActivityListState copyWith({
     ActivityStateStatus? activityStateStatus,
-    List<Product>? list,
-    List<double>? progressCourse,
+    List<Product>? listInComplete,
+    List<Product>? listComplete,
+    List<double>? progressCourseInComplete,
+    List<double>? progressCourseComplete,
+    List<double>? timeLearnedInComplete,
+    List<double>? timeLearnedComplete,
     double? totalProgress,
-    List<double>? timeLearned,
     CustomError? error,
   }) {
     return ActivityListState(
       activityStateStatus: activityStateStatus ?? this.activityStateStatus,
-      list: list ?? this.list,
-      progressCourse: progressCourse ?? this.progressCourse,
+      listInComplete: listInComplete ?? this.listInComplete,
+      listComplete: listComplete ?? this.listComplete,
+      progressCourseInComplete:
+          progressCourseInComplete ?? this.progressCourseInComplete,
+      progressCourseComplete:
+          progressCourseComplete ?? this.progressCourseComplete,
+      timeLearnedInComplete:
+          timeLearnedInComplete ?? this.timeLearnedInComplete,
+      timeLearnedComplete: timeLearnedComplete ?? this.timeLearnedComplete,
       totalProgress: totalProgress ?? this.totalProgress,
-      timeLearned: timeLearned ?? this.timeLearned,
       error: error ?? this.error,
     );
   }

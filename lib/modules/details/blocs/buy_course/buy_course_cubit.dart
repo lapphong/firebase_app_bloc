@@ -32,6 +32,7 @@ class BuyCourseCubit extends Cubit<BuyCourseState> {
       await appBase.updateTotalStudentInProduct(product: product);
       await profileCubit.updateUserMyLearning(
         userID: profileCubit.state.user.id,
+        listVideo: product.listVideoID,
         productID: product.id,
         progress: 0,
       );

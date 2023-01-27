@@ -20,7 +20,7 @@ class CompletedPage extends StatelessWidget {
         }
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: state.list.length,
+          itemCount: state.listComplete.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.only(top: 20.0, left: 24, right: 24),
@@ -28,14 +28,14 @@ class CompletedPage extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(
                     RouteName.detailCoursePage,
-                    arguments: state.list[index],
+                    arguments: state.listComplete[index],
                   );
                 },
-                title: state.list[index].title,
-                imgUrl: state.list[index].image,
-                percent: state.progressCourse[index],
-                duration: state.list[index].duration,
-                timeLearned: state.timeLearned[index],
+                title: state.listComplete[index].title,
+                imgUrl: state.listComplete[index].image,
+                percent: state.progressCourseComplete[index],
+                duration: state.listComplete[index].duration,
+                timeLearned: state.timeLearnedComplete[index],
               ),
             );
           },

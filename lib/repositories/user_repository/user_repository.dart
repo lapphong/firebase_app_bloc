@@ -193,16 +193,60 @@ class UserRepository implements UserBase {
   @override
   Future<void> updateMyLearningByUser({
     required String userID,
+    required List<String> listVideo,
     required String productID,
     required int progress,
   }) async {
     try {
       await firebaseFirestore
+            .collection(ApiPath.user())
+            .doc(userID)
+            .collection(ApiPath.myLearning())
+            .doc(productID)
+            .set({'progress': progress});
+
+      for (var i = 0; i < listVideo.length; i++) {
+        await firebaseFirestore
+            .collection(ApiPath.user())
+            .doc(userID)
+            .collection(ApiPath.myLearning())
+            .doc(productID)
+            .collection(ApiPath.listVideoProgress())
+            .doc(listVideo[i])
+            .set({'progress': progress});
+      }
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<List<VideoProgress>> getListVideoProgressFromUser({
+    required String userID,
+    required String productID,
+  }) async {
+    try {
+      List<VideoProgress> list = [];
+
+      await firebaseFirestore
           .collection(ApiPath.user())
           .doc(userID)
           .collection(ApiPath.myLearning())
           .doc(productID)
-          .set({'progress': progress});
+          .collection(ApiPath.listVideoProgress())
+          .get()
+          .then((value) {
+        value.docs
+            .forEach((element) => list.add(VideoProgress.fromDoc(element)));
+      });
+
+      return list;
+    } on FirebaseException catch (e) {
+      throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
     } catch (e) {
       throw CustomError(
         code: 'Exception',

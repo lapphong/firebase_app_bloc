@@ -7,4 +7,6 @@ class PlayingCubit extends Cubit<PlayingState> {
   PlayingCubit() : super(PlayingState.initial());
 
   void initPlaying() => emit(state.copyWith(status: PlayingStatus.initialized));
+
+  
 }

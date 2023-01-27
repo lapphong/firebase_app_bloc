@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
 import '../../../models/models.dart';
+import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
 import '../../details/blocs/blocs.dart';
@@ -103,6 +104,10 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
           '⚡ ${_chewieController.videoPlayerController.value.duration.inMilliseconds}');
       print(
           '👀 ${_chewieController.videoPlayerController.value.position.inMilliseconds}');
+    }
+    if (_chewieController.videoPlayerController.value.duration.inMilliseconds ==
+        _chewieController.videoPlayerController.value.position.inMilliseconds) {
+      print('done');
     }
   }
 
@@ -273,7 +278,15 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
                   padding: const EdgeInsets.only(top: 10),
                   child: ItemsCourse(
                     key: ValueKey(state.videoCourse[index]),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        RouteName.playingCoursePage,
+                        arguments: {
+                          'videoCourse': state.videoCourse[index],
+                          'context': context,
+                        },
+                      );
+                    },
                     assetName: state.videoCourse[index].imgVideo,
                     time: '10:09',
                     part: 'Course Part ${state.videoCourse[index].part}',

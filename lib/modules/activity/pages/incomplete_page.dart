@@ -24,7 +24,7 @@ class IncompletePage extends StatelessWidget {
         }
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: state.list.length,
+          itemCount: state.listInComplete.length,
           addAutomaticKeepAlives: true,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
@@ -33,14 +33,14 @@ class IncompletePage extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).pushNamed(
                     RouteName.detailCoursePage,
-                    arguments: state.list[index],
+                    arguments: state.listInComplete[index],
                   );
                 },
-                title: state.list[index].title,
-                imgUrl: state.list[index].image,
-                percent: state.progressCourse[index],
-                duration: state.list[index].duration,
-                timeLearned: state.timeLearned[index],
+                title: state.listInComplete[index].title,
+                imgUrl: state.listInComplete[index].image,
+                percent: state.progressCourseInComplete[index],
+                duration: state.listInComplete[index].duration,
+                timeLearned: state.timeLearnedInComplete[index],
               ),
             );
           },

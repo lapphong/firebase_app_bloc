@@ -6,70 +6,67 @@ import 'package:equatable/equatable.dart';
 import '../../../../blocs/blocs.dart';
 import '../../../../models/models.dart';
 import '../../../../repositories/repository.dart';
-import '../blocs.dart';
 
 part 'activity_list_state.dart';
 
 class ActivityListCubit extends Cubit<ActivityListState> {
   final UserBase userBase;
-  final TabCubit tabCubit;
   final ProfileCubit profileCubit;
 
-  late StreamSubscription tabSubscription;
   late StreamSubscription profileSubscription;
 
   ActivityListCubit({
     required this.userBase,
-    required this.tabCubit,
     required this.profileCubit,
   }) : super(ActivityListState.initial()) {
-    tabSubscription = tabCubit.stream.listen((tabState) {
-      _setListProductByTab();
-    });
-
     profileSubscription = profileCubit.stream.listen((profileState) {
-      _setListProductByTab();
+      getListActivityByTab(profileState.listMyLearning);
     });
-  }
-
-  void _setListProductByTab() {
-    if (tabCubit.state.tabStatus == TabStatus.complete) {
-      final List<MyLearning> listComplete = profileCubit.state.listMyLearning
-          .where((element) => element.progress == 100)
-          .toList();
-      getListActivityByTab(listComplete);
-    } else {
-      final List<MyLearning> listComplete = profileCubit.state.listMyLearning
-          .where((element) => element.progress < 100)
-          .toList();
-      getListActivityByTab(listComplete);
-    }
   }
 
   Future<void> getListActivityByTab(List<MyLearning> list) async {
-    final List<Product> listProductFromDoc = [];
-    final List<double> listProgress = [];
-    final List<double> listTimeLearned = [];
+    final listInComplete =
+        list.where((element) => element.progress < 100).toList();
+    final listComplete =
+        list.where((element) => element.progress == 100).toList();
+    final List<Product> listProductInComplete = [];
+    final List<Product> listProductComplete = [];
+
+    final List<double> listProgressInComplete = [];
+    final List<double> listProgressComplete = [];
+
+    final List<double> listTimeLearnedInComplete = [];
+    final List<double> listTimeLearnedComplete = [];
 
     late Product product = Product.initial();
     late double totalProgress = 0;
 
     try {
-      for (var i = 0; i < list.length; i++) {
-        product = await userBase.getProductByID(id: list[i].id);
-        listProductFromDoc.add(product);
-        listProgress.add(list[i].progress / 100);
-        totalProgress += (list[i].progress / 100);
-        listTimeLearned.add(percentOfNumber(
-            list[i].progress / 100, double.parse(product.duration)));
+      for (var i = 0; i < listInComplete.length; i++) {
+        product = await userBase.getProductByID(id: listInComplete[i].id);
+        listProductInComplete.add(product);
+        listProgressInComplete.add(listInComplete[i].progress / 100);
+        listTimeLearnedInComplete.add(percentOfNumber(
+            listInComplete[i].progress / 100, double.parse(product.duration)));
+        totalProgress += (listInComplete[i].progress / 100);
+      }
+      for (var i = 0; i < listComplete.length; i++) {
+        product = await userBase.getProductByID(id: listComplete[i].id);
+        listProductComplete.add(product);
+        listProgressComplete.add(listComplete[i].progress / 100);
+        listTimeLearnedComplete.add(percentOfNumber(
+            listComplete[i].progress / 100, double.parse(product.duration)));
       }
 
       emit(state.copyWith(
         activityStateStatus: ActivityStateStatus.loaded,
-        list: listProductFromDoc,
-        progressCourse: listProgress,
-        totalProgress: totalProgress / listProgress.length,
-        timeLearned: listTimeLearned,
+        listInComplete: listProductInComplete,
+        listComplete: listProductComplete,
+        progressCourseInComplete: listProgressInComplete,
+        progressCourseComplete: listProgressComplete,
+        timeLearnedInComplete: listTimeLearnedInComplete,
+        timeLearnedComplete: listTimeLearnedComplete,
+        totalProgress: totalProgress / listInComplete.length,
       ));
     } on CustomError catch (e) {
       emit(state.copyWith(
@@ -80,4 +77,31 @@ class ActivityListCubit extends Cubit<ActivityListState> {
   }
 
   double percentOfNumber(double a, double b) => b * a / 100;
+
+  @override
+  Future<void> close() {
+    profileSubscription.cancel();
+    return super.close();
+  }
+
+  // Future<List<VideoProgress>> getListVideoProgressFromID({
+  //   required String userID,
+  //   required String productID,
+  // }) async {
+  //   try {
+  //     final listVideoProgress = await userBase.getListVideoProgressFromUser(
+  //       userID: userID,
+  //       productID: productID,
+  //     );
+
+  //     return listVideoProgress;
+  //   } catch (e) {
+  //     throw CustomError(
+  //       code: 'Exception',
+  //       message: e.toString(),
+  //       plugin: 'flutter_error/server_error',
+  //     );
+  //   }
+  // }
+
 }

@@ -4,6 +4,7 @@ enum PlayingStatus { initial, initialized }
 
 class PlayingState extends Equatable {
   final PlayingStatus status;
+
   const PlayingState({
     required this.status,
   });
@@ -16,7 +17,9 @@ class PlayingState extends Equatable {
   List<Object> get props => [status];
 
   @override
-  String toString() => 'PlayingState(status:$status)';
+  String toString() {
+    return 'PlayingState(status:$status)';
+  }
 
   PlayingState copyWith({
     PlayingStatus? status,

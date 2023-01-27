@@ -12,18 +12,18 @@ class ProfileCubit extends Cubit<ProfileState> {
   late User userUpdated;
   late List<MyLearning> listMyLearning;
 
-  ProfileCubit({
-    required this.userBase,
-  }) : super(ProfileState.initial());
+  ProfileCubit({required this.userBase}) : super(ProfileState.initial());
 
   Future<void> updateUserMyLearning({
     required String userID,
+    required List<String> listVideo,
     required String productID,
     required int progress,
   }) async {
     try {
       await userBase.updateMyLearningByUser(
         userID: userID,
+        listVideo: listVideo,
         productID: productID,
         progress: progress,
       );
