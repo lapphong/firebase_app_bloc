@@ -9,6 +9,7 @@ class DetailState extends Equatable {
   final CourseStatus statusCourse;
   final Teacher teacher;
   final List<VideoCourse> videoCourse;
+  final List<VideoProgress> videoProgress;
   final CustomError error;
 
   const DetailState({
@@ -16,6 +17,7 @@ class DetailState extends Equatable {
     required this.statusCourse,
     required this.teacher,
     required this.videoCourse,
+    required this.videoProgress,
     required this.error,
   });
 
@@ -25,6 +27,7 @@ class DetailState extends Equatable {
       statusCourse: CourseStatus.initial,
       teacher: Teacher.initialTeacher(),
       videoCourse: const [],
+      videoProgress: const [],
       error: const CustomError(),
     );
   }
@@ -35,12 +38,13 @@ class DetailState extends Equatable {
         statusCourse,
         teacher,
         videoCourse,
+        videoProgress,
         error,
       ];
 
   @override
   String toString() {
-    return 'DetailState(statusOverview: $statusOverview,statusCourse: $statusCourse,teacher: $teacher,videoCourse: $videoCourse, error: $error)';
+    return 'DetailState(statusOverview: $statusOverview,statusCourse: $statusCourse,teacher: $teacher,videoCourse: $videoCourse,videoProgress:$videoProgress, error: $error)';
   }
 
   DetailState copyWith({
@@ -48,6 +52,7 @@ class DetailState extends Equatable {
     CourseStatus? statusCourse,
     Teacher? teacher,
     List<VideoCourse>? videoCourse,
+    List<VideoProgress>? videoProgress,
     CustomError? error,
   }) {
     return DetailState(
@@ -55,6 +60,7 @@ class DetailState extends Equatable {
       statusCourse: statusCourse ?? this.statusCourse,
       teacher: teacher ?? this.teacher,
       videoCourse: videoCourse ?? this.videoCourse,
+      videoProgress: videoProgress ?? this.videoProgress,
       error: error ?? this.error,
     );
   }

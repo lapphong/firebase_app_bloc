@@ -7,7 +7,9 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets/assets_path.dart';
+import '../../../blocs/blocs.dart';
 import '../../../models/models.dart';
+import '../../../repositories/repository.dart';
 import '../../../routes/route_name.dart';
 import '../../../themes/themes.dart';
 import '../../../widgets/stateless/stateless.dart';
@@ -18,9 +20,11 @@ class PlayingCoursePage extends StatelessWidget {
   const PlayingCoursePage({
     super.key,
     required this.videoCourse,
+    required this.product,
     required this.context,
   });
   final VideoCourse videoCourse;
+  final Product product;
   final BuildContext context;
 
   @override
@@ -30,16 +34,29 @@ class PlayingCoursePage extends StatelessWidget {
         BlocProvider.value(
           value: BlocProvider.of<DetailBloc>(this.context),
         ),
-        BlocProvider(create: (context) => PlayingCubit()),
+        BlocProvider(
+          create: (context) => PlayingCubit(
+            userBase: context.read<UserBase>(),
+            detailBloc: BlocProvider.of<DetailBloc>(this.context),
+          ),
+        ),
       ],
-      child: PlayingCourseView(videoCourse: videoCourse),
+      child: PlayingCourseView(
+        videoCourse: videoCourse,
+        product: product,
+      ),
     );
   }
 }
 
 class PlayingCourseView extends StatefulWidget {
-  const PlayingCourseView({super.key, required this.videoCourse});
+  const PlayingCourseView({
+    super.key,
+    required this.videoCourse,
+    required this.product,
+  });
   final VideoCourse videoCourse;
+  final Product product;
 
   @override
   State<PlayingCourseView> createState() => _PlayingCourseViewState();
@@ -99,15 +116,21 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
   }
 
   void _listenerEventVideoPlayer() {
-    if (!_chewieController.videoPlayerController.value.isPlaying) {
-      print(
-          '⚡ ${_chewieController.videoPlayerController.value.duration.inMilliseconds}');
-      print(
-          '👀 ${_chewieController.videoPlayerController.value.position.inMilliseconds}');
-    }
-    if (_chewieController.videoPlayerController.value.duration.inMilliseconds ==
-        _chewieController.videoPlayerController.value.position.inMilliseconds) {
-      print('done');
+    bool isPlaying = _chewieController.videoPlayerController.value.isPlaying;
+    int durationVideo =
+        _chewieController.videoPlayerController.value.duration.inMilliseconds;
+    int durationTimeLearned =
+        _chewieController.videoPlayerController.value.position.inMilliseconds;
+    String userID = context.read<ProfileCubit>().state.user.id;
+
+    if (!isPlaying || durationVideo == durationTimeLearned) {
+      context.read<PlayingCubit>().updateVideoProgress(
+            userID: userID,
+            product: widget.product,
+            videoID: widget.videoCourse.id,
+            durationVideo: durationVideo,
+            durationTimeLearned: durationTimeLearned,
+          );
     }
   }
 
@@ -119,7 +142,16 @@ class _PlayingCourseViewState extends State<PlayingCourseView> {
   }
 
   Widget _playView() {
-    return BlocBuilder<PlayingCubit, PlayingState>(
+    return BlocConsumer<PlayingCubit, PlayingState>(
+      listener: (context, state) {
+        if (state.playingVideoStatus == PlayingVideoStatus.learned) {
+          context.read<DetailBloc>().add(UpdateVideoProgressEvent(
+                videoProgress: context.read<PlayingCubit>().state.videoProgress,
+                userID: context.read<ProfileCubit>().state.user.id,
+                productID: widget.product.id,
+              ));
+        }
+      },
       builder: (context, state) {
         return state.status == PlayingStatus.initial
             ? buildImageVideoCourse()

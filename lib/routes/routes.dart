@@ -46,34 +46,13 @@ class Routes {
           return _buildRoute(
             settings,
             PlayingCoursePage(
-                videoCourse: arguments['videoCourse'], context: arguments['context']),
+              videoCourse: arguments['videoCourse'],
+              context: arguments['context'],
+              product: arguments['product'],
+            ),
           );
         }
         return _errorRoute(settings);
-      // case RouteName.verifyYourPage:
-      //   return _buildRoute(settings, const VerifyYourPage());
-      // case RouteName.selectPlanPage:
-      //   return _buildRoute(settings, const SelectPlanPage());
-      // case RouteName.activityPage:
-      //   return _buildRoute(
-      //       settings, const RootPage(currentTab: TabItem.activity));
-      // case RouteName.categoryPage:
-      //   return _buildRoute(
-      //       settings, const RootPage(currentTab: TabItem.category));
-      // case RouteName.settingPage:
-      //   return _buildRoute(
-      //       settings, const RootPage(currentTab: TabItem.setting));
-
-      // case RouteName.favoritePage:
-      //   return _buildRoute(settings, const MyFavoritePage());
-      // case RouteName.downloadVideoPage:
-      //   return _buildRoute(settings, DownloadVideoPage());
-      // case RouteName.detailMentorPage:
-      //   return _buildRoute(settings, const DetailMentorPage());
-      // case RouteName.playingCoursePage:
-      //   return _buildRoute(settings, const PlayingCoursePage());
-      // case RouteName.fullScreenPage:
-      //   return _buildRoute(settings, const LandingPage());
       default:
         return _errorRoute(settings);
     }

@@ -13,10 +13,12 @@ class ItemsVideoCourse extends StatelessWidget {
     required this.part,
     required this.time,
     required this.onTap,
+    required this.seen,
   }) : super(key: key);
 
   final String imgUrl, title, part, time;
   final VoidCallback onTap;
+  final bool seen;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class ItemsVideoCourse extends StatelessWidget {
                   title,
                   style: TxtStyle.courseText,
                   maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.start,
                 ),
                 Text(
                   part,
@@ -48,18 +50,10 @@ class ItemsVideoCourse extends StatelessWidget {
           ),
           right: Align(
             alignment: Alignment.centerRight,
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  width: 0.8,
-                  color: DarkTheme.white.withOpacity(0.2),
-                ),
-              ),
-              child: Image.asset(AssetPath.iconDownload, height: 20, width: 20),
-            ),
+            child: seen
+                ? Image.asset(AssetPath.iconChecked,
+                    height: 30, width: 30, color: DarkTheme.green)
+                : Container(),
           ),
           child: Stack(
             children: [

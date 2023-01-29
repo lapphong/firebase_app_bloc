@@ -1,7 +1,4 @@
 import 'dart:io';
-
-import 'package:firebase_app_bloc/models/video_progress.dart';
-
 import '../../models/models.dart';
 
 abstract class UserBase {
@@ -42,6 +39,19 @@ abstract class UserBase {
   Future<List<VideoProgress>> getListVideoProgressFromUser({
     required String userID,
     required String productID,
+  });
+
+  Future<void> updateVideoProgress({
+    required String userID,
+    required String productID,
+    required String videoID,
+    required int progress,
+  });
+
+  Future<void> updateTotalProgress({
+    required String userID,
+    required String productID,
+    required int progress,
   });
 
   /*get MyFavorite MyLearning From User*/

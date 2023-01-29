@@ -199,11 +199,11 @@ class UserRepository implements UserBase {
   }) async {
     try {
       await firebaseFirestore
-            .collection(ApiPath.user())
-            .doc(userID)
-            .collection(ApiPath.myLearning())
-            .doc(productID)
-            .set({'progress': progress});
+          .collection(ApiPath.user())
+          .doc(userID)
+          .collection(ApiPath.myLearning())
+          .doc(productID)
+          .set({'progress': progress});
 
       for (var i = 0; i < listVideo.length; i++) {
         await firebaseFirestore
@@ -247,6 +247,53 @@ class UserRepository implements UserBase {
       return list;
     } on FirebaseException catch (e) {
       throw CustomError(code: e.code, message: e.message!, plugin: e.plugin);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> updateVideoProgress({
+    required String userID,
+    required String productID,
+    required String videoID,
+    required int progress,
+  }) async {
+    try {
+      await firebaseFirestore
+          .collection(ApiPath.user())
+          .doc(userID)
+          .collection(ApiPath.myLearning())
+          .doc(productID)
+          .collection(ApiPath.listVideoProgress())
+          .doc(videoID)
+          .set({'progress': progress});
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
+
+  @override
+  Future<void> updateTotalProgress({
+    required String userID,
+    required String productID,
+    required int progress,
+  }) async {
+    try {
+      await firebaseFirestore
+          .collection(ApiPath.user())
+          .doc(userID)
+          .collection(ApiPath.myLearning())
+          .doc(productID)
+          .set({'progress': progress});
     } catch (e) {
       throw CustomError(
         code: 'Exception',

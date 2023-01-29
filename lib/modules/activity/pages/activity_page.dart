@@ -25,6 +25,7 @@ class ActivityPage extends StatelessWidget {
             userBase: context.read<UserBase>(),
             profileCubit: BlocProvider.of<ProfileCubit>(context),
           ),
+          lazy: false,
         ),
       ],
       child: const ActivityView(),
@@ -48,8 +49,7 @@ class _ActivityViewState extends State<ActivityView> {
   @override
   void initState() {
     super.initState();
-    final listInComplete = context.read<ProfileCubit>().state.listMyLearning;
-    context.read<ActivityListCubit>().getListActivityByTab(listInComplete);
+    context.read<ActivityListCubit>().getListActivityByTab();
   }
 
   @override

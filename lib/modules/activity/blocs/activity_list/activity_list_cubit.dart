@@ -20,15 +20,19 @@ class ActivityListCubit extends Cubit<ActivityListState> {
     required this.profileCubit,
   }) : super(ActivityListState.initial()) {
     profileSubscription = profileCubit.stream.listen((profileState) {
-      getListActivityByTab(profileState.listMyLearning);
+      getListActivityByTab();
     });
   }
 
-  Future<void> getListActivityByTab(List<MyLearning> list) async {
-    final listInComplete =
-        list.where((element) => element.progress < 100).toList();
-    final listComplete =
-        list.where((element) => element.progress == 100).toList();
+  Future<void> getListActivityByTab() async {
+    emit(state.copyWith(activityStateStatus: ActivityStateStatus.initial));
+
+    final listInComplete = profileCubit.state.listMyLearning
+        .where((element) => element.progress < 100)
+        .toList();
+    final listComplete = profileCubit.state.listMyLearning
+        .where((element) => element.progress == 100)
+        .toList();
     final List<Product> listProductInComplete = [];
     final List<Product> listProductComplete = [];
 
@@ -66,7 +70,8 @@ class ActivityListCubit extends Cubit<ActivityListState> {
         progressCourseComplete: listProgressComplete,
         timeLearnedInComplete: listTimeLearnedInComplete,
         timeLearnedComplete: listTimeLearnedComplete,
-        totalProgress: totalProgress / listInComplete.length,
+        totalProgress:
+            totalProgress != 0 ? totalProgress / listInComplete.length : 0,
       ));
     } on CustomError catch (e) {
       emit(state.copyWith(
@@ -83,25 +88,4 @@ class ActivityListCubit extends Cubit<ActivityListState> {
     profileSubscription.cancel();
     return super.close();
   }
-
-  // Future<List<VideoProgress>> getListVideoProgressFromID({
-  //   required String userID,
-  //   required String productID,
-  // }) async {
-  //   try {
-  //     final listVideoProgress = await userBase.getListVideoProgressFromUser(
-  //       userID: userID,
-  //       productID: productID,
-  //     );
-
-  //     return listVideoProgress;
-  //   } catch (e) {
-  //     throw CustomError(
-  //       code: 'Exception',
-  //       message: e.toString(),
-  //       plugin: 'flutter_error/server_error',
-  //     );
-  //   }
-  // }
-
 }

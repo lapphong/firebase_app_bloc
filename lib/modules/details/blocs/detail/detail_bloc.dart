@@ -4,9 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../../../blocs/blocs.dart';
 import '../../../../models/models.dart';
-import '../../../../repositories/app_repository/app_base.dart';
+import '../../../../repositories/repository.dart';
 import '../blocs.dart';
 
 part 'detail_event.dart';
@@ -21,26 +20,56 @@ EventTransformer<GetListCourseEvent> debounce<GetListCourseEvent>(
 
 class DetailBloc extends Bloc<DetailEvent, DetailState> {
   final AppBase appBase;
+  final UserBase userBase;
   final LikeTeacherCubit likeTeacherCubit;
 
   late final StreamSubscription likeSubscription;
 
   DetailBloc({
     required this.appBase,
+    required this.userBase,
     required this.likeTeacherCubit,
   }) : super(DetailState.initial()) {
-    on<GetTeacherByIDEvent>(
-      _getTeacherByID,
-      transformer: debounce(const Duration(milliseconds: _duration)),
-    );
+    on<GetTeacherByIDEvent>(_getTeacherByID);
     on<GetListVideoByIDEvent>(
       _getListVideoByID,
       transformer: debounce(const Duration(milliseconds: _duration)),
     );
+    on<UpdateVideoProgressEvent>(_updateVideoProgress);
 
     likeSubscription = likeTeacherCubit.stream.listen((likeState) {
       updateVotedTeacher();
     });
+  }
+
+  Future<void> _updateVideoProgress(
+    UpdateVideoProgressEvent event,
+    Emitter<DetailState> emit,
+  ) async {
+    emit(state.copyWith(statusCourse: CourseStatus.initial));
+
+    int index = state.videoProgress
+        .indexWhere((element) => element.id == event.videoProgress!.id);
+    final listVideoProgressNew = state.videoProgress;
+    listVideoProgressNew.removeAt(index);
+    listVideoProgressNew.insert(index, event.videoProgress!);
+
+    int total = 0;
+    for (var i = 0; i < state.videoProgress.length; i++) {
+      total += state.videoProgress[i].progress;
+    }
+    total = total ~/ state.videoProgress.length;
+
+    await userBase.updateTotalProgress(
+      userID: event.userID!,
+      productID: event.productID!,
+      progress: total,
+    );
+
+    emit(state.copyWith(
+      statusCourse: CourseStatus.loaded,
+      videoProgress: listVideoProgressNew,
+    ));
   }
 
   late int votedCurrent = 0;
@@ -85,16 +114,32 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
   ) async {
     final List<VideoCourse> listVideoFromDoc = [];
     late VideoCourse videoCourse = VideoCourse.initialVideo();
-    emit(state.copyWith(statusCourse: CourseStatus.initial));
+
     try {
-      for (var i = 0; i < event.courseVideoId.length; i++) {
+      for (var i = 0; i < event.product.listVideoID.length; i++) {
         videoCourse =
-            await appBase.getVideoCourseByID(id: event.courseVideoId[i]);
+            await appBase.getVideoCourseByID(id: event.product.listVideoID[i]);
         listVideoFromDoc.add(videoCourse);
       }
 
+      final listVideoProgress = await userBase.getListVideoProgressFromUser(
+          userID: event.userID, productID: event.product.id);
+
+      //sort by list videoCourse
+      final Map<String, int> sortingOrderMap = {
+        for (var i = 0; i < listVideoFromDoc.length; i++)
+          listVideoFromDoc[i].id: i
+      };
+
+      listVideoProgress.sort((s1, s2) =>
+          sortingOrderMap[s1.id]!.compareTo(sortingOrderMap[s2.id]!));
+      //
+
       emit(state.copyWith(
-          statusCourse: CourseStatus.loaded, videoCourse: listVideoFromDoc));
+        statusCourse: CourseStatus.loaded,
+        videoCourse: listVideoFromDoc,
+        videoProgress: listVideoProgress,
+      ));
     } on CustomError catch (e) {
       emit(state.copyWith(statusCourse: CourseStatus.error, error: e));
     }

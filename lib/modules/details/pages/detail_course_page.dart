@@ -38,6 +38,7 @@ class DetailCoursePage extends StatelessWidget {
         BlocProvider<DetailBloc>(
           create: (context) => DetailBloc(
             appBase: context.read<AppBase>(),
+            userBase: context.read<UserBase>(),
             likeTeacherCubit: BlocProvider.of<LikeTeacherCubit>(context),
           ),
           lazy: false,
@@ -165,7 +166,15 @@ class _DetailCourseViewState extends State<DetailCourseView> {
                   requirements: widget.product.requirements,
                   student: widget.product.studentTotal.toString(),
                 ),
-                TabCoursePage(listVideoID: widget.product.listVideoID),
+                BlocBuilder<BuyCourseCubit, BuyCourseState>(
+                  builder: (context, state) {
+                    return state.status == BuyCourseStatus.bought
+                        ? TabCoursePage(product: widget.product)
+                        : const Center(
+                            child: Text('Please Buy course to watch',
+                                style: TxtStyle.headline2));
+                  },
+                ),
               ],
             ),
           ),

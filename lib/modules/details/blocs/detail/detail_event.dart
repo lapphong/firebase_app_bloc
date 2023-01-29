@@ -16,9 +16,29 @@ class GetTeacherByIDEvent extends DetailEvent {
 }
 
 class GetListVideoByIDEvent extends DetailEvent {
-  final List courseVideoId;
-  const GetListVideoByIDEvent({required this.courseVideoId});
+  final String userID;
+  final Product product;
+
+  const GetListVideoByIDEvent({
+    required this.userID,
+    required this.product,
+  });
 
   @override
-  List<Object?> get props => [courseVideoId];
+  List<Object?> get props => [userID, product];
+}
+
+class UpdateVideoProgressEvent extends DetailEvent {
+  final VideoProgress? videoProgress;
+  final String? userID;
+  final String? productID;
+
+  const UpdateVideoProgressEvent({
+    required this.videoProgress,
+    required this.userID,
+    required this.productID,
+  });
+
+  @override
+  List<Object?> get props => [videoProgress, userID, productID];
 }
